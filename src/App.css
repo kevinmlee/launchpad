@@ -24,6 +24,11 @@ body {
   line-height: 1.2em;
   transition: ease-in-out margin 0.3s;
 }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
 
 @media screen and (max-width: 500px) {
   body {
@@ -33,12 +38,6 @@ body {
 
 [role="tooltip"] {
   z-index: 9991 !important;
-}
-
-.container {
-  max-width: 95%;
-  margin: 0 auto;
-  padding: 0 2rem;
 }
 
 #main-content {

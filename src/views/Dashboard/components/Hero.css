@@ -1,9 +1,10 @@
 .hero {
-  padding: 125px 0;
+  padding: 150px 0 0;
   background: #1a191d;
   position: relative;
 }
 
 .hero h1 {
   color: #ffffff;
+  margin-bottom: 100px;
 }
