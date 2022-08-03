@@ -6,7 +6,7 @@ import Select from "../../../components/Select/Select";
 
 import "./UserInput.css";
 
-const EVENTS = ["Launch", "Expeditions", "Dockings", "Events"];
+const EVENTS = ["Launches", "Expeditions", "Dockings", "Events"];
 const LOCATIONS = [
   "Starbase, TX",
   "Kennedy Space Center, FL",

@@ -3,7 +3,7 @@ import "./Select.css";
 
 export default function Select({ label, options }) {
   const [showOptions, setShowOptions] = useState(false);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState("");
   const ref = useRef();
 
   useEffect(() => {}, []);
@@ -19,13 +19,20 @@ export default function Select({ label, options }) {
     setShowOptions(false);
   });
 
+  const selectOption = (option) => {
+    setSelected(option);
+    setShowOptions(false);
+  };
+
   return (
     <div id={label.toLowerCase()} className="custom-select" ref={ref}>
-      <label onClick={(e) => setShowOptions(!showOptions)}>{label}</label>
+      <label onClick={(e) => setShowOptions(!showOptions)}>
+        {selected ? selected : label}
+      </label>
 
       <ul className={"options " + (showOptions && "opened")}>
         {options.map((option) => (
-          <li key={option} value={option}>
+          <li key={option} value={option} onClick={(e) => selectOption(option)}>
             {option}
           </li>
         ))}
