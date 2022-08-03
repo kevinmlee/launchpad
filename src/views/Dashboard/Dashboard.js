@@ -3,6 +3,7 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import { Button, Typography } from "@mui/joy";
 
 import Hero from "./components/Hero";
+import Cards from "./components/Cards";
 import sampleData from "./sampleData.json";
 
 export default function Dashboard() {
@@ -20,11 +21,10 @@ export default function Dashboard() {
       .then((data) => setLaunches(data));
   };
 
-  console.log(launches);
-
   return (
     <CssVarsProvider>
       <Hero />
+      <Cards data={launches} />
     </CssVarsProvider>
   );
 }
