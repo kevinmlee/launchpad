@@ -7,6 +7,12 @@
   border-radius: 30px;
   display: flex;
 }
+.user-input > *:not(:last-child) {
+  border-right: 1px solid #eaeaea;
+}
+.user-input > *:nth-last-child(2) {
+  border-right: none;
+}
 
 .user-input .Joy-focused:before {
   box-shadow: none !important;
@@ -52,4 +58,11 @@
   top: 50%;
   transform: translateY(-50%);
   border-radius: 30px;
+}
+
+.user-input .custom-select {
+  background-color: #ffffff;
+  position: relative;
+  width: calc(65% / 3);
+  height: 70px;
 }

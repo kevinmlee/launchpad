@@ -2,10 +2,17 @@ import React, { useEffect, useState } from "react";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { Button, Typography, TextField } from "@mui/joy";
 
-import Select from "@mui/joy/Select";
-import Option from "@mui/joy/Option";
+import Select from "../../../components/Select/Select";
 
 import "./UserInput.css";
+
+const EVENTS = ["Launch", "Expeditions", "Dockings", "Events"];
+const LOCATIONS = [
+  "Starbase, TX",
+  "Kennedy Space Center, FL",
+  "Vandenberg Air Force Base, CA",
+];
+const DATEPICKER = ["test", "test2", "test3", "test4"];
 
 export default function UserInput() {
   useEffect(() => {}, []);
@@ -14,29 +21,15 @@ export default function UserInput() {
     <CssVarsProvider>
       <div className="user-input">
         <TextField
-          classes={{ root: "searchField" }}
           id="search"
           label="Plain"
           placeholder="Search by name or event"
           variant="plain"
         />
 
-        <Select id="date" defaultValue="">
-          <Option value="">Date</Option>
-          <Option value="dog">Dog</Option>
-          <Option value="cat">Cat</Option>
-        </Select>
-
-        <Select id="location" defaultValue="">
-          <Option value="">Location</Option>
-          <Option value="dog">Dog</Option>
-          <Option value="cat">Cat</Option>
-        </Select>
-
-        <Select id="event" defaultValue="">
-          <Option value="">Event</Option>
-          <Option value="launch">Launch</Option>
-        </Select>
+        <Select label="Date" options={DATEPICKER} />
+        <Select label="Location" options={LOCATIONS} />
+        <Select label="Events" options={EVENTS} />
 
         <Button
           id="search-btn"
