@@ -3,12 +3,14 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import { Button, Typography } from "@mui/joy";
 
 import Hero from "./components/Hero";
+import sampleData from "./sampleData.json";
 
 export default function Dashboard() {
   const [launches, setLaunches] = useState({});
 
   useEffect(() => {
     //getLaunches();
+    setLaunches(sampleData);
   }, []);
 
   const getLaunches = async () => {
@@ -18,7 +20,7 @@ export default function Dashboard() {
       .then((data) => setLaunches(data));
   };
 
-  //console.log(launches);
+  console.log(launches);
 
   return (
     <CssVarsProvider>
