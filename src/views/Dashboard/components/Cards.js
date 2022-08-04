@@ -68,9 +68,14 @@ export default function Cards({ launches, expeditions }) {
   const expedition = (post) => {
     let imageUrl = "";
     let classes = "";
+    let agency = "";
+    let missionType = "";
+
     if (post.mission_patches.length > 0) {
       imageUrl = post.mission_patches[0].image_url;
       classes = "patch";
+      agency = post.mission_patches[0].agency.name;
+      missionType = post.mission_patches[0].agency.type;
     } else if (post.spacestation.image_url) {
       imageUrl = post.spacestation.image_url;
       classes = "spacestation";
@@ -78,6 +83,14 @@ export default function Cards({ launches, expeditions }) {
 
     return (
       <div className="card expedition" key={post.id}>
+        <div className="chips">
+          {missionType && (
+            <Chip className="type" color="neutral" size="sm">
+              {missionType}
+            </Chip>
+          )}
+        </div>
+
         <div className={"featured-image " + classes}>
           <img src={imageUrl} loading="lazy" />
         </div>
@@ -86,6 +99,7 @@ export default function Cards({ launches, expeditions }) {
           <div className="mission">
             <h3 className="name">{post.name}</h3>
             <div className="lp">{post.spacestation.name}</div>
+            {agency && <div className="lp">{agency}</div>}
             <div className="target-date">
               {post.start &&
                 dayjs(post.start).format("ddd, MMM D, YYYY h:mm A")}
