@@ -69,6 +69,14 @@
   display: block;
 }
 
+@media (prefers-color-scheme: light) {
+}
+@media (prefers-color-scheme: dark) {
+  .card .details {
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.45);
+  }
+}
+
 @media screen and (max-width: 768px) {
   .card {
     width: calc(100% / 2 - 40px);
