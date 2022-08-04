@@ -68,3 +68,15 @@
 .card:hover .desc {
   display: block;
 }
+
+@media screen and (max-width: 768px) {
+  .card {
+    width: calc(100% / 2 - 40px);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .card {
+    width: calc(100% - 40px);
+  }
+}

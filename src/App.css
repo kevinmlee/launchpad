@@ -30,6 +30,14 @@ body {
   padding: 0 30px;
 }
 
+@media (prefers-color-scheme: light) {
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #333;
+  }
+}
+
 @media screen and (max-width: 500px) {
   body {
     font-size: 14px;
