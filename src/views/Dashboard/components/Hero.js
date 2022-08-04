@@ -15,6 +15,9 @@ export default function Hero() {
       <div className="hero">
         <div className="container">
           <Typography level="h1">Launchpad</Typography>
+          <p className="hero-copy">
+            Upcoming launches, dockings, and expeditions
+          </p>
           <Orbit />
           <UserInput />
         </div>

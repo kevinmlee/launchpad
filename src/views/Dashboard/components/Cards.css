@@ -11,10 +11,22 @@
 }
 
 .card .featured-image {
-  height: 250px;
+  height: 275px;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   overflow: hidden;
+}
+
+.card.expedition .featured-image.patch {
+  background-color: #000;
+  padding: 20px;
+}
+.card.expedition .featured-image.patch img {
+  object-fit: contain;
+}
+
+.card.expedition .featured-image {
+  padding: 0;
 }
 
 .card .featured-image.no-img {

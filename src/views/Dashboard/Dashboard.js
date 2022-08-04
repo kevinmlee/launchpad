@@ -4,30 +4,46 @@ import { Button, Typography } from "@mui/joy";
 
 import Hero from "./components/Hero";
 import Cards from "./components/Cards";
-import sampleData from "./sampleData.json";
-import upcoming from "./upcomingLaunches.json";
+
+import upcomingLaunches from "./upcomingLaunches.json";
+import upcomingExpeditions from "./upcomingExpeditions.json";
+
+// for pagination
+// https://ll.thespacedevs.com/2.2.0/launch/?limit=10&offset=10
 
 export default function Dashboard() {
   const [launches, setLaunches] = useState({});
+  const [expeditions, setExpeditions] = useState({});
 
   useEffect(() => {
     //getLaunches();
-    setLaunches(upcoming);
+    //getExpeditions();
+
+    setLaunches(upcomingLaunches);
+    setExpeditions(upcomingExpeditions);
   }, []);
 
   const getLaunches = async () => {
-    // https://ll.thespacedevs.com/2.2.0/launch/?limit=10&offset=10
-    await fetch("https://ll.thespacedevs.com/2.2.0/launch/upcoming?limit=10")
+    await fetch("https://ll.thespacedevs.com/2.2.0/launch/upcoming?limit=20")
       .then((response) => response.json())
       .then((data) => setLaunches(data));
   };
 
+  const getExpeditions = async () => {
+    await fetch(
+      "https://ll.thespacedevs.com/2.2.0/expedition?ordering=-start&limit=20"
+    )
+      .then((response) => response.json())
+      .then((data) => setExpeditions(data));
+  };
+
   //console.log(launches);
+  //console.log(expeditions);
 
   return (
     <CssVarsProvider>
       <Hero />
-      <Cards data={launches} />
+      <Cards launches={launches} expeditions={expeditions} />
     </CssVarsProvider>
   );
 }

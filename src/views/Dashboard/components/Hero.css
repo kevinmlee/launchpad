@@ -6,5 +6,9 @@
 
 .hero h1 {
   color: #ffffff;
-  margin-bottom: 100px;
+}
+.hero-copy {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 75px;
 }

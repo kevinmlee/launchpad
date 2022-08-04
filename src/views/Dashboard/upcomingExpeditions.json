@@ -1,0 +1,288 @@
+{
+  "count": 146,
+  "next": "https://ll.thespacedevs.com/2.2.0/expedition/?limit=10&offset=10&ordering=-start",
+  "previous": null,
+  "results": [
+    {
+      "id": 149,
+      "url": "https://ll.thespacedevs.com/2.2.0/expedition/149/",
+      "name": "Shenzhou 14",
+      "start": "2022-06-05T09:42:00Z",
+      "end": null,
+      "spacestation": {
+        "id": 18,
+        "url": "https://ll.thespacedevs.com/2.2.0/spacestation/18/",
+        "name": "Tiangong space station",
+        "status": {
+          "id": 1,
+          "name": "Active"
+        },
+        "orbit": "Low Earth Orbit",
+        "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/spacestation_images/chinese_space_s_image_20210429041040.png"
+      },
+      "mission_patches": [
+        {
+          "id": 634,
+          "name": "Shenzhou 14 Mission Patch",
+          "priority": 10,
+          "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/mission_patch_images/shenzhou252014_mission_patch_20220604085704.png",
+          "agency": {
+            "id": 17,
+            "url": "https://ll.thespacedevs.com/2.2.0/agencies/17/",
+            "name": "China National Space Administration",
+            "type": "Government"
+          }
+        }
+      ]
+    },
+    {
+      "id": 148,
+      "url": "https://ll.thespacedevs.com/2.2.0/expedition/148/",
+      "name": "Ax-1",
+      "start": "2022-04-09T12:29:00Z",
+      "end": "2022-04-25T01:10:00Z",
+      "spacestation": {
+        "id": 4,
+        "url": "https://ll.thespacedevs.com/2.2.0/spacestation/4/",
+        "name": "International Space Station",
+        "status": {
+          "id": 1,
+          "name": "Active"
+        },
+        "orbit": "Low Earth Orbit",
+        "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/spacestation_images/international2520space2520station_image_20190220215716.jpeg"
+      },
+      "mission_patches": [
+        {
+          "id": 605,
+          "name": "Ax-1 Patch",
+          "priority": 10,
+          "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/mission_patch_images/ax-12520patch_mission_patch_20220401172359.png",
+          "agency": {
+            "id": 1022,
+            "url": "https://ll.thespacedevs.com/2.2.0/agencies/1022/",
+            "name": "Axiom Space",
+            "type": "Private"
+          }
+        }
+      ]
+    },
+    {
+      "id": 147,
+      "url": "https://ll.thespacedevs.com/2.2.0/expedition/147/",
+      "name": "Expedition 67",
+      "start": "2022-03-30T07:21:00Z",
+      "end": null,
+      "spacestation": {
+        "id": 4,
+        "url": "https://ll.thespacedevs.com/2.2.0/spacestation/4/",
+        "name": "International Space Station",
+        "status": {
+          "id": 1,
+          "name": "Active"
+        },
+        "orbit": "Low Earth Orbit",
+        "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/spacestation_images/international2520space2520station_image_20190220215716.jpeg"
+      },
+      "mission_patches": [
+        {
+          "id": 621,
+          "name": "Expedition 67 Patch",
+          "priority": 10,
+          "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/mission_patch_images/expedition2520_mission_patch_20220330073231.png",
+          "agency": {
+            "id": 44,
+            "url": "https://ll.thespacedevs.com/2.2.0/agencies/44/",
+            "name": "National Aeronautics and Space Administration",
+            "type": "Government"
+          }
+        }
+      ]
+    },
+    {
+      "id": 144,
+      "url": "https://ll.thespacedevs.com/2.2.0/expedition/144/",
+      "name": "Soyuz MS-20",
+      "start": "2021-12-08T00:00:00Z",
+      "end": "2021-12-20T00:00:00Z",
+      "spacestation": {
+        "id": 4,
+        "url": "https://ll.thespacedevs.com/2.2.0/spacestation/4/",
+        "name": "International Space Station",
+        "status": {
+          "id": 1,
+          "name": "Active"
+        },
+        "orbit": "Low Earth Orbit",
+        "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/spacestation_images/international2520space2520station_image_20190220215716.jpeg"
+      },
+      "mission_patches": []
+    },
+    {
+      "id": 142,
+      "url": "https://ll.thespacedevs.com/2.2.0/expedition/142/",
+      "name": "Expedition 66",
+      "start": "2021-10-17T01:14:00Z",
+      "end": "2022-03-30T07:21:00Z",
+      "spacestation": {
+        "id": 4,
+        "url": "https://ll.thespacedevs.com/2.2.0/spacestation/4/",
+        "name": "International Space Station",
+        "status": {
+          "id": 1,
+          "name": "Active"
+        },
+        "orbit": "Low Earth Orbit",
+        "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/spacestation_images/international2520space2520station_image_20190220215716.jpeg"
+      },
+      "mission_patches": [
+        {
+          "id": 95,
+          "name": "Expedition 66 Mission Patch",
+          "priority": 10,
+          "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/mission_patch_images/expedition2520_mission_patch_20211017070255.png",
+          "agency": {
+            "id": 44,
+            "url": "https://ll.thespacedevs.com/2.2.0/agencies/44/",
+            "name": "National Aeronautics and Space Administration",
+            "type": "Government"
+          }
+        }
+      ]
+    },
+    {
+      "id": 146,
+      "url": "https://ll.thespacedevs.com/2.2.0/expedition/146/",
+      "name": "Shenzhou 13",
+      "start": "2021-10-15T22:48:39Z",
+      "end": "2022-04-15T16:44:00Z",
+      "spacestation": {
+        "id": 18,
+        "url": "https://ll.thespacedevs.com/2.2.0/spacestation/18/",
+        "name": "Tiangong space station",
+        "status": {
+          "id": 1,
+          "name": "Active"
+        },
+        "orbit": "Low Earth Orbit",
+        "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/spacestation_images/chinese_space_s_image_20210429041040.png"
+      },
+      "mission_patches": [
+        {
+          "id": 93,
+          "name": "Shenzhou 13 Mission Patch",
+          "priority": 10,
+          "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/mission_patch_images/shenzhou252013_mission_patch_20211014074317.png",
+          "agency": {
+            "id": 17,
+            "url": "https://ll.thespacedevs.com/2.2.0/agencies/17/",
+            "name": "China National Space Administration",
+            "type": "Government"
+          }
+        }
+      ]
+    },
+    {
+      "id": 143,
+      "url": "https://ll.thespacedevs.com/2.2.0/expedition/143/",
+      "name": "Challenge Movie Crew",
+      "start": "2021-10-05T12:22:31Z",
+      "end": "2021-10-17T01:14:00Z",
+      "spacestation": {
+        "id": 4,
+        "url": "https://ll.thespacedevs.com/2.2.0/spacestation/4/",
+        "name": "International Space Station",
+        "status": {
+          "id": 1,
+          "name": "Active"
+        },
+        "orbit": "Low Earth Orbit",
+        "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/spacestation_images/international2520space2520station_image_20190220215716.jpeg"
+      },
+      "mission_patches": [
+        {
+          "id": 72,
+          "name": "Soyuz MS-19 Mission Patch",
+          "priority": 10,
+          "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/mission_patch_images/soyuz2520ms-19_mission_patch_20210807140848.png",
+          "agency": {
+            "id": 63,
+            "url": "https://ll.thespacedevs.com/2.2.0/agencies/63/",
+            "name": "Russian Federal Space Agency (ROSCOSMOS)",
+            "type": "Government"
+          }
+        }
+      ]
+    },
+    {
+      "id": 145,
+      "url": "https://ll.thespacedevs.com/2.2.0/expedition/145/",
+      "name": "Shenzhou 12",
+      "start": "2021-06-17T07:54:00Z",
+      "end": "2021-09-17T05:34:00Z",
+      "spacestation": {
+        "id": 18,
+        "url": "https://ll.thespacedevs.com/2.2.0/spacestation/18/",
+        "name": "Tiangong space station",
+        "status": {
+          "id": 1,
+          "name": "Active"
+        },
+        "orbit": "Low Earth Orbit",
+        "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/spacestation_images/chinese_space_s_image_20210429041040.png"
+      },
+      "mission_patches": []
+    },
+    {
+      "id": 141,
+      "url": "https://ll.thespacedevs.com/2.2.0/expedition/141/",
+      "name": "Expedition 65",
+      "start": "2021-04-17T19:45:00Z",
+      "end": "2021-10-17T01:14:00Z",
+      "spacestation": {
+        "id": 4,
+        "url": "https://ll.thespacedevs.com/2.2.0/spacestation/4/",
+        "name": "International Space Station",
+        "status": {
+          "id": 1,
+          "name": "Active"
+        },
+        "orbit": "Low Earth Orbit",
+        "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/spacestation_images/international2520space2520station_image_20190220215716.jpeg"
+      },
+      "mission_patches": [
+        {
+          "id": 96,
+          "name": "Expedition 65 Mission Patch",
+          "priority": 10,
+          "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/mission_patch_images/expedition2520_mission_patch_20211017070409.png",
+          "agency": {
+            "id": 44,
+            "url": "https://ll.thespacedevs.com/2.2.0/agencies/44/",
+            "name": "National Aeronautics and Space Administration",
+            "type": "Government"
+          }
+        }
+      ]
+    },
+    {
+      "id": 140,
+      "url": "https://ll.thespacedevs.com/2.2.0/expedition/140/",
+      "name": "Expedition 64",
+      "start": "2020-10-20T20:15:00Z",
+      "end": "2021-04-17T01:34:00Z",
+      "spacestation": {
+        "id": 4,
+        "url": "https://ll.thespacedevs.com/2.2.0/spacestation/4/",
+        "name": "International Space Station",
+        "status": {
+          "id": 1,
+          "name": "Active"
+        },
+        "orbit": "Low Earth Orbit",
+        "image_url": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/spacestation_images/international2520space2520station_image_20190220215716.jpeg"
+      },
+      "mission_patches": []
+    }
+  ]
+}
