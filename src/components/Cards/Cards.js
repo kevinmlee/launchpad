@@ -13,12 +13,15 @@ dayjs.extend(isToday);
 
 export default function Cards({ launches, expeditions }) {
   const status = (type) => {
+    const green = ["success", "go", "active"];
+    const yellow = ["tbc", "tbd"];
+    const red = ["failure"];
+
     let color = "neutral";
 
-    if (type === "Success" || type === "Go" || type === "Active")
-      color = "success";
-    if (type === "Failure") color = "danger";
-    if (type === "TBC" || type === "TBD") color = "warning";
+    if (green.includes(type.toLowerCase())) color = "success";
+    if (yellow.includes(type.toLowerCase())) color = "warning";
+    if (red.includes(type.toLowerCase())) color = "danger";
 
     return (
       <Chip className="type" color={color} size="sm">
