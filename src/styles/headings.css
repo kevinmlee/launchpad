@@ -11,6 +11,19 @@
 h1,
 .h1,
 h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5 {
+  font-family: "Merriweather", serif !important;
+}
+
+h1,
+.h1,
+h2,
 .h2 {
   margin-top: 0;
   line-height: 1.2em;
@@ -41,45 +54,14 @@ h3,
   font-size: 18px !important;
 }
 
-.MuiTypography-root,
-.MuiTableCell-root {
-  font-family: "Merriweather", serif !important;
-}
-
-.MuiTypography-root.MuiTypography-h6 {
-  font-size: 15px;
-}
-
-.MuiTypography-root.MuiTypography-body1 {
-  font-size: 14px;
-}
-
-.MuiTableCell-root {
-  text-transform: capitalize;
-}
-.MuiTableRow-root:last-child .MuiTableCell-root {
-  border-bottom: none;
-}
-
 @media screen and (max-width: 768px) {
   h2,
-  .h2,
-  .MuiTypography-root.h2 {
+  .h2 {
     font-size: 24px;
   }
 
   h4,
-  .h4,
-  .MuiTypography-root.h4 {
-    font-size: 24px !important;
-  }
-
-  .MuiTypography-h5 {
-    font-size: 16px !important;
-  }
-
-  .section-title,
-  .section-title.MuiTypography-root {
-    text-align: center;
+  .h4 {
+    font-size: 24px;
   }
 }

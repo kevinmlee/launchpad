@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { Button, TextField, Chip } from "@mui/joy";
 import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import isToday from "dayjs/plugin/isToday";
 
 import "./Cards.css";
+
+dayjs.extend(LocalizedFormat);
+dayjs.extend(isToday);
 
 export default function Cards({ launches, expeditions }) {
   useEffect(() => {}, []);
@@ -24,35 +29,48 @@ export default function Cards({ launches, expeditions }) {
   };
 
   const launch = (post) => {
+    const postNetDay = post.net && dayjs(post.net).format("ll");
+    const postNetTime = post.net && dayjs(post.net).format("LT");
+
+    const postStartDay = post.start && dayjs(post.net).format("ll");
+    const postStartTime = post.start && dayjs(post.net).format("LT");
+
+    const day = postNetDay ? postNetDay : postStartDay;
+
     return (
       <div className="card launch" key={post.id}>
-        <div className="chips">
-          {"mission" in post && post.mission && (
-            <Chip className="type" color="neutral" size="sm">
-              {post.mission.type}
-            </Chip>
-          )}
-
-          {status(post.status.abbrev)}
+        <div className="target-date">
+          <div className="inner">
+            <div className="date">{dayjs(day).isToday() ? "Today" : day}</div>
+            <div className="time h3">
+              {postNetTime ? postNetTime : postStartTime}
+            </div>
+          </div>
         </div>
 
-        <div className={"featured-image " + (!post.image && "no-img")}>
+        {/*<div className={"featured-image " + (!post.image && "no-img")}>
           {post.image && <img src={post.image} loading="lazy" />}
-        </div>
+          </div>*/}
 
         <div className="details">
           {"mission" in post && post.mission ? (
             <div className="mission">
-              <h3 className="name">{post.mission.name}</h3>
+              <h2 className="name">{post.mission.name}</h2>
+
+              <div className="chips">
+                {"mission" in post && post.mission && (
+                  <Chip className="type" color="neutral" size="sm">
+                    {post.mission.type}
+                  </Chip>
+                )}
+
+                {status(post.status.abbrev)}
+              </div>
+
               <div className="lp">LSP: {post.launch_service_provider.name}</div>
+
               <div className="desc">
                 {post.mission.description && post.mission.description}
-              </div>
-              <div className="target-date">
-                {post.net && dayjs(post.net).format("ddd, MMM D, YYYY h:mm A")}
-
-                {post.start &&
-                  dayjs(post.net).format("ddd, MMM D, YYYY h:mm A")}
               </div>
             </div>
           ) : (
@@ -67,47 +85,51 @@ export default function Cards({ launches, expeditions }) {
 
   const expedition = (post) => {
     let imageUrl = "";
-    let classes = "";
     let agency = "";
     let missionType = "";
 
     if (post.mission_patches.length > 0) {
       imageUrl = post.mission_patches[0].image_url;
-      classes = "patch";
       agency = post.mission_patches[0].agency.name;
       missionType = post.mission_patches[0].agency.type;
-    } else if (post.spacestation.image_url) {
-      imageUrl = post.spacestation.image_url;
-      classes = "spacestation";
-    } else classes = "no-img";
+    }
+
+    const postStartDay = post.start && dayjs(post.start).format("ll");
+    const postStartTime = post.start && dayjs(post.start).format("LT");
+    const postEndDay = post.end && dayjs(post.end).format("ll");
+    const postEndTime = post.end && dayjs(post.end).format("LT");
 
     return (
       <div className="card expedition" key={post.id}>
-        <div className="chips">
-          {missionType && (
-            <Chip className="type" color="neutral" size="sm">
-              {missionType}
-            </Chip>
-          )}
+        <div className="target-date">
+          <div className="inner">
+            <div className="date">
+              {dayjs(postStartDay).isToday() ? "Today" : postStartDay}
+            </div>
+            {postStartTime && <div className="time h3">{postStartTime}</div>}
+          </div>
         </div>
 
-        <div className={"featured-image " + classes}>
+        {/*<div className={"featured-image " + classes}>
           <img src={imageUrl} loading="lazy" />
-        </div>
+          </div>*/}
 
         <div className="details">
           <div className="mission">
-            <h3 className="name">{post.name}</h3>
-            <div className="lp">{post.spacestation.name}</div>
-            {agency && <div className="lp">{agency}</div>}
-            <div className="target-date">
-              {post.start &&
-                dayjs(post.start).format("ddd, MMM D, YYYY h:mm A")}
-              {post.end && " -  "}
-              {post.end && dayjs(post.end).format("ddd, MMM D, YYYY h:mm A")}
+            <h2 className="name">{post.name}</h2>
+            <div className="chips">
+              {missionType && (
+                <Chip className="type" color="neutral" size="sm">
+                  {missionType}
+                </Chip>
+              )}
             </div>
+            <div className="lp">Station: {post.spacestation.name}</div>
+            {agency && <div className="lp">Agency: {agency}</div>}
           </div>
         </div>
+
+        <img className="patch" src={imageUrl} loading="lazy" />
       </div>
     );
   };
