@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CssVarsProvider } from "@mui/joy/styles";
-import { Button, Typography } from "@mui/joy";
+import { Typography } from "@mui/joy";
 
 import "./Hero.css";
 
-import UserInput from "./UserInput";
-import Orbit from "./Orbit";
+//import UserInput from "../UserInput/UserInput";
+import Orbit from "../Orbit/Orbit";
 
 export default function Hero() {
-  useEffect(() => {}, []);
-
   return (
     <CssVarsProvider>
       <div className="hero">
@@ -19,7 +17,7 @@ export default function Hero() {
             Upcoming launches, dockings, and expeditions
           </p>
           <Orbit />
-          <UserInput />
+          {/*<UserInput />*/}
         </div>
       </div>
     </CssVarsProvider>

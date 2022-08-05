@@ -4,22 +4,15 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import Hero from "../../components/Hero/Hero";
 import Cards from "../../components/Cards/Cards";
 
-import upcomingLaunches from "./upcomingLaunches.json";
-import upcomingExpeditions from "./upcomingExpeditions.json";
-
 // for pagination
 // https://ll.thespacedevs.com/2.2.0/launch/?limit=10&offset=10
 
-export default function Dashboard() {
+export default function Launches() {
   const [launches, setLaunches] = useState({});
   const [expeditions, setExpeditions] = useState({});
 
   useEffect(() => {
-    //getLaunches();
-    //getExpeditions();
-
-    setLaunches(upcomingLaunches);
-    setExpeditions(upcomingExpeditions);
+    getLaunches();
   }, []);
 
   const getLaunches = async () => {
@@ -28,21 +21,10 @@ export default function Dashboard() {
       .then((data) => setLaunches(data));
   };
 
-  const getExpeditions = async () => {
-    await fetch(
-      "https://ll.thespacedevs.com/2.2.0/expedition?ordering=-start&limit=20"
-    )
-      .then((response) => response.json())
-      .then((data) => setExpeditions(data));
-  };
-
-  //console.log(launches);
-  //console.log(expeditions);
-
   return (
     <CssVarsProvider>
       <Hero />
-      <Cards launches={launches} expeditions={expeditions} />
+      <Cards launches={launches} />
     </CssVarsProvider>
   );
 }

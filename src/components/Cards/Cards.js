@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { CssVarsProvider } from "@mui/joy/styles";
-import { Button, TextField, Chip } from "@mui/joy";
+import { Chip } from "@mui/joy";
+
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import isToday from "dayjs/plugin/isToday";
@@ -11,8 +12,6 @@ dayjs.extend(LocalizedFormat);
 dayjs.extend(isToday);
 
 export default function Cards({ launches, expeditions }) {
-  useEffect(() => {}, []);
-
   const status = (type) => {
     let color = "neutral";
 
@@ -138,10 +137,12 @@ export default function Cards({ launches, expeditions }) {
     <CssVarsProvider>
       <div className="container">
         <div className="cards">
-          {"results" in launches &&
+          {launches &&
+            "results" in launches &&
             launches.results.map((post) => launch(post))}
 
-          {"results" in expeditions &&
+          {expeditions &&
+            "results" in expeditions &&
             expeditions.results.map((post) => expedition(post))}
         </div>
       </div>
