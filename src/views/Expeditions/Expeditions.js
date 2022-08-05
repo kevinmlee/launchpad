@@ -16,7 +16,7 @@ export default function Expeditions() {
 
   const getExpeditions = async () => {
     await fetch(
-      "https://ll.thespacedevs.com/2.2.0/expedition?ordering=-start&limit=20"
+      "https://ll.thespacedevs.com/2.2.0/expedition?ordering=-start&limit=20&mode=detailed"
     )
       .then((response) => response.json())
       .then((data) => setExpeditions(data));
