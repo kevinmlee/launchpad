@@ -11,6 +11,10 @@
   box-shadow: 0px 2px 8px 0px rgba(99, 99, 99, 0.2);
   padding: 20px;
   margin-top: 30px;
+  transition: ease-in-out all 0.2s;
+}
+.card:hover {
+  transform: translateY(-10px);
 }
 
 .card .featured-image {
