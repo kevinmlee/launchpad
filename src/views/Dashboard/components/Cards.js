@@ -48,10 +48,6 @@ export default function Cards({ launches, expeditions }) {
           </div>
         </div>
 
-        {/*<div className={"featured-image " + (!post.image && "no-img")}>
-          {post.image && <img src={post.image} loading="lazy" />}
-          </div>*/}
-
         <div className="details">
           {"mission" in post && post.mission ? (
             <div className="mission">
@@ -75,9 +71,13 @@ export default function Cards({ launches, expeditions }) {
             </div>
           ) : (
             <div className="mission">
-              <h3 className="name">No information</h3>
+              <h2 className="name">No information available</h2>
             </div>
           )}
+        </div>
+
+        <div className={"featured-image " + (!post.image && "no-img")}>
+          {post.image && <img src={post.image} loading="lazy" />}
         </div>
       </div>
     );
