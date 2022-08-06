@@ -3,6 +3,7 @@ import { CssVarsProvider } from "@mui/joy/styles";
 
 import Hero from "../../components/Hero/Hero";
 import Cards from "../../components/Cards/Cards";
+import SolarSystemLoader from "../../components/SolarSystemLoader/SolarSystemLoader";
 
 import upcomingLaunches from "./upcomingLaunches.json";
 import upcomingExpeditions from "./upcomingExpeditions.json";
@@ -42,6 +43,7 @@ export default function Dashboard() {
   return (
     <CssVarsProvider>
       <Hero />
+      <SolarSystemLoader />
       <Cards launches={launches} expeditions={expeditions} />
     </CssVarsProvider>
   );

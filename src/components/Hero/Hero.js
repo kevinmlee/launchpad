@@ -5,8 +5,8 @@ import { Typography } from "@mui/joy";
 import "./Hero.css";
 
 //import UserInput from "../UserInput/UserInput";
-import Orbit from "../Orbit/Orbit";
-import Mars from "../Mars/Mars";
+//import Orbit from "../Orbit/Orbit";
+//import Mars from "../Mars/Mars";
 import Moon from "../Moon/Moon";
 
 export default function Hero() {
