@@ -1,0 +1,262 @@
+.moon-container {
+  position: absolute;
+  right: 10rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.moon .craters::before,
+.moon .craters::after {
+  position: absolute;
+  display: block;
+  content: "";
+  background: #bfbfbf;
+  box-shadow: inset 2px 0 #9e9e9e;
+  border-radius: 50%;
+}
+
+.moon {
+  position: relative;
+  top: 25%;
+
+  margin: auto;
+  height: 100px;
+  width: 100px;
+  background: #eaeaea;
+  border-radius: 50%;
+  box-shadow: inset -15px 0 6px #bfbfbf, 0 0 8px #eaeaea;
+  animation: floating 5s linear infinite 0s;
+  z-index: 10;
+}
+.moon .craters {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  height: 20%;
+  width: 20%;
+  background: #bfbfbf;
+  border-radius: 50%;
+  box-shadow: inset -1px 0 1px #9e9e9e;
+  opacity: 0.4;
+}
+.moon .craters::before {
+  top: -8px;
+  right: -25px;
+  height: 15px;
+  width: 15px;
+  box-shadow: inset -1px 0 1px #9e9e9e;
+}
+.moon .craters::after {
+  top: 30px;
+  left: 30px;
+  height: 10px;
+  width: 10px;
+  box-shadow: inset -1px 0 1px #9e9e9e;
+}
+
+.eye-left,
+.eye-right {
+  position: absolute;
+  bottom: 30%;
+  height: 15%;
+  width: 9%;
+  background: #333;
+  border-radius: 50%;
+  animation: blink 4s linear infinite 0s;
+}
+
+.eye-left::before,
+.eye-right::before {
+  position: absolute;
+  display: block;
+  content: "";
+  top: 1px;
+  right: 2px;
+  height: 4px;
+  width: 2px;
+  background: #eaeaea;
+  border-radius: 50%;
+}
+
+.eye-left {
+  left: 10%;
+}
+
+.eye-right {
+  bottom: 25%;
+  left: 30%;
+}
+
+.stars .top,
+.stars .top::before,
+.stars .top::after,
+.stars .left,
+.stars .left::before,
+.stars .left::after,
+.stars .bottom,
+.stars .bottom::before,
+.stars .bottom::after,
+.stars .right {
+  background: #efe894;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 1px #efe894;
+  animation: glow 5s linear infinite;
+}
+
+.stars {
+  position: absolute;
+  top: 20%;
+  left: calc((100% - 300px) / 2);
+  height: 200px;
+  width: 300px;
+}
+.stars .top {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  height: 3px;
+  width: 3px;
+  box-shadow: 0 0 5px #efe894;
+}
+.stars .top::before {
+  position: absolute;
+  display: block;
+  content: "";
+  top: 10px;
+  left: 150px;
+  height: 4px;
+  width: 4px;
+}
+.stars .top::after {
+  position: absolute;
+  display: block;
+  content: "";
+  top: 2px;
+  left: 90px;
+  height: 3px;
+  width: 3px;
+}
+.stars .left {
+  position: absolute;
+  top: 20%;
+  left: 15%;
+  height: 4px;
+  width: 4px;
+  box-shadow: 0 0 5px #efe894;
+}
+.stars .left::before {
+  position: absolute;
+  display: block;
+  content: "";
+  top: 53px;
+  left: -12px;
+  height: 3px;
+  width: 3px;
+}
+.stars .left::after {
+  position: absolute;
+  display: block;
+  content: "";
+  top: -10px;
+  left: 40px;
+  height: 3px;
+  width: 3px;
+}
+.stars .bottom {
+  position: absolute;
+  bottom: 20%;
+  right: 28%;
+  height: 3px;
+  width: 3px;
+  box-shadow: 0 0 5px #efe894;
+}
+.stars .bottom::before {
+  position: absolute;
+  display: block;
+  content: "";
+  height: 4px;
+  width: 4px;
+  bottom: 35px;
+  right: -10px;
+}
+.stars .bottom::after {
+  position: absolute;
+  display: block;
+  content: "";
+  height: 3px;
+  width: 3px;
+  top: 10px;
+  right: 80px;
+}
+.stars .right {
+  position: absolute;
+  bottom: 25%;
+  right: 10%;
+  height: 5px;
+  width: 5px;
+}
+
+@keyframes blink {
+  5%,
+  10% {
+    height: 1px;
+  }
+  10% {
+    height: 15%;
+  }
+}
+
+@keyframes floating {
+  0% {
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+  50% {
+    -webkit-transform: translateY(2px) translateX(1px);
+    -moz-transform: translateY(2px) translateX(1px);
+    -ms-transform: translateY(2px) translateX(1px);
+    transform: translateY(2px) translateX(1px);
+    box-shadow: inset -20px 0 20px #bfbfbf, 0 0 8px #eaeaea;
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+
+@keyframes glow {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.watchme {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  text-align: center;
+}
+.watchme span {
+  background: #fff;
+}
+.watchme p {
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+}
+.watchme .fa {
+  vertical-align: middle;
+  width: 40px;
+  color: #ff0000;
+  font-size: 3em;
+}

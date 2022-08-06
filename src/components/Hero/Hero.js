@@ -6,6 +6,8 @@ import "./Hero.css";
 
 //import UserInput from "../UserInput/UserInput";
 import Orbit from "../Orbit/Orbit";
+import Mars from "../Mars/Mars";
+import Moon from "../Moon/Moon";
 
 export default function Hero() {
   return (
@@ -16,8 +18,8 @@ export default function Hero() {
           <p className="hero-copy">
             Upcoming launches, dockings, and expeditions
           </p>
-          <Orbit />
-          {/*<UserInput />*/}
+
+          <Moon />
         </div>
       </div>
     </CssVarsProvider>
