@@ -4,15 +4,15 @@ import "./SolarSystemLoader.css";
 
 export default function SolarSystemLoader() {
   return (
-    <div class="spinner-box">
-      <div class="solar-system">
-        <div class="earth-orbit orbit">
-          <div class="planet earth"></div>
-          <div class="venus-orbit orbit">
-            <div class="planet venus"></div>
-            <div class="mercury-orbit orbit">
-              <div class="planet mercury"></div>
-              <div class="sun"></div>
+    <div className="spinner-box">
+      <div className="solar-system">
+        <div className="earth-orbit orbit">
+          <div className="planet earth"></div>
+          <div className="venus-orbit orbit">
+            <div className="planet venus"></div>
+            <div className="mercury-orbit orbit">
+              <div className="planet mercury"></div>
+              <div className="sun"></div>
             </div>
           </div>
         </div>

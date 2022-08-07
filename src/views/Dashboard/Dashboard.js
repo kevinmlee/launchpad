@@ -14,13 +14,16 @@ import upcomingExpeditions from "./upcomingExpeditions.json";
 export default function Dashboard() {
   const [launches, setLaunches] = useState({});
   const [expeditions, setExpeditions] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     //getLaunches();
     //getExpeditions();
 
+    setLoading(true);
     setLaunches(upcomingLaunches);
     setExpeditions(upcomingExpeditions);
+    setLoading(false);
   }, []);
 
   const getLaunches = async () => {
@@ -43,8 +46,12 @@ export default function Dashboard() {
   return (
     <CssVarsProvider>
       <Hero />
-      <SolarSystemLoader />
-      <Cards launches={launches} expeditions={expeditions} />
+
+      {loading ? (
+        <SolarSystemLoader />
+      ) : (
+        <Cards launches={launches} expeditions={expeditions} />
+      )}
     </CssVarsProvider>
   );
 }

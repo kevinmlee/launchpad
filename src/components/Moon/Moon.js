@@ -5,16 +5,16 @@ import "./Moon.css";
 export default function Moon() {
   return (
     <div className="moon-container">
-      <div class="moon">
-        <div class="craters"></div>
-        <div class="eye-left"></div>
-        <div class="eye-right"></div>
+      <div className="moon">
+        <div className="craters"></div>
+        <div className="eye-left"></div>
+        <div className="eye-right"></div>
       </div>
-      <div class="stars">
-        <div class="top"></div>
-        <div class="left"></div>
-        <div class="right"></div>
-        <div class="bottom"></div>
+      <div className="stars">
+        <div className="top"></div>
+        <div className="left"></div>
+        <div className="right"></div>
+        <div className="bottom"></div>
       </div>
     </div>
   );

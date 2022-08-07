@@ -5,23 +5,23 @@ import "./Mars.css";
 export default function Mars() {
   return (
     <div className="mars-container">
-      <div class="orbit">
-        <div class="mars">
-          <div class="craters"></div>
-          <div class="eye-left"></div>
-          <div class="eye-right"></div>
-          <div class="mouth"></div>
+      <div className="orbit">
+        <div className="mars">
+          <div className="craters"></div>
+          <div className="eye-left"></div>
+          <div className="eye-right"></div>
+          <div className="mouth"></div>
         </div>
-        <div class="moon-orbit">
-          <div class="moon-1"></div>
-          <div class="moon-2"></div>
+        <div className="moon-orbit">
+          <div className="moon-1"></div>
+          <div className="moon-2"></div>
         </div>
       </div>
-      <div class="stars">
-        <div class="top"></div>
-        <div class="left"></div>
-        <div class="right"></div>
-        <div class="bottom"></div>
+      <div className="stars">
+        <div className="top"></div>
+        <div className="left"></div>
+        <div className="right"></div>
+        <div className="bottom"></div>
       </div>
     </div>
   );
