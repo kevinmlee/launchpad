@@ -1,14 +1,14 @@
 .hero {
   padding: 150px 0 0;
-  /*background: #1a191d;*/
   position: relative;
 }
 
-.hero h1 {
-  color: #ffffff;
-}
 .hero-copy {
   font-size: 20px;
-  color: #fff;
   padding-bottom: 75px;
+}
+
+.hero h1,
+.hero-copy {
+  color: #ffffff;
 }

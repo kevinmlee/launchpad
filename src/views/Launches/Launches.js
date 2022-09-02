@@ -16,11 +16,13 @@ export default function Launches() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getLaunches();
+    if (navigator.onLine) getLaunches();
+    else console.log("No connection available.");
   }, []);
 
   const getLaunches = async () => {
     setLoading(true);
+
     await fetch("https://ll.thespacedevs.com/2.2.0/launch/upcoming?limit=20")
       .then((response) => response.json())
       .then((data) => {

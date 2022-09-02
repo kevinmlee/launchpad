@@ -4,6 +4,10 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
+/*
+* Add color vars here or in it's own stylesheet and include here to be used globally
+*/
+
 * {
   outline: none;
   box-sizing: border-box;
@@ -23,8 +27,7 @@ body {
   font-family: "Poppins", sans-serif;
   line-height: 1.2em;
   transition: ease-in-out margin 0.3s;
-
-  background: rgb(20, 6, 75);
+  background-color: rgb(20, 6, 75);
   background: linear-gradient(
     90deg,
     rgb(17, 5, 65) 0%,
@@ -35,14 +38,6 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 30px;
-}
-
-@media (prefers-color-scheme: light) {
-}
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #1a191d;
-  }
 }
 
 @media screen and (max-width: 500px) {
@@ -98,12 +93,14 @@ a:hover,
 .link:hover {
   color: #a79b7c;
 }
+
 @media (prefers-color-scheme: light) {
   a,
   .link {
     color: #000000;
   }
 }
+
 @media (prefers-color-scheme: dark) {
   a,
   .link {
