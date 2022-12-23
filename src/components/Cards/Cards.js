@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { Chip } from "@mui/joy";
 
@@ -79,7 +79,9 @@ export default function Cards({ launches, expeditions }) {
         </div>
 
         <div className={"featured-image " + (!post.image && "no-img")}>
-          {post.image && <img src={post.image} loading="lazy" />}
+          {post.image && (
+            <img src={post.image} loading="lazy" alt={post.name} />
+          )}
         </div>
       </div>
     );
@@ -98,8 +100,8 @@ export default function Cards({ launches, expeditions }) {
 
     const postStartDay = post.start && dayjs(post.start).format("ll");
     const postStartTime = post.start && dayjs(post.start).format("LT");
-    const postEndDay = post.end && dayjs(post.end).format("ll");
-    const postEndTime = post.end && dayjs(post.end).format("LT");
+    //const postEndDay = post.end && dayjs(post.end).format("ll");
+    //const postEndTime = post.end && dayjs(post.end).format("LT");
 
     return (
       <div className="card expedition" key={post.id}>
@@ -131,7 +133,7 @@ export default function Cards({ launches, expeditions }) {
           </div>
         </div>
 
-        <img className="patch" src={imageUrl} loading="lazy" />
+        <img className="patch" src={imageUrl} loading="lazy" alt={post.name} />
       </div>
     );
   };
