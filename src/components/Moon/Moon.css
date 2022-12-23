@@ -260,3 +260,12 @@
   color: #ff0000;
   font-size: 3em;
 }
+
+@media screen and (max-width: 650px) {
+  .moon-container {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+  }
+}

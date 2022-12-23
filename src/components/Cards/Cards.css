@@ -115,13 +115,47 @@
 }
 
 @media screen and (max-width: 768px) {
-  .card {
-    width: calc(100% / 2 - 40px);
+  .card .details .mission {
+    padding-right: 30px;
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 650px) {
+  .cards {
+    margin: 50px 0;
+  }
   .card {
-    width: calc(100% - 40px);
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 0;
+  }
+  .card .target-date {
+    width: 100%;
+    order: 3;
+    min-height: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .card .target-date .inner {
+    top: auto;
+    transform: none;
+    padding: 20px;
+    border-radius: 0;
+  }
+  .card .details {
+    width: 100%;
+    order: 2;
+    padding: 20px;
+  }
+  .card .featured-image {
+    max-width: none;
+    order: 1;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .card .details .mission {
+    top: auto;
+    transform: none;
+    padding: 0;
   }
 }

@@ -6,9 +6,20 @@
 .hero-copy {
   font-size: 20px;
   padding-bottom: 75px;
+  line-height: 1.2em;
 }
 
 .hero h1,
 .hero-copy {
   color: #ffffff;
+}
+
+@media screen and (max-width: 650px) {
+  .hero {
+    padding: 75px 0;
+  }
+  .hero-copy {
+    font-size: 14px;
+    padding-bottom: 30px;
+  }
 }
