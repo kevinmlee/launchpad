@@ -17,8 +17,8 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    //getLaunches();
-    //getExpeditions();
+    getLaunches();
+    getExpeditions();
 
     setLoading(true);
     setLaunches(upcomingLaunches);
