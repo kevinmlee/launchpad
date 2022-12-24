@@ -6,6 +6,8 @@ import Hero from "../../components/Hero/Hero";
 import Cards from "../../components/Cards/Cards";
 import SolarSystemLoader from "../../components/SolarSystemLoader/SolarSystemLoader";
 
+import "./Dashboard.css";
+
 //import upcomingLaunches from "./upcomingLaunches.json";
 //import upcomingExpeditions from "./upcomingExpeditions.json";
 
@@ -18,7 +20,7 @@ const currentTime = dayjs().format();
 export default function Dashboard() {
   const [launches, setLaunches] = useState({});
   const [expeditions, setExpeditions] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // check localStorage for launch data
   // if none found or timer expired, fetch new data
@@ -32,9 +34,8 @@ export default function Dashboard() {
       const minutesDiff = Math.floor((difference / 1000 / 60) % 60);
 
       if (minutesDiff < 30) setLaunches(cachedLaunches);
-      else fetchLaunches();
-    }
-    fetchLaunches();
+      else if (navigator.onLine) fetchLaunches();
+    } else if (navigator.onLine) fetchLaunches();
   }, []);
 
   const fetchLaunches = async () => {
@@ -63,13 +64,12 @@ export default function Dashboard() {
       const minutesDiff = Math.floor((difference / 1000 / 60) % 60);
 
       if (minutesDiff < 30) setExpeditions(cachedExpeditions);
-      else fetchExpeditions();
-    }
-    fetchExpeditions();
+      else if (navigator.onLine) fetchExpeditions();
+    } else if (navigator.onLine) fetchExpeditions();
   }, []);
 
   const fetchExpeditions = async () => {
-    await fetch(`${endpoint}/expedition?ordering=-start&limit=20`)
+    await fetch(`${endpoint}/expedition?ordering=-start&limit=20&mode=detailed`)
       .then((response) => response.json())
       .then((data) => {
         if ("results" in data) {
@@ -83,7 +83,6 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    setLoading(true);
     getLaunches();
     getExpeditions();
     setLoading(false);

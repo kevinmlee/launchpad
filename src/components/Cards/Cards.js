@@ -40,7 +40,7 @@ export default function Cards({ launches, expeditions }) {
     const day = postNetDay ? postNetDay : postStartDay;
 
     return (
-      <div className="card launch" key={post.id}>
+      <div className="card launches" key={post.id}>
         <div className="target-date">
           <div className="inner">
             <div className="date">{dayjs(day).isToday() ? "Today" : day}</div>
@@ -104,7 +104,7 @@ export default function Cards({ launches, expeditions }) {
     //const postEndTime = post.end && dayjs(post.end).format("LT");
 
     return (
-      <div className="card expedition" key={post.id}>
+      <div className="card expeditions" key={post.id}>
         <div className="target-date">
           <div className="inner">
             <div className="date">
@@ -140,16 +140,14 @@ export default function Cards({ launches, expeditions }) {
 
   return (
     <CssVarsProvider>
-      <div className="container">
-        <div className="cards">
-          {launches &&
-            "results" in launches &&
-            launches.results.map((post) => launch(post))}
+      <div className="cards">
+        {launches &&
+          "results" in launches &&
+          launches.results.map((post) => launch(post))}
 
-          {expeditions &&
-            "results" in expeditions &&
-            expeditions.results.map((post) => expedition(post))}
-        </div>
+        {expeditions &&
+          "results" in expeditions &&
+          expeditions.results.map((post) => expedition(post))}
       </div>
     </CssVarsProvider>
   );

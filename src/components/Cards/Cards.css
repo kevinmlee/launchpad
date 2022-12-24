@@ -1,5 +1,5 @@
 .cards {
-  margin: 100px 0 100px;
+  margin: 25px 0;
 }
 
 .card {
@@ -74,7 +74,7 @@
   background-color: #4e9f3f !important;
 }
 
-.card.expedition .patch {
+.card.expeditions .patch {
   max-width: 150px;
   height: auto;
   margin-left: 10px;
@@ -107,10 +107,10 @@
   font-weight: 600;
   margin-top: 10px;
 }
-.card.launch .target-date .inner {
+.card.launches .target-date .inner {
   background-color: #edf8eb;
 }
-.card.card.expedition .target-date .inner {
+.card.card.expeditions .target-date .inner {
   background-color: #eceef9;
 }
 
@@ -121,9 +121,6 @@
 }
 
 @media screen and (max-width: 650px) {
-  .cards {
-    margin: 50px 0;
-  }
   .card {
     flex-wrap: wrap;
     flex-direction: column;

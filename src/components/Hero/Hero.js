@@ -13,14 +13,12 @@ export default function Hero() {
   return (
     <CssVarsProvider>
       <div className="hero">
-        <div className="container">
-          <Typography level="h1">Launchpad</Typography>
-          <p className="hero-copy">
-            Upcoming launches, dockings, and expeditions
-          </p>
+        <Typography level="h1">Launchpad</Typography>
+        <p className="hero-copy">
+          Upcoming launches, dockings, and expeditions
+        </p>
 
-          <Moon />
-        </div>
+        <Moon />
       </div>
     </CssVarsProvider>
   );
