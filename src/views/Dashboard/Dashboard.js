@@ -42,7 +42,12 @@ export default function Dashboard() {
       const minutes = Math.floor((difference / 1000 / 60) % 60);
 
       if (minutes < 30) setLaunches(cachedLaunches);
+      else fetchLaunches();
     }
+    fetchLaunches();
+  };
+
+  const fetchLaunches = async () => {
     await fetch(`${endpoint}/launch/upcoming?limit=20`)
       .then((response) => response.json())
       .then((data) => {
@@ -66,7 +71,12 @@ export default function Dashboard() {
       const minutes = Math.floor((difference / 1000 / 60) % 60);
 
       if (minutes < 30) setExpeditions(cachedExpeditions);
+      else fetchExpeditions();
     }
+    fetchExpeditions();
+  };
+
+  const fetchExpeditions = async () => {
     await fetch(`${endpoint}/expedition?ordering=-start&limit=20`)
       .then((response) => response.json())
       .then((data) => {
