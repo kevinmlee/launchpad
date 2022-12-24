@@ -29,9 +29,9 @@ export default function Dashboard() {
 
     if (cachedLaunches) {
       const difference = dayjs(currentTime).diff(dayjs(cachedLaunches.at));
-      const minutes = Math.floor((difference / 1000 / 60) % 60);
+      const minutesDiff = Math.floor((difference / 1000 / 60) % 60);
 
-      if (minutes < 30) setLaunches(cachedLaunches);
+      if (minutesDiff < 30) setLaunches(cachedLaunches);
       else fetchLaunches();
     }
     fetchLaunches();
@@ -41,11 +41,13 @@ export default function Dashboard() {
     await fetch(`${endpoint}/launch/upcoming?limit=20`)
       .then((response) => response.json())
       .then((data) => {
-        const cache = data;
-        cache["at"] = currentTime;
+        if ("results" in data) {
+          const cache = data;
+          cache["at"] = currentTime;
 
-        localStorage.setItem("launches", JSON.stringify(cache));
-        setLaunches(cache);
+          localStorage.setItem("launches", JSON.stringify(cache));
+          setLaunches(cache);
+        }
       });
   };
 
@@ -58,9 +60,9 @@ export default function Dashboard() {
 
     if (cachedExpeditions) {
       const difference = dayjs(currentTime).diff(dayjs(cachedExpeditions.at));
-      const minutes = Math.floor((difference / 1000 / 60) % 60);
+      const minutesDiff = Math.floor((difference / 1000 / 60) % 60);
 
-      if (minutes < 30) setExpeditions(cachedExpeditions);
+      if (minutesDiff < 30) setExpeditions(cachedExpeditions);
       else fetchExpeditions();
     }
     fetchExpeditions();
@@ -70,11 +72,13 @@ export default function Dashboard() {
     await fetch(`${endpoint}/expedition?ordering=-start&limit=20`)
       .then((response) => response.json())
       .then((data) => {
-        const cache = data;
-        cache["at"] = currentTime;
+        if ("results" in data) {
+          const cache = data;
+          cache["at"] = currentTime;
 
-        localStorage.setItem("expeditions", JSON.stringify(cache));
-        setExpeditions(cache);
+          localStorage.setItem("expeditions", JSON.stringify(cache));
+          setExpeditions(cache);
+        }
       });
   };
 
