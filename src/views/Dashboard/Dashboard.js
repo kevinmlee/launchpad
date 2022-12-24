@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { CssVarsProvider } from "@mui/joy/styles";
 import dayjs from "dayjs";
 
@@ -20,19 +20,9 @@ export default function Dashboard() {
   const [expeditions, setExpeditions] = useState({});
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    getLaunches();
-    getExpeditions();
-
-    setLoading(true);
-    //setLaunches(upcomingLaunches);
-    //setExpeditions(upcomingExpeditions);
-    setLoading(false);
-  }, []);
-
   // check localStorage for launch data
   // if none found or timer expired, fetch new data
-  const getLaunches = async () => {
+  const getLaunches = useCallback(async () => {
     const cachedLaunches =
       localStorage.getItem("launches") &&
       JSON.parse(localStorage.getItem("launches"));
@@ -45,7 +35,7 @@ export default function Dashboard() {
       else fetchLaunches();
     }
     fetchLaunches();
-  };
+  }, []);
 
   const fetchLaunches = async () => {
     await fetch(`${endpoint}/launch/upcoming?limit=20`)
@@ -61,7 +51,7 @@ export default function Dashboard() {
 
   // check localStorage for expedition data
   // if none found or timer expired, fetch new data
-  const getExpeditions = async () => {
+  const getExpeditions = useCallback(async () => {
     const cachedExpeditions =
       localStorage.getItem("expeditions") &&
       JSON.parse(localStorage.getItem("expeditions"));
@@ -74,7 +64,7 @@ export default function Dashboard() {
       else fetchExpeditions();
     }
     fetchExpeditions();
-  };
+  }, []);
 
   const fetchExpeditions = async () => {
     await fetch(`${endpoint}/expedition?ordering=-start&limit=20`)
@@ -87,6 +77,13 @@ export default function Dashboard() {
         setExpeditions(cache);
       });
   };
+
+  useEffect(() => {
+    setLoading(true);
+    getLaunches();
+    getExpeditions();
+    setLoading(false);
+  }, [getLaunches, getExpeditions]);
 
   return (
     <CssVarsProvider>
