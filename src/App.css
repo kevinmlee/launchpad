@@ -27,12 +27,15 @@ body {
   font-family: "Poppins", sans-serif;
   line-height: 1.2em;
   transition: ease-in-out margin 0.3s;
+  background-color: #222222;
+  /*
   background-color: rgb(20, 6, 75);
   background: linear-gradient(
     90deg,
     rgb(17, 5, 65) 0%,
     rgba(45, 20, 128, 1) 100%
   );
+  */
 }
 .container {
   max-width: 1200px;
