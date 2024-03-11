@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.187.0/containers/javascript-node
 {
-  "name": "Node.js",
+  "name": "launchpad",
   "build": {
     "dockerfile": "Dockerfile"
   },
@@ -13,10 +13,7 @@
   "customizations": {
     "vscode": {
       // Add the IDs of extensions you want installed when the container is created.
-      "extensions": [
-        "editorconfig.editorconfig",
-        "dbaeumer.vscode-eslint"
-      ]
+      "extensions": ["editorconfig.editorconfig", "dbaeumer.vscode-eslint"]
     }
   },
 
