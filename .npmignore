@@ -1,0 +1,15 @@
+.devcontainer/
+.github/
+.jira/
+.eslint*
+.storybook/
+.nvmrc
+*rc.js
+*.config.js
+*.spec.*
+*.stories.*
+index.html
+jest*
+coverage/
+mocks/
+__mocks__
