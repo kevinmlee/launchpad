@@ -4,12 +4,14 @@ import { screen, render } from '@testing-library/react'
 import Cards from './Cards';
 
 jest.mock('dayjs', () => {
-  const dayjs = jest.requireActual('dayjs')
   const mockDay = jest.fn(() => ({
     isToday: jest.fn(() => true),
-    format: jest.fn(() => 'Today')
+    format: jest.fn((formatString) => {
+      if (formatString === 'll') return 'April 5, 2024' // Mocking format('ll') to return a specific date format
+      if (formatString === 'LT') return '10:00 AM' // Mocking format('LT') to return a specific time format
+      return ''
+    })
   }))
-
   mockDay.extend = () => {}
   return mockDay
 })
