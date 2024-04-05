@@ -22,7 +22,7 @@
   "scripts": {
     "start": "WATCHPACK_POLLING=true react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll --runInBand --detectOpenHandles",
+    "test": "react-scripts test --watchAll --runInBand --detectOpenHandles --forceExit",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
