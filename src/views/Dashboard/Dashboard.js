@@ -7,6 +7,7 @@ import Cards from "../../components/Cards/Cards";
 import SolarSystemLoader from "../../components/SolarSystemLoader/SolarSystemLoader";
 
 import "./Dashboard.css";
+// import { ConstructionOutlined } from "@mui/icons-material";
 
 //import upcomingLaunches from "./upcomingLaunches.json";
 //import upcomingExpeditions from "./upcomingExpeditions.json";
@@ -22,6 +23,34 @@ export default function Dashboard() {
   const [expeditions, setExpeditions] = useState({});
   const [loading, setLoading] = useState(true);
 
+  const fetchLaunches = useCallback(async () => {
+    await fetch(`${endpoint}/launch/upcoming?limit=20`)
+      .then((response) => response.json())
+      .then((data) => {
+        if ("results" in data) {
+          const cache = data;
+          cache["at"] = currentTime;
+
+          localStorage.setItem("launches", JSON.stringify(cache));
+          setLaunches(cache);
+        }
+      });
+  }, []);
+
+  const fetchExpeditions = useCallback(async () => {
+    await fetch(`${endpoint}/expedition?ordering=-start&limit=20&mode=detailed`)
+      .then((response) => response.json())
+      .then((data) => {
+        if ("results" in data) {
+          const cache = data;
+          cache["at"] = currentTime;
+
+          localStorage.setItem("expeditions", JSON.stringify(cache));
+          setExpeditions(cache);
+        }
+      });
+  }, []);
+
   // check localStorage for launch data
   // if none found or timer expired, fetch new data
   const getLaunches = useCallback(async () => {
@@ -36,21 +65,7 @@ export default function Dashboard() {
       if (minutesDiff < 30) setLaunches(cachedLaunches);
       else if (navigator.onLine) fetchLaunches();
     } else if (navigator.onLine) fetchLaunches();
-  }, []);
-
-  const fetchLaunches = async () => {
-    await fetch(`${endpoint}/launch/upcoming?limit=20`)
-      .then((response) => response.json())
-      .then((data) => {
-        if ("results" in data) {
-          const cache = data;
-          cache["at"] = currentTime;
-
-          localStorage.setItem("launches", JSON.stringify(cache));
-          setLaunches(cache);
-        }
-      });
-  };
+  }, [fetchLaunches]);
 
   // check localStorage for expedition data
   // if none found or timer expired, fetch new data
@@ -66,27 +81,18 @@ export default function Dashboard() {
       if (minutesDiff < 30) setExpeditions(cachedExpeditions);
       else if (navigator.onLine) fetchExpeditions();
     } else if (navigator.onLine) fetchExpeditions();
-  }, []);
-
-  const fetchExpeditions = async () => {
-    await fetch(`${endpoint}/expedition?ordering=-start&limit=20&mode=detailed`)
-      .then((response) => response.json())
-      .then((data) => {
-        if ("results" in data) {
-          const cache = data;
-          cache["at"] = currentTime;
-
-          localStorage.setItem("expeditions", JSON.stringify(cache));
-          setExpeditions(cache);
-        }
-      });
-  };
+  }, [fetchExpeditions]);
 
   useEffect(() => {
     getLaunches();
     getExpeditions();
-    setLoading(false);
   }, [getLaunches, getExpeditions]);
+
+  useEffect(() => {
+    if (Object.keys(launches).length !== 0 && Object.keys(expeditions).length !== 0){
+      setLoading(false);
+    }
+  }, [launches, expeditions])
 
   return (
     <CssVarsProvider>
