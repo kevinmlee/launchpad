@@ -9,7 +9,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.19",
     "@mui/joy": "^5.0.0-beta.36",
-    "@mui/material": "^5.15.19",
+    "@mui/material": "^5.15.21",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
