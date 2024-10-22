@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-env": "^7.25.9",
     "@babel/preset-react": "^7.25.9",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
