@@ -12,15 +12,17 @@ updates:
     open-pull-requests-limit: 10
     groups:
       react:
-        - react
-        - react-dom
-        - react-router-dom 
+        patterns:
+          - "react"
+          - "react-dom"
+          - "react-router-dom"
       mui:
         patterns:
           - "@mui/*"
       testing:
-        - jest
-        - testing-library/react
+        patterns:
+          - "jest"
+          - "@testing-library/react"
       emotion:
         patterns:
           - "@emotion/*"
