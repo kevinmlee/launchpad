@@ -20,8 +20,8 @@ updates:
           - "@mui/*"
       testing:
         patterns:
-          - "jest"
-          - "@testing-library/*"
+          - "^jest$"
+          - "^@testing-library/.*$"
       emotion:
         patterns:
           - "@emotion/*"
