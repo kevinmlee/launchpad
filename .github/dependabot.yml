@@ -11,6 +11,13 @@ updates:
       interval: "daily"
     open-pull-requests-limit: 10
     groups:
+      react:
+        - react
+        - react-dom
+        - react-router-dom 
       mui:
         patterns:
           - "@mui/*"
+      testing:
+        - jest
+        - testing-library/react
