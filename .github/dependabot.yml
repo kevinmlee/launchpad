@@ -21,3 +21,9 @@ updates:
       testing:
         - jest
         - testing-library/react
+      emotion:
+        patterns:
+          - "@emotion/*"
+      babel:
+        patterns:
+          - "@babel/*"
