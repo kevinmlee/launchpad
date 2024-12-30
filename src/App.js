@@ -1,5 +1,5 @@
 import { CssVarsProvider } from "@mui/joy/styles";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router";
 import Dashboard from "./views/Dashboard/Dashboard";
 import Launches from "./views/Launches/Launches";
 import Expeditions from "./views/Expeditions/Expeditions";
