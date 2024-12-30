@@ -11,20 +11,20 @@ updates:
       interval: "daily"
     groups:
       react:
-        dependencies:
-          - react
-          - react-dom
-          - react-router-dom
+        patterns:
+          - "^react$"
+          - "^react-dom$"
+          - "^react-router-dom$"
       mui:
         patterns:
-          - "@mui/*"
+          - "^@mui/.*$"
       testing:
-        dependencies:
-          - jest
-          - "@testing-library/*"
+        patterns:
+          - "^jest$"
+          - "^@testing-library/.*$"
       emotion:
         patterns:
-          - "@emotion/*"
+          - "^@emotion/.*$"
       babel:
         patterns:
-          - "@babel/*"
+          - "^@babel/.*$"
