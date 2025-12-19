@@ -43,8 +43,8 @@ export default function Cards({ launches, expeditions }) {
         key={post.id}
       >
         {/* Date/Time Box - LEFT Column */}
-        <div className="flex items-center rounded-2xl justify-center text-center text-black bg-[#edf8eb] p-4">
-          <div>
+        <div className="flex items-center">
+          <div className="rounded-2xl justify-center text-center text-black bg-[#edf8eb] py-8 px-6">
             <div className="text-sm uppercase font-medium">{dayjs(day).isToday() ? "Today" : day}</div>
             <div className="text-xl font-semibold mt-2.5">
               {postNetTime ? postNetTime : postStartTime}
