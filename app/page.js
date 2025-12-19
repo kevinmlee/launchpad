@@ -50,8 +50,8 @@ export default function Home() {
 
   const getExpeditions = useCallback(async () => {
     const cachedExpeditions =
-      localStorage.getItem("expeditions") &&
-      JSON.parse(localStorage.getItem("expeditions"));
+      localStorage.getItem("expeditions_v2") &&
+      JSON.parse(localStorage.getItem("expeditions_v2"));
 
     if (cachedExpeditions) {
       const difference = dayjs(currentTime).diff(dayjs(cachedExpeditions.at));
@@ -63,14 +63,15 @@ export default function Home() {
   }, []);
 
   const fetchExpeditions = async () => {
-    await fetch(`${endpoint}/expedition?ordering=-start&limit=20&mode=detailed`)
+    const now = dayjs().format('YYYY-MM-DD');
+    await fetch(`${endpoint}/expedition?end__gte=${now}&ordering=start&limit=20&mode=detailed`)
       .then((response) => response.json())
       .then((data) => {
         if ("results" in data) {
           const cache = data;
           cache["at"] = currentTime;
 
-          localStorage.setItem("expeditions", JSON.stringify(cache));
+          localStorage.setItem("expeditions_v2", JSON.stringify(cache));
           setExpeditions(cache);
         }
       });

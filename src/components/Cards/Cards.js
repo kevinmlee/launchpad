@@ -96,6 +96,16 @@ export default function Cards({ launches, expeditions }) {
     );
   };
 
+  // Filter out past expeditions on the client side
+  const filterActiveExpeditions = (expeditionsList) => {
+    if (!expeditionsList || !("results" in expeditionsList)) return [];
+
+    return expeditionsList.results.filter((post) => {
+      const endDate = post.end ? dayjs(post.end) : null;
+      return !endDate || endDate.isAfter(dayjs()) || endDate.isToday();
+    });
+  };
+
   return (
     <div className="my-6">
       {launches &&
@@ -104,7 +114,7 @@ export default function Cards({ launches, expeditions }) {
 
       {expeditions &&
         "results" in expeditions &&
-        expeditions.results.map((post) => expedition(post))}
+        filterActiveExpeditions(expeditions).map((post) => expedition(post))}
     </div>
   );
 }
