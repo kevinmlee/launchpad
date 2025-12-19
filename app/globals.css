@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-space-dark text-white antialiased;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+    outline: none;
+  }
+}
+
+@layer components {
+  .moon-crater::before,
+  .moon-crater::after {
+    @apply absolute block bg-[#bfbfbf] rounded-full;
+    content: "";
+    box-shadow: inset 2px 0 #9e9e9e;
+  }
+
+  .moon-crater::before {
+    @apply h-[15px] w-[15px];
+    top: -8px;
+    right: -25px;
+    box-shadow: inset -1px 0 1px #9e9e9e;
+  }
+
+  .moon-crater::after {
+    @apply h-[10px] w-[10px];
+    top: 30px;
+    left: 30px;
+    box-shadow: inset -1px 0 1px #9e9e9e;
+  }
+
+  .moon-eye::before {
+    @apply absolute block bg-[#eaeaea] rounded-full;
+    content: "";
+    top: 1px;
+    right: 2px;
+    height: 4px;
+    width: 2px;
+  }
+
+  .star-point,
+  .star-point::before,
+  .star-point::after {
+    @apply bg-[#efe894] rounded-full animate-glow;
+    box-shadow: 0 0 5px 1px #efe894;
+  }
+
+  .star-point::before,
+  .star-point::after {
+    @apply absolute block;
+    content: "";
+  }
+}

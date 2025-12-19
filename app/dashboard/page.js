@@ -1,28 +1,20 @@
-import React, { useEffect, useState, useCallback } from "react";
+"use client";
+
+import { useEffect, useState, useCallback } from "react";
 import dayjs from "dayjs";
 
-import Hero from "../../components/Hero/Hero";
-import Cards from "../../components/Cards/Cards";
-import SolarSystemLoader from "../../components/SolarSystemLoader/SolarSystemLoader";
-
-import "./Dashboard.css";
-
-//import upcomingLaunches from "./upcomingLaunches.json";
-//import upcomingExpeditions from "./upcomingExpeditions.json";
+import Hero from "../../src/components/Hero/Hero";
+import Cards from "../../src/components/Cards/Cards";
+import SolarSystemLoader from "../../src/components/SolarSystemLoader/SolarSystemLoader";
 
 const endpoint = "https://ll.thespacedevs.com/2.2.0";
 const currentTime = dayjs().format();
-
-// for pagination
-// https://ll.thespacedevs.com/2.2.0/launch/?limit=10&offset=10
 
 export default function Dashboard() {
   const [launches, setLaunches] = useState({});
   const [expeditions, setExpeditions] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // check localStorage for launch data
-  // if none found or timer expired, fetch new data
   const getLaunches = useCallback(async () => {
     const cachedLaunches =
       localStorage.getItem("launches") &&
@@ -51,8 +43,6 @@ export default function Dashboard() {
       });
   };
 
-  // check localStorage for expedition data
-  // if none found or timer expired, fetch new data
   const getExpeditions = useCallback(async () => {
     const cachedExpeditions =
       localStorage.getItem("expeditions") &&

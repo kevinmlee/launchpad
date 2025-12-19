@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useCallback } from "react";
+"use client";
+
+import { useEffect, useState, useCallback } from "react";
 import dayjs from "dayjs";
 
-import Hero from "../../components/Hero/Hero";
-import Cards from "../../components/Cards/Cards";
-import SolarSystemLoader from "../../components/SolarSystemLoader/SolarSystemLoader";
+import Hero from "../../src/components/Hero/Hero";
+import Cards from "../../src/components/Cards/Cards";
+import SolarSystemLoader from "../../src/components/SolarSystemLoader/SolarSystemLoader";
 
 const endpoint = "https://ll.thespacedevs.com/2.2.0";
 const currentTime = dayjs().format();
@@ -12,8 +14,6 @@ export default function Launches() {
   const [launches, setLaunches] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // check localStorage for launch data
-  // if none found or timer expired, fetch new data
   const getLaunches = useCallback(async () => {
     const cachedLaunches =
       localStorage.getItem("launches") &&
