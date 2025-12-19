@@ -46,6 +46,9 @@ export default function Cards({ launches, expeditions }) {
       status(post.status.abbrev),
     ] : [];
 
+    // Use default image if no launch image is available
+    const finalImageUrl = post.image || "/default-launch.png";
+
     return (
       <Card
         key={post.id}
@@ -55,7 +58,7 @@ export default function Cards({ launches, expeditions }) {
         chips={chips}
         subtitle={post.launch_service_provider?.name && `LSP: ${post.launch_service_provider.name}`}
         description={post.mission?.description}
-        image={post.image}
+        image={finalImageUrl}
         imageStyle="cover"
       />
     );
@@ -71,6 +74,10 @@ export default function Cards({ launches, expeditions }) {
       agency = post.mission_patches[0].agency.name;
       missionType = post.mission_patches[0].agency.type;
     }
+
+    // Use default image if no mission patch image is available
+    const finalImageUrl = imageUrl || "/default-expedition.png";
+    const finalImageStyle = imageUrl ? "contain" : "cover";
 
     const postStartDay = post.start && dayjs(post.start).format("ll");
     const postStartTime = post.start && dayjs(post.start).format("LT");
@@ -90,8 +97,8 @@ export default function Cards({ launches, expeditions }) {
         chips={chips}
         subtitle={`Station: ${post.spacestation.name}`}
         description={agency && `Agency: ${agency}`}
-        image={imageUrl}
-        imageStyle="contain"
+        image={finalImageUrl}
+        imageStyle={finalImageStyle}
       />
     );
   };
