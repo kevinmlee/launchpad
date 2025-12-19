@@ -85,7 +85,11 @@ export default function Home() {
   return (
     <>
       <Hero />
-
+      <div style={{ color: 'white', padding: '20px' }}>
+        <p>Loading: {loading ? 'true' : 'false'}</p>
+        <p>Launches count: {launches?.results?.length || 0}</p>
+        <p>Expeditions count: {expeditions?.results?.length || 0}</p>
+      </div>
       {loading ? (
         <SolarSystemLoader />
       ) : (
