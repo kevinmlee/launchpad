@@ -39,11 +39,11 @@ export default function Cards({ launches, expeditions }) {
 
       return (
       <div
-        className="grid grid-cols-[150px_1fr_150px] p-6 mt-8 relative bg-white/10 rounded-2xl overflow-hidden shadow-[0_10px_15px_-3px_rgba(0,0,0,0.45)] transition-all duration-200 text-white hover:-translate-y-2.5 hover:bg-[#3c2ea9]"
+        className="grid grid-cols-[150px_1fr_150px] p-6 mt-8 relative bg-black/40 rounded-2xl overflow-hidden shadow-[0_10px_15px_-3px_rgba(0,0,0,0.45)] transition-all duration-200 text-white hover:-translate-y-2.5 hover:bg-[#3c2ea9]"
         key={post.id}
       >
         {/* Date/Time Box - LEFT Column */}
-        <div className="flex items-center justify-center text-center text-black bg-[#edf8eb] p-4">
+        <div className="flex items-center rounded-2xl justify-center text-center text-black bg-[#edf8eb] p-4">
           <div>
             <div className="text-sm uppercase font-medium">{dayjs(day).isToday() ? "Today" : day}</div>
             <div className="text-xl font-semibold mt-2.5">
@@ -82,7 +82,7 @@ export default function Cards({ launches, expeditions }) {
         </div>
 
         {/* Image - RIGHT Column */}
-        <div className="relative">
+        <div className="relative rounded-2xl overflow-hidden">
           {post.image && (
             <img src={post.image} loading="lazy" alt={post.name} className="h-full w-full object-cover" />
           )}
