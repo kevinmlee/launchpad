@@ -1,0 +1,57 @@
+"use client";
+
+import { useEffect, useState, useCallback } from "react";
+import dayjs from "dayjs";
+
+import Hero from "../../src/components/Hero/Hero";
+import Cards from "../../src/components/Cards/Cards";
+import SolarSystemLoader from "../../src/components/SolarSystemLoader/SolarSystemLoader";
+
+const endpoint = "https://ll.thespacedevs.com/2.2.0";
+const currentTime = dayjs().format();
+
+export default function Launches() {
+  const [launches, setLaunches] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  const getLaunches = useCallback(async () => {
+    const cachedLaunches =
+      localStorage.getItem("launches") &&
+      JSON.parse(localStorage.getItem("launches"));
+
+    if (cachedLaunches) {
+      const difference = dayjs(currentTime).diff(dayjs(cachedLaunches.at));
+      const minutesDiff = Math.floor((difference / 1000 / 60) % 60);
+
+      if (minutesDiff < 30) setLaunches(cachedLaunches);
+      else if (navigator.onLine) fetchLaunches();
+    } else if (navigator.onLine) fetchLaunches();
+  }, []);
+
+  const fetchLaunches = async () => {
+    await fetch(`${endpoint}/launch/upcoming?limit=20`)
+      .then((response) => response.json())
+      .then((data) => {
+        if ("results" in data) {
+          const cache = data;
+          cache["at"] = currentTime;
+
+          localStorage.setItem("launches", JSON.stringify(cache));
+          setLaunches(cache);
+        }
+      });
+  };
+
+  useEffect(() => {
+    getLaunches();
+    setLoading(false);
+  }, [getLaunches]);
+
+  return (
+    <>
+      <Hero />
+
+      {loading ? <SolarSystemLoader /> : <Cards launches={launches} />}
+    </>
+  );
+}
