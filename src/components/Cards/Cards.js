@@ -1,6 +1,6 @@
 "use client";
 
-import { Chip } from "@mui/joy";
+import Chip from "../Chip/Chip";
 
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
@@ -60,7 +60,7 @@ export default function Cards({ launches, expeditions }) {
 
               <div className="mb-2.5 [&>*:not(:last-child)]:mr-1.5">
                 {"mission" in post && post.mission && (
-                  <Chip color="neutral" size="sm" className="!bg-[#6f737c]">
+                  <Chip color="neutral" size="sm">
                     {post.mission.type}
                   </Chip>
                 )}
@@ -127,7 +127,7 @@ export default function Cards({ launches, expeditions }) {
 
             <div className="mb-2.5 [&>*:not(:last-child)]:mr-1.5">
               {missionType && (
-                <Chip color="neutral" size="sm" className="!bg-[#6f737c]">
+                <Chip color="neutral" size="sm">
                   {missionType}
                 </Chip>
               )}
