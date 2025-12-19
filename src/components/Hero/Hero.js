@@ -9,7 +9,7 @@ export default function Hero() {
       <Typography level="h1" className="text-white">
         Launchpad
       </Typography>
-      <p className="text-xl pb-[75px] leading-tight text-white sm:text-sm sm:pb-8">
+      <p className="text-xl pb-[75px] text-white">
         Upcoming launches, dockings, and expeditions
       </p>
 
