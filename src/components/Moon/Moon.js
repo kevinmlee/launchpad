@@ -2,7 +2,7 @@
 
 export default function Moon() {
   return (
-    <div className="absolute right-40 top-1/2 -translate-y-1/2 sm:relative sm:right-auto sm:top-auto sm:translate-y-0">
+    <div className="relative mt-10 mb-20 -translate-y-1/2 sm:absolute sm:right-2 sm:top-10 sm:translate-y-0">
       <div className="relative top-1/4 mx-auto h-[100px] w-[100px] bg-[#eaeaea] rounded-full animate-floating z-10" style={{boxShadow: 'inset -15px 0 6px #bfbfbf, 0 0 8px #eaeaea'}}>
         <div className="moon-crater absolute top-[20%] left-[20%] h-[20%] w-[20%] bg-[#bfbfbf] rounded-full opacity-40" style={{boxShadow: 'inset -1px 0 1px #9e9e9e'}}></div>
         <div className="moon-eye absolute bottom-[30%] left-[10%] h-[15%] w-[9%] bg-[#333] rounded-full animate-blink"></div>

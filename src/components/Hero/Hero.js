@@ -5,7 +5,7 @@ import Moon from "../Moon/Moon";
 
 export default function Hero() {
   return (
-    <div className="pt-[150px] relative sm:pt-[75px]">
+    <div className="pt-10 relative sm:pt-20">
       <Typography level="h1" className="text-white">
         Launchpad
       </Typography>
