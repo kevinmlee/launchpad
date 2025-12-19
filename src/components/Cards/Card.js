@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function Card({
   day,
   time,
@@ -9,12 +11,12 @@ export default function Card({
   imageStyle = "cover",
 }) {
   const imageClasses = imageStyle === "cover"
-    ? "h-full w-full object-cover"
-    : "max-w-full h-auto object-contain";
+    ? "object-cover"
+    : "object-contain";
 
   const imageContainerClasses = imageStyle === "cover"
-    ? "relative rounded-2xl overflow-hidden"
-    : "relative rounded-2xl overflow-hidden flex items-center justify-center";
+    ? "relative rounded-2xl overflow-hidden h-full w-full"
+    : "relative rounded-2xl overflow-hidden flex items-center justify-center h-full w-full";
 
   return (
     <div className="grid grid-cols-[150px_1fr_150px] p-6 mt-8 relative bg-black/40 rounded-2xl overflow-hidden shadow-[0_10px_15px_-3px_rgba(0,0,0,0.45)] transition-all duration-200 text-white hover:-translate-y-2.5 hover:bg-[#3c2ea9]">
@@ -46,7 +48,13 @@ export default function Card({
       {/* Image - RIGHT Column */}
       <div className={imageContainerClasses}>
         {image && (
-          <img src={image} loading="lazy" alt={title} className={imageClasses} />
+          <Image
+            src={image}
+            alt={title}
+            fill
+            sizes="150px"
+            className={imageClasses}
+          />
         )}
       </div>
     </div>
