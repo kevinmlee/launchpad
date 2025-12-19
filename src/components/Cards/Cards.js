@@ -23,7 +23,7 @@ export default function Cards({ launches, expeditions }) {
     if (red.includes(type.toLowerCase())) color = "danger";
 
     return (
-      <Chip color={color} size="sm" className="!bg-[#6f737c]">
+      <Chip key="status" color={color} size="sm">
         {type}
       </Chip>
     );
