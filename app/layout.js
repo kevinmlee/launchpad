@@ -1,4 +1,3 @@
-import { CssVarsProvider } from "@mui/joy/styles";
 import "./globals.css";
 
 export const metadata = {
@@ -24,7 +23,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="font-['Poppins',sans-serif] bg-[#222222] text-white">
         <div className="max-w-[1200px] mx-auto px-8">
-          <CssVarsProvider>{children}</CssVarsProvider>
+          {children}
         </div>
       </body>
     </html>
