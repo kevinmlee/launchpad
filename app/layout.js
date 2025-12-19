@@ -18,7 +18,6 @@ const merriweather = Merriweather({
 export const metadata = {
   title: "Launchpad - Space Launches & Expeditions",
   description: "Track upcoming space launches and expeditions",
-  manifest: "/manifest.json",
 };
 
 export default function RootLayout({ children }) {
