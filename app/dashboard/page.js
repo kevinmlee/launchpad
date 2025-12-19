@@ -7,8 +7,6 @@ import Hero from "../../src/components/Hero/Hero";
 import Cards from "../../src/components/Cards/Cards";
 import SolarSystemLoader from "../../src/components/SolarSystemLoader/SolarSystemLoader";
 
-import "../../src/views/Dashboard/Dashboard.css";
-
 const endpoint = "https://ll.thespacedevs.com/2.2.0";
 const currentTime = dayjs().format();
 

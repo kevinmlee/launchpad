@@ -1,25 +1,19 @@
-import React from "react";
-import { CssVarsProvider } from "@mui/joy/styles";
+"use client";
+
 import { Typography } from "@mui/joy";
-
-import "./Hero.css";
-
-//import UserInput from "../UserInput/UserInput";
-//import Orbit from "../Orbit/Orbit";
-//import Mars from "../Mars/Mars";
 import Moon from "../Moon/Moon";
 
 export default function Hero() {
   return (
-    <CssVarsProvider>
-      <div className="hero">
-        <Typography level="h1">Launchpad</Typography>
-        <p className="hero-copy">
-          Upcoming launches, dockings, and expeditions
-        </p>
+    <div className="pt-[150px] relative sm:pt-[75px]">
+      <Typography level="h1" className="text-white">
+        Launchpad
+      </Typography>
+      <p className="text-xl pb-[75px] leading-tight text-white sm:text-sm sm:pb-8">
+        Upcoming launches, dockings, and expeditions
+      </p>
 
-        <Moon />
-      </div>
-    </CssVarsProvider>
+      <Moon />
+    </div>
   );
 }

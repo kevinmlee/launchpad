@@ -6,8 +6,9 @@ A Next.js application for tracking upcoming space launches, dockings, and expedi
 
 - **Next.js 15** - React framework with App Router
 - **React 19** - UI library
-- **Material-UI Joy** - Component library
-- **Emotion** - CSS-in-JS styling
+- **Tailwind CSS** - Utility-first CSS framework
+- **Material-UI Joy** - Component library (Chips)
+- **Emotion** - CSS-in-JS styling (for MUI Joy)
 - **Day.js** - Date formatting
 - **The Space Devs API** - Space launch and expedition data
 
@@ -121,11 +122,13 @@ vercel
 
 ## Migration Notes
 
-This project was migrated from Create React App to Next.js 15. Key changes:
+This project was migrated from Create React App to Next.js 15 with Tailwind CSS. Key changes:
 - React Router → Next.js App Router
 - Client-side only → Hybrid SSR/Client components
 - react-scripts → Next.js build system
 - Node 18 → Node 22
+- Custom CSS → Tailwind CSS utility classes
+- All component styles converted to Tailwind
 
 ## License
 
