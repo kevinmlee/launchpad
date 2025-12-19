@@ -12,7 +12,7 @@ export default function Chip({ children, color = "neutral", size = "md", classNa
     lg: "px-4 py-1.5 text-base",
   };
 
-  const baseClasses = "inline-flex items-center justify-center rounded-full font-medium";
+  const baseClasses = "inline-flex tracking-wide items-center justify-center rounded-full font-medium";
   const colorClass = colorClasses[color] || colorClasses.neutral;
   const sizeClass = sizeClasses[size] || sizeClasses.md;
 

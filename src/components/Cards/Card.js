@@ -29,7 +29,7 @@ export default function Card({
       {/* Mission Details - MIDDLE Column */}
       <div className="p-5">
         <div>
-          <h2 className="my-0 flex items-center mb-2.5">{title}</h2>
+          <h2 className="my-0 text-xl flex items-center mb-2.5 font-merriweather">{title}</h2>
 
           {chips && chips.length > 0 && (
             <div className="mb-2.5 [&>*:not(:last-child)]:mr-1.5">

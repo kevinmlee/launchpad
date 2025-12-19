@@ -17,6 +17,10 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body className="font-['Poppins',sans-serif] bg-[#222222] text-white">
         <div className="max-w-[1200px] mx-auto px-8">
