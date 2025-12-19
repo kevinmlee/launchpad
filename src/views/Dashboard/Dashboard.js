@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { CssVarsProvider } from "@mui/joy/styles";
 import dayjs from "dayjs";
 
 import Hero from "../../components/Hero/Hero";
@@ -89,7 +88,7 @@ export default function Dashboard() {
   }, [getLaunches, getExpeditions]);
 
   return (
-    <CssVarsProvider>
+    <>
       <Hero />
 
       {loading ? (
@@ -97,6 +96,6 @@ export default function Dashboard() {
       ) : (
         <Cards launches={launches} expeditions={expeditions} />
       )}
-    </CssVarsProvider>
+    </>
   );
 }

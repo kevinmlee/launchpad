@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 import dayjs from "dayjs";
-import { CssVarsProvider } from "@mui/joy/styles";
 
 import Hero from "../../components/Hero/Hero";
 import Cards from "../../components/Cards/Cards";
@@ -49,10 +48,10 @@ export default function Launches() {
   }, [getLaunches]);
 
   return (
-    <CssVarsProvider>
+    <>
       <Hero />
 
       {loading ? <SolarSystemLoader /> : <Cards launches={launches} />}
-    </CssVarsProvider>
+    </>
   );
 }

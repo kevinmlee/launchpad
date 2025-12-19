@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { CssVarsProvider } from "@mui/joy/styles";
-import { Button, Typography, TextField } from "@mui/joy";
 
 import Select from "../../../components/Select/Select";
 
@@ -18,29 +16,24 @@ export default function UserInput() {
   useEffect(() => {}, []);
 
   return (
-    <CssVarsProvider>
-      <div className="user-input">
-        <TextField
-          id="search"
-          label="Plain"
-          placeholder="Search by name or event"
-          variant="plain"
-        />
+    <div className="user-input">
+      <input
+        id="search"
+        placeholder="Search by name or event"
+        className="px-4 py-2 border rounded"
+      />
 
-        <Select label="Date" options={DATEPICKER} />
-        <Select label="Location" options={LOCATIONS} />
-        <Select label="Events" options={EVENTS} />
+      <Select label="Date" options={DATEPICKER} />
+      <Select label="Location" options={LOCATIONS} />
+      <Select label="Events" options={EVENTS} />
 
-        <Button
-          id="search-btn"
-          color="primary"
-          onClick={(e) => {}}
-          size="md"
-          variant="solid"
-        >
-          Search
-        </Button>
-      </div>
-    </CssVarsProvider>
+      <button
+        id="search-btn"
+        onClick={(e) => {}}
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        Search
+      </button>
+    </div>
   );
 }
