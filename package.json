@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next dev",
     "lint": "next lint",
-    "test": "jest --coverage --watchAll=false --detectOpenHandles --forceExit"
+    "test": "jest --coverage --watchAll=false --detectOpenHandles --forceExit --passWithNoTests"
   },
   "dependencies": {
     "dayjs": "^1.11.13",
