@@ -21,7 +21,7 @@ export default function Card({
   // Check if today is launch day
   const isToday = day === "Today";
   const dateBoxClasses = isToday
-    ? "sm:rounded-2xl justify-center text-center text-black bg-[#edf8eb] py-4 sm:py-8 sm:px-6 w-full md:w-auto shadow-[0_0_20px_rgba(237,248,235,0.8)] animate-pulse"
+    ? "sm:rounded-2xl justify-center text-center text-white bg-green-600 py-4 sm:py-8 sm:px-6 w-full md:w-auto"
     : "sm:rounded-2xl justify-center text-center text-black bg-[#edf8eb] py-4 sm:py-8 sm:px-6 w-full md:w-auto";
 
   return (
