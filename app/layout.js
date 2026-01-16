@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo192.png" />
       </head>
-      <body className="font-poppins bg-[#222222] text-white">
+      <body className="font-poppins bg-[#1a1625] text-white">
         <div className="max-w-[1200px] mx-auto px-3 sm:px-8">
           {children}
         </div>

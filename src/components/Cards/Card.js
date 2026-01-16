@@ -26,10 +26,10 @@ export default function Card({
     const baseClasses = "grid grid-cols-[100px_1fr] md:grid-cols-[150px_1fr_150px] gap-4 md:gap-0 p-4 sm:p-6 mt-4 sm:mt-8 relative rounded-2xl overflow-hidden transition-all duration-300 ease-out";
 
     if (isPast) {
-      return `${baseClasses} bg-black/30 opacity-75 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.4)] border border-white/5 text-past-muted hover:opacity-90 hover:bg-black/35`;
+      return `${baseClasses} bg-[#2a2535] opacity-80 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.5)] border border-white/10 text-past-muted hover:opacity-90`;
     }
 
-    return `${baseClasses} bg-gradient-to-br from-black/50 to-black/30 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5),0_4px_6px_-2px_rgba(0,0,0,0.3)] border border-white/10 text-white hover:border-indigo-400/30 hover:shadow-[0_10px_40px_-10px_rgba(99,102,241,0.3)]`;
+    return `${baseClasses} bg-[#2d2640] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] border border-white/15 text-white hover:border-indigo-400/40 hover:shadow-[0_10px_40px_-10px_rgba(99,102,241,0.35)]`;
   };
 
   // Date/time display for mobile (inline) vs desktop (box)

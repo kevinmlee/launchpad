@@ -29,11 +29,11 @@ export default function Modal({ isOpen, onClose, launch }) {
       onClick={onClose}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-[#1a1625]/90 backdrop-blur-sm" />
 
       {/* Modal */}
       <div
-        className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-2xl bg-gradient-to-br from-space-blue to-space-dark border border-white/10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)]"
+        className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-2xl bg-[#2d2640] border border-white/15 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -55,7 +55,7 @@ export default function Modal({ isOpen, onClose, launch }) {
               fill
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-space-dark via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#2d2640] via-transparent to-transparent" />
           </div>
         )}
 
