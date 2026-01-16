@@ -16,7 +16,7 @@ dayjs.extend(utc);
 dayjs.extend(LocalizedFormat);
 dayjs.extend(isToday);
 
-export default function Cards({ launches, expeditions }) {
+export default function Cards({ launches, expeditions, events }) {
   const [selectedLaunch, setSelectedLaunch] = useState(null);
   const [useUTC, setUseUTC] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
@@ -164,6 +164,51 @@ export default function Cards({ launches, expeditions }) {
     );
   };
 
+  const event = (post, index) => {
+    // Get image from the image object or use default
+    const imageUrl = post.image?.image_url || "/default-event.png";
+    const finalImageStyle = post.image?.image_url ? "cover" : "cover";
+
+    const { day: formattedDay, time: formattedTime } = formatDate(post.date);
+
+    // Determine if event is in the past
+    const isPast = checkIfPast(post.date);
+    const displayDay = dayjs(post.date).isToday() ? "Today" : formattedDay;
+
+    // Event type chip - handle object format from API v2.3.0
+    const eventType = post.type;
+    const eventTypeName = typeof eventType === "object" ? eventType.name : eventType;
+
+    const chips = eventTypeName ? [
+      <Chip key="event-type" color="neutral" size="sm">
+        {eventTypeName}
+      </Chip>,
+    ] : [];
+
+    // Data to pass to modal
+    const eventData = {
+      day: displayDay,
+      time: formattedTime,
+      title: post.name,
+      chips,
+      subtitle: post.location && `Location: ${post.location}`,
+      description: post.description,
+      image: imageUrl,
+      isPast,
+      launchDate: post.date,
+    };
+
+    return (
+      <Card
+        key={post.id}
+        {...eventData}
+        imageStyle={finalImageStyle}
+        index={index}
+        onClick={() => setSelectedLaunch(eventData)}
+      />
+    );
+  };
+
   // Filter out past expeditions on the client side
   const filterActiveExpeditions = (expeditionsList) => {
     if (!expeditionsList || !("results" in expeditionsList)) return [];
@@ -172,6 +217,12 @@ export default function Cards({ launches, expeditions }) {
       const endDate = post.end ? dayjs(post.end) : null;
       return !endDate || endDate.isAfter(dayjs()) || endDate.isToday();
     });
+  };
+
+  // Filter events (only show upcoming by default)
+  const filterEvents = (eventsList) => {
+    if (!eventsList || !("results" in eventsList)) return [];
+    return eventsList.results;
   };
 
   // Apply quick filters to launches
@@ -216,6 +267,10 @@ export default function Cards({ launches, expeditions }) {
         {expeditions &&
           "results" in expeditions &&
           filterActiveExpeditions(expeditions).map((post, index) => expedition(post, index))}
+
+        {events &&
+          "results" in events &&
+          filterEvents(events).map((post, index) => event(post, index))}
       </div>
 
       <Modal

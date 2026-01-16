@@ -47,16 +47,38 @@ async function getExpeditions() {
   }
 }
 
+async function getEvents() {
+  try {
+    const client = await clientPromise;
+    const db = client.db("data");
+    const eventsDoc = await db.collection("events").findOne({});
+
+    if (!eventsDoc) {
+      return { results: [] };
+    }
+
+    return {
+      results: eventsDoc.results || [],
+      count: eventsDoc.count,
+      updatedAt: eventsDoc.updatedAt?.toISOString(),
+    };
+  } catch (error) {
+    console.error("Error fetching events from MongoDB:", error);
+    return { results: [] };
+  }
+}
+
 export default async function Home() {
-  const [launches, expeditions] = await Promise.all([
+  const [launches, expeditions, events] = await Promise.all([
     getLaunches(),
     getExpeditions(),
+    getEvents(),
   ]);
 
   return (
     <>
       <Hero />
-      <Cards launches={launches} expeditions={expeditions} />
+      <Cards launches={launches} expeditions={expeditions} events={events} />
     </>
   );
 }
