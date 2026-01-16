@@ -1,5 +1,5 @@
 import Hero from "../src/components/Hero/Hero";
-import ExpeditionsSection from "../src/components/ExpeditionsSection/ExpeditionsSection";
+import Cards from "../src/components/Cards/Cards";
 import clientPromise from "../src/lib/mongodb";
 
 // Force dynamic rendering so we fetch fresh data from MongoDB on each request
@@ -15,7 +15,6 @@ async function getLaunches() {
       return { results: [] };
     }
 
-    // Return plain object (not MongoDB document with _id)
     return {
       results: launchesDoc.results || [],
       count: launchesDoc.count,
@@ -27,13 +26,37 @@ async function getLaunches() {
   }
 }
 
+async function getExpeditions() {
+  try {
+    const client = await clientPromise;
+    const db = client.db("data");
+    const expeditionsDoc = await db.collection("expeditions").findOne({});
+
+    if (!expeditionsDoc) {
+      return { results: [] };
+    }
+
+    return {
+      results: expeditionsDoc.results || [],
+      count: expeditionsDoc.count,
+      updatedAt: expeditionsDoc.updatedAt?.toISOString(),
+    };
+  } catch (error) {
+    console.error("Error fetching expeditions from MongoDB:", error);
+    return { results: [] };
+  }
+}
+
 export default async function Home() {
-  const launches = await getLaunches();
+  const [launches, expeditions] = await Promise.all([
+    getLaunches(),
+    getExpeditions(),
+  ]);
 
   return (
     <>
       <Hero />
-      <ExpeditionsSection launches={launches} />
+      <Cards launches={launches} expeditions={expeditions} />
     </>
   );
 }

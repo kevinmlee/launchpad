@@ -119,7 +119,9 @@ export default function Cards({ launches, expeditions }) {
     if (post.mission_patches.length > 0) {
       imageUrl = post.mission_patches[0].image_url;
       agency = post.mission_patches[0].agency.name;
-      missionType = post.mission_patches[0].agency.type;
+      // API v2.3.0 returns type as object {id, name} instead of string
+      const agencyType = post.mission_patches[0].agency.type;
+      missionType = typeof agencyType === "object" ? agencyType.name : agencyType;
     }
 
     // Use default image if no mission patch image is available
