@@ -14,6 +14,8 @@ module.exports = {
         'space-dark': '#0a0e27',
         'space-blue': '#1a1f3a',
         'moon-gray': '#c9d1d9',
+        'past-muted': '#8b9099',
+        'launched-badge': '#4ade80',
       },
       animation: {
         'spin-slow': 'spin 20s linear infinite',
