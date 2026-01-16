@@ -1,20 +1,39 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
 function Stars() {
+  const [stars, setStars] = useState([]);
+
+  useEffect(() => {
+    setStars(
+      [...Array(50)].map((_, i) => ({
+        id: i,
+        width: Math.random() * 3 + 1,
+        height: Math.random() * 3 + 1,
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        animationDelay: Math.random() * 3,
+        animationDuration: Math.random() * 3 + 2,
+        opacity: Math.random() * 0.7 + 0.3,
+      }))
+    );
+  }, []);
+
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {[...Array(50)].map((_, i) => (
+      {stars.map((star) => (
         <div
-          key={i}
+          key={star.id}
           className="absolute rounded-full bg-white animate-pulse"
           style={{
-            width: Math.random() * 3 + 1 + "px",
-            height: Math.random() * 3 + 1 + "px",
-            top: Math.random() * 100 + "%",
-            left: Math.random() * 100 + "%",
-            animationDelay: Math.random() * 3 + "s",
-            animationDuration: Math.random() * 3 + 2 + "s",
-            opacity: Math.random() * 0.7 + 0.3,
+            width: star.width + "px",
+            height: star.height + "px",
+            top: star.top + "%",
+            left: star.left + "%",
+            animationDelay: star.animationDelay + "s",
+            animationDuration: star.animationDuration + "s",
+            opacity: star.opacity,
           }}
         />
       ))}
@@ -27,7 +46,7 @@ function Rocket() {
     <div className="relative animate-rocket">
       <svg
         width="120"
-        height="120"
+        height="150"
         viewBox="0 0 64 64"
         className="drop-shadow-2xl"
       >
