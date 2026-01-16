@@ -2,14 +2,14 @@
 
 import { useState, useRef, useEffect } from "react";
 
-const timeFilters = [
+export const timeFilters = [
   { id: "all", label: "All Times" },
   { id: "today", label: "Today" },
   { id: "week", label: "This Week" },
   { id: "upcoming", label: "Upcoming" },
 ];
 
-const typeFilters = [
+export const typeFilters = [
   { id: "all-types", label: "All Types" },
   { id: "launches", label: "Launches" },
   { id: "expeditions", label: "Expeditions" },
@@ -94,9 +94,23 @@ function FilterDropdown({ label, options, value, onChange, color = "indigo" }) {
   );
 }
 
-export default function Filters({ onFilterChange, onTypeFilterChange }) {
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [activeTypeFilter, setActiveTypeFilter] = useState("all-types");
+export default function Filters({
+  onFilterChange,
+  onTypeFilterChange,
+  initialTimeFilter = "all",
+  initialTypeFilter = "all-types"
+}) {
+  const [activeFilter, setActiveFilter] = useState(initialTimeFilter);
+  const [activeTypeFilter, setActiveTypeFilter] = useState(initialTypeFilter);
+
+  // Sync with initial values when they change (e.g., from URL params)
+  useEffect(() => {
+    setActiveFilter(initialTimeFilter);
+  }, [initialTimeFilter]);
+
+  useEffect(() => {
+    setActiveTypeFilter(initialTypeFilter);
+  }, [initialTypeFilter]);
 
   const handleFilterChange = (filterId) => {
     setActiveFilter(filterId);
