@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 
 import Hero from "../../components/Hero/Hero";
 import Cards from "../../components/Cards/Cards";
-import SolarSystemLoader from "../../components/SolarSystemLoader/SolarSystemLoader";
+import { CardSkeletonList } from "../../components/Cards/CardSkeleton";
 
 const endpoint = "https://ll.thespacedevs.com/2.2.0";
 const currentTime = dayjs().format();
@@ -23,9 +23,15 @@ export default function Launches() {
       const difference = dayjs(currentTime).diff(dayjs(cachedLaunches.at));
       const minutesDiff = Math.floor((difference / 1000 / 60) % 60);
 
-      if (minutesDiff < 30) setLaunches(cachedLaunches);
-      else if (navigator.onLine) fetchLaunches();
-    } else if (navigator.onLine) fetchLaunches();
+      if (minutesDiff < 30) {
+        setLaunches(cachedLaunches);
+        setLoading(false);
+      } else if (navigator.onLine) {
+        fetchLaunches();
+      }
+    } else if (navigator.onLine) {
+      fetchLaunches();
+    }
   }, []);
 
   const fetchLaunches = async () => {
@@ -38,20 +44,20 @@ export default function Launches() {
 
           localStorage.setItem("launches", JSON.stringify(cache));
           setLaunches(cache);
+          setLoading(false);
         }
       });
   };
 
   useEffect(() => {
     getLaunches();
-    setLoading(false);
   }, [getLaunches]);
 
   return (
     <>
       <Hero />
 
-      {loading ? <SolarSystemLoader /> : <Cards launches={launches} />}
+      {loading ? <CardSkeletonList count={5} /> : <Cards launches={launches} />}
     </>
   );
 }

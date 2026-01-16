@@ -49,7 +49,7 @@ export default function Cards({ launches, expeditions }) {
     );
   };
 
-  const launch = (post) => {
+  const launch = (post, index) => {
     const postNetDay = post.net && dayjs(post.net).format("ll");
     const postNetTime = post.net && dayjs(post.net).format("LT");
 
@@ -60,9 +60,9 @@ export default function Cards({ launches, expeditions }) {
     const time = postNetTime ? postNetTime : postStartTime;
 
     // Determine if launch is in the past (by time or by status)
-    const launchDate = post.net || post.start;
+    const launchDateRaw = post.net || post.start;
     const launchStatus = post.status?.abbrev;
-    const isPast = checkIfPast(launchDate, launchStatus);
+    const isPast = checkIfPast(launchDateRaw, launchStatus);
 
     const chips = "mission" in post && post.mission ? [
       <Chip key="mission-type" color="neutral" size="sm">
@@ -85,6 +85,7 @@ export default function Cards({ launches, expeditions }) {
       description: post.mission?.description,
       image: finalImageUrl,
       isPast,
+      launchDate: launchDateRaw,
     };
 
     return (
@@ -92,12 +93,13 @@ export default function Cards({ launches, expeditions }) {
         key={post.id}
         {...launchData}
         imageStyle="cover"
+        index={index}
         onClick={() => setSelectedLaunch(launchData)}
       />
     );
   };
 
-  const expedition = (post) => {
+  const expedition = (post, index) => {
     let imageUrl = "";
     let agency = "";
     let missionType = "";
@@ -135,6 +137,7 @@ export default function Cards({ launches, expeditions }) {
       description: agency && `Agency: ${agency}`,
       image: finalImageUrl,
       isPast,
+      launchDate: post.start,
     };
 
     return (
@@ -142,6 +145,7 @@ export default function Cards({ launches, expeditions }) {
         key={post.id}
         {...expeditionData}
         imageStyle={finalImageStyle}
+        index={index}
         onClick={() => setSelectedLaunch(expeditionData)}
       />
     );
@@ -162,11 +166,11 @@ export default function Cards({ launches, expeditions }) {
       <div className="my-6">
         {launches &&
           "results" in launches &&
-          launches.results.map((post) => launch(post))}
+          launches.results.map((post, index) => launch(post, index))}
 
         {expeditions &&
           "results" in expeditions &&
-          filterActiveExpeditions(expeditions).map((post) => expedition(post))}
+          filterActiveExpeditions(expeditions).map((post, index) => expedition(post, index))}
       </div>
 
       <Modal

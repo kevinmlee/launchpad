@@ -1,4 +1,7 @@
+"use client";
+
 import Image from 'next/image';
+import useCountdown from '../../hooks/useCountdown';
 
 export default function Card({
   day,
@@ -10,7 +13,9 @@ export default function Card({
   image,
   imageStyle = "cover",
   isPast = false,
+  launchDate,
   onClick,
+  index = 0,
 }) {
   const imageClasses = imageStyle === "cover"
     ? "object-cover"
@@ -18,6 +23,9 @@ export default function Card({
 
   // Check if today is launch day
   const isToday = day === "Today";
+
+  // Countdown hook
+  const { formatted: countdown, isImminent, isVerySoon } = useCountdown(isPast ? null : launchDate);
 
   // Card container classes - unified layout for mobile and desktop
   const getCardClasses = () => {
@@ -31,7 +39,34 @@ export default function Card({
     return `${baseClasses} bg-[#2d2640] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] border border-white/15 text-white hover:border-indigo-400/40 hover:shadow-[0_10px_40px_-10px_rgba(99,102,241,0.35)]`;
   };
 
-  // Unified date/time display
+  // Status indicator dot
+  const StatusDot = () => {
+    if (isPast) return null;
+
+    if (isVerySoon) {
+      // Red pulsing dot for < 1 hour
+      return (
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+        </span>
+      );
+    }
+
+    if (isImminent || isToday) {
+      // Green pulsing dot for < 24 hours or Today
+      return (
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        </span>
+      );
+    }
+
+    return null;
+  };
+
+  // Unified date/time display with countdown
   const getDateDisplay = () => {
     if (isPast) {
       return (
@@ -44,15 +79,34 @@ export default function Card({
     }
 
     return (
-      <div className={`flex items-center gap-2 text-sm md:text-base ${isToday ? 'text-indigo-400' : 'text-white/60'}`}>
-        <span className="font-medium">{day}</span>
-        {time && <span className="opacity-80">• {time}</span>}
+      <div className={`flex items-center gap-2 text-sm md:text-base flex-wrap`}>
+        <StatusDot />
+        <span className={`font-medium ${isToday ? 'text-indigo-400' : 'text-white/60'}`}>{day}</span>
+        {time && <span className={`${isToday ? 'text-indigo-400/80' : 'text-white/50'}`}>• {time}</span>}
+        {countdown && (
+          <span className={`text-xs font-mono px-2 py-0.5 rounded-full ${
+            isVerySoon
+              ? 'bg-red-500/20 text-red-400'
+              : isImminent
+                ? 'bg-green-500/20 text-green-400'
+                : 'bg-white/10 text-white/50'
+          }`}>
+            {countdown}
+          </span>
+        )}
       </div>
     );
   };
 
+  // Animation delay based on index
+  const animationDelay = `${index * 100}ms`;
+
   return (
-    <div className={`${getCardClasses()} cursor-pointer`} onClick={onClick}>
+    <div
+      className={`${getCardClasses()} cursor-pointer animate-fadeSlideIn`}
+      style={{ animationDelay }}
+      onClick={onClick}
+    >
       {/* Image - LEFT on both mobile and desktop */}
       <div className={`relative rounded-xl overflow-hidden h-24 md:h-28 ${isPast ? 'opacity-60 grayscale-[30%]' : ''}`}>
         {image && (

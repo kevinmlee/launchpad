@@ -26,6 +26,7 @@ module.exports = {
         'spin-12': 'spin 12s linear infinite',
         'spin-7': 'spin 7.4s linear infinite',
         'spin-3': 'spin 3s linear infinite',
+        'fadeSlideIn': 'fadeSlideIn 0.5s ease-out forwards',
       },
       keyframes: {
         orbit: {
@@ -45,6 +46,10 @@ module.exports = {
           '0%': { opacity: '1' },
           '50%': { opacity: '0.6' },
           '100%': { opacity: '1' },
+        },
+        fadeSlideIn: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
     },

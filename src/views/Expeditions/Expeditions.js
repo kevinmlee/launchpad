@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 
 import Hero from "../../components/Hero/Hero";
 import Cards from "../../components/Cards/Cards";
-import SolarSystemLoader from "../../components/SolarSystemLoader/SolarSystemLoader";
+import { CardSkeletonList } from "../../components/Cards/CardSkeleton";
 
 const endpoint = "https://ll.thespacedevs.com/2.2.0";
 const currentTime = dayjs().format();
@@ -23,9 +23,15 @@ export default function Expeditions() {
       const difference = dayjs(currentTime).diff(dayjs(cachedExpeditions.at));
       const minutesDiff = Math.floor((difference / 1000 / 60) % 60);
 
-      if (minutesDiff < 30) setExpeditions(cachedExpeditions);
-      else if (navigator.onLine) fetchExpeditions();
-    } else if (navigator.onLine) fetchExpeditions();
+      if (minutesDiff < 30) {
+        setExpeditions(cachedExpeditions);
+        setLoading(false);
+      } else if (navigator.onLine) {
+        fetchExpeditions();
+      }
+    } else if (navigator.onLine) {
+      fetchExpeditions();
+    }
   }, []);
 
   const fetchExpeditions = async () => {
@@ -38,20 +44,20 @@ export default function Expeditions() {
 
           localStorage.setItem("expeditions", JSON.stringify(cache));
           setExpeditions(cache);
+          setLoading(false);
         }
       });
   };
 
   useEffect(() => {
     getExpeditions();
-    setLoading(false);
   }, [getExpeditions]);
 
   return (
     <>
       <Hero />
 
-      {loading ? <SolarSystemLoader /> : <Cards expeditions={expeditions} />}
+      {loading ? <CardSkeletonList count={5} /> : <Cards expeditions={expeditions} />}
     </>
   );
 }
