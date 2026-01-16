@@ -332,6 +332,67 @@ export default function Cards({ launches, expeditions, events }) {
   const showExpeditions = activeTypeFilter === "all-types" || activeTypeFilter === "expeditions";
   const showEvents = activeTypeFilter === "all-types" || activeTypeFilter === "events";
 
+  // Combine and sort all items by date
+  const getSortedItems = () => {
+    const items = [];
+
+    // Add launches with type marker
+    if (showLaunches && launches) {
+      filterLaunches(launches).forEach((post) => {
+        items.push({
+          type: "launch",
+          date: post.net || post.start,
+          data: post,
+        });
+      });
+    }
+
+    // Add expeditions with type marker
+    if (showExpeditions && expeditions) {
+      filterActiveExpeditions(expeditions).forEach((post) => {
+        items.push({
+          type: "expedition",
+          date: post.start,
+          data: post,
+        });
+      });
+    }
+
+    // Add events with type marker
+    if (showEvents && events) {
+      filterEvents(events).forEach((post) => {
+        items.push({
+          type: "event",
+          date: post.date,
+          data: post,
+        });
+      });
+    }
+
+    // Sort by date (earliest first)
+    return items.sort((a, b) => {
+      const dateA = a.date ? dayjs(a.date) : dayjs().add(100, "year");
+      const dateB = b.date ? dayjs(b.date) : dayjs().add(100, "year");
+      return dateA.valueOf() - dateB.valueOf();
+    });
+  };
+
+  const sortedItems = getSortedItems();
+
+  // Render the appropriate card based on type
+  const renderItem = (item) => {
+    switch (item.type) {
+      case "launch":
+        return launch(item.data);
+      case "expedition":
+        return expedition(item.data);
+      case "event":
+        return event(item.data);
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       {/* Filter bar - sticky on scroll */}
@@ -351,16 +412,7 @@ export default function Cards({ launches, expeditions, events }) {
       </div>
 
       <div className="my-6">
-        {showLaunches && launches &&
-          filterLaunches(launches).map((post) => launch(post))}
-
-        {showExpeditions && expeditions &&
-          "results" in expeditions &&
-          filterActiveExpeditions(expeditions).map((post) => expedition(post))}
-
-        {showEvents && events &&
-          "results" in events &&
-          filterEvents(events).map((post) => event(post))}
+        {sortedItems.map((item) => renderItem(item))}
       </div>
 
       <Modal

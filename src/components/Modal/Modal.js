@@ -3,9 +3,24 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
+// Skeleton component for image loading
+function ImageSkeleton() {
+  return (
+    <div className="absolute inset-0 bg-[#1a1625] animate-pulse">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skeleton-shimmer" />
+    </div>
+  );
+}
+
 export default function Modal({ isOpen, onClose, launch }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Reset image loaded state when launch changes
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [launch?.image]);
 
   // Handle open/close animations
   useEffect(() => {
@@ -13,14 +28,16 @@ export default function Modal({ isOpen, onClose, launch }) {
       setIsVisible(true);
       // Small delay to trigger animation
       requestAnimationFrame(() => {
-        setIsAnimating(true);
+        requestAnimationFrame(() => {
+          setIsAnimating(true);
+        });
       });
     } else {
       setIsAnimating(false);
       // Wait for animation to complete before hiding
       const timer = setTimeout(() => {
         setIsVisible(false);
-      }, 200);
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
@@ -46,43 +63,52 @@ export default function Modal({ isOpen, onClose, launch }) {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300 ease-out ${
         isAnimating ? 'opacity-100' : 'opacity-0'
       }`}
       onClick={onClose}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-[#1a1625]/90 backdrop-blur-sm" />
+      <div
+        className={`absolute inset-0 bg-[#1a1625]/90 backdrop-blur-sm transition-all duration-300 ${
+          isAnimating ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
 
       {/* Modal */}
       <div
-        className={`relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-2xl bg-[#2d2640] border border-white/15 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] transition-all duration-200 ${
+        className={`relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-2xl bg-[#2d2640] border border-white/15 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] transition-all duration-300 ease-out ${
           isAnimating
             ? 'opacity-100 scale-100 translate-y-0'
-            : 'opacity-0 scale-95 translate-y-4'
+            : 'opacity-0 scale-95 translate-y-8'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
+        {/* Close button - with shadow outline for visibility on any background */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white/70 hover:text-white"
+          className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-black/50 hover:bg-black/70 transition-colors text-white backdrop-blur-sm shadow-[0_0_0_2px_rgba(0,0,0,0.3),0_2px_8px_rgba(0,0,0,0.4)]"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
         {/* Image */}
         {launch.image && (
-          <div className="relative w-full h-48 sm:h-64">
+          <div className="relative w-full h-48 sm:h-64 bg-[#1a1625]">
+            {/* Skeleton loader */}
+            {!imageLoaded && <ImageSkeleton />}
+
             <Image
               src={launch.image}
               alt={launch.title}
               fill
-              className="object-cover"
-              placeholder="blur"
-              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAMH/8QAIhAAAgEDAwUBAAAAAAAAAAAAAQIDAAQRBRIhBhMiMUFR/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADESH/2gAMAwEAAhEDEEA/ANT6d1K0sdJtLW6WdbiGJY5F7TMMgDnkD3/a1r+pdOoP+xSlPqRnQGxgKsGXJ//Z"
+              className={`object-cover transition-opacity duration-300 ${
+                imageLoaded ? 'opacity-100' : 'opacity-0'
+              }`}
+              onLoad={() => setImageLoaded(true)}
+              priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#2d2640] via-transparent to-transparent" />
           </div>
