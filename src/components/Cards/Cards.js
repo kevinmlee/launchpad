@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import Chip from "../Chip/Chip";
 import Card from "./Card";
 import Modal from "../Modal/Modal";
 import TimezoneToggle from "../TimezoneToggle/TimezoneToggle";
 import NotificationToggle from "../NotificationToggle/NotificationToggle";
-import Filters from "../Filters/Filters";
+import Filters, { timeFilters, typeFilters } from "../Filters/Filters";
 import BackToTop from "../BackToTop/BackToTop";
 import useNotifications from "../../hooks/useNotifications";
 
@@ -19,12 +20,63 @@ dayjs.extend(utc);
 dayjs.extend(LocalizedFormat);
 dayjs.extend(isToday);
 
+// Valid filter values for URL param validation
+const validTimeFilters = timeFilters.map(f => f.id);
+const validTypeFilters = typeFilters.map(f => f.id);
+
 export default function Cards({ launches, expeditions, events }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Read initial values from URL params (with validation)
+  const timeParam = searchParams.get("time");
+  const typeParam = searchParams.get("type");
+
+  const initialTimeFilter = validTimeFilters.includes(timeParam) ? timeParam : "all";
+  const initialTypeFilter = validTypeFilters.includes(typeParam) ? typeParam : "all-types";
+
   const [selectedLaunch, setSelectedLaunch] = useState(null);
   const [useUTC, setUseUTC] = useState(false);
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [activeTypeFilter, setActiveTypeFilter] = useState("all-types");
+  const [activeFilter, setActiveFilter] = useState(initialTimeFilter);
+  const [activeTypeFilter, setActiveTypeFilter] = useState(initialTypeFilter);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+
+  // Update URL when filters change
+  const updateURLParams = useCallback((time, type) => {
+    const params = new URLSearchParams();
+
+    // Only add params if they're not the default values
+    if (time && time !== "all") {
+      params.set("time", time);
+    }
+    if (type && type !== "all-types") {
+      params.set("type", type);
+    }
+
+    const queryString = params.toString();
+    const newURL = queryString ? `${pathname}?${queryString}` : pathname;
+
+    // Use replace to avoid adding to browser history for every filter change
+    router.replace(newURL, { scroll: false });
+  }, [pathname, router]);
+
+  // Handle filter changes
+  const handleTimeFilterChange = (filterId) => {
+    setActiveFilter(filterId);
+    updateURLParams(filterId, activeTypeFilter);
+  };
+
+  const handleTypeFilterChange = (filterId) => {
+    setActiveTypeFilter(filterId);
+    updateURLParams(activeFilter, filterId);
+  };
+
+  // Sync state with URL params on mount and when URL changes
+  useEffect(() => {
+    setActiveFilter(initialTimeFilter);
+    setActiveTypeFilter(initialTypeFilter);
+  }, [initialTimeFilter, initialTypeFilter]);
 
   // Combine all items for notification checking
   const allItems = [
@@ -285,7 +337,12 @@ export default function Cards({ launches, expeditions, events }) {
       {/* Filter bar - sticky on scroll */}
       <div className="sticky top-0 z-40 py-4 backdrop-blur-sm">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <Filters onFilterChange={setActiveFilter} onTypeFilterChange={setActiveTypeFilter} />
+          <Filters
+            onFilterChange={handleTimeFilterChange}
+            onTypeFilterChange={handleTypeFilterChange}
+            initialTimeFilter={activeFilter}
+            initialTypeFilter={activeTypeFilter}
+          />
           <div className="flex items-center gap-2">
             <NotificationToggle onNotificationChange={setNotificationsEnabled} />
             <TimezoneToggle onTimezoneChange={setUseUTC} />
