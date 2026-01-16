@@ -5,7 +5,8 @@ import Chip from "../Chip/Chip";
 import Card from "./Card";
 import Modal from "../Modal/Modal";
 import TimezoneToggle from "../TimezoneToggle/TimezoneToggle";
-import FilterPills from "../FilterPills/FilterPills";
+import Filters from "../Filters/Filters";
+import BackToTop from "../BackToTop/BackToTop";
 
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -16,10 +17,11 @@ dayjs.extend(utc);
 dayjs.extend(LocalizedFormat);
 dayjs.extend(isToday);
 
-export default function Cards({ launches, expeditions }) {
+export default function Cards({ launches, expeditions, events }) {
   const [selectedLaunch, setSelectedLaunch] = useState(null);
   const [useUTC, setUseUTC] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
+  const [activeTypeFilter, setActiveTypeFilter] = useState("all-types");
 
   // Format date/time based on timezone preference
   const formatDate = (dateString) => {
@@ -65,7 +67,7 @@ export default function Cards({ launches, expeditions }) {
     );
   };
 
-  const launch = (post, index) => {
+  const launch = (post) => {
     const launchDateRaw = post.net || post.start;
     const { day: formattedDay, time: formattedTime } = formatDate(launchDateRaw);
 
@@ -105,13 +107,12 @@ export default function Cards({ launches, expeditions }) {
         key={post.id}
         {...launchData}
         imageStyle="cover"
-        index={index}
         onClick={() => setSelectedLaunch(launchData)}
       />
     );
   };
 
-  const expedition = (post, index) => {
+  const expedition = (post) => {
     let imageUrl = "";
     let agency = "";
     let missionType = "";
@@ -119,7 +120,9 @@ export default function Cards({ launches, expeditions }) {
     if (post.mission_patches.length > 0) {
       imageUrl = post.mission_patches[0].image_url;
       agency = post.mission_patches[0].agency.name;
-      missionType = post.mission_patches[0].agency.type;
+      // API v2.3.0 returns type as object {id, name} instead of string
+      const agencyType = post.mission_patches[0].agency.type;
+      missionType = typeof agencyType === "object" ? agencyType.name : agencyType;
     }
 
     // Use default image if no mission patch image is available
@@ -156,10 +159,71 @@ export default function Cards({ launches, expeditions }) {
         key={post.id}
         {...expeditionData}
         imageStyle={finalImageStyle}
-        index={index}
         onClick={() => setSelectedLaunch(expeditionData)}
       />
     );
+  };
+
+  const event = (post) => {
+    // Get image from the image object or use default
+    const imageUrl = post.image?.image_url || "/default-event.png";
+    const finalImageStyle = post.image?.image_url ? "cover" : "cover";
+
+    const { day: formattedDay, time: formattedTime } = formatDate(post.date);
+
+    // Determine if event is in the past
+    const isPast = checkIfPast(post.date);
+    const displayDay = dayjs(post.date).isToday() ? "Today" : formattedDay;
+
+    // Event type chip - handle object format from API v2.3.0
+    const eventType = post.type;
+    const eventTypeName = typeof eventType === "object" ? eventType.name : eventType;
+
+    const chips = eventTypeName ? [
+      <Chip key="event-type" color="neutral" size="sm">
+        {eventTypeName}
+      </Chip>,
+    ] : [];
+
+    // Data to pass to modal
+    const eventData = {
+      day: displayDay,
+      time: formattedTime,
+      title: post.name,
+      chips,
+      subtitle: post.location && `Location: ${post.location}`,
+      description: post.description,
+      image: imageUrl,
+      isPast,
+      launchDate: post.date,
+    };
+
+    return (
+      <Card
+        key={post.id}
+        {...eventData}
+        imageStyle={finalImageStyle}
+        onClick={() => setSelectedLaunch(eventData)}
+      />
+    );
+  };
+
+  // Apply time filter to a date
+  const applyTimeFilter = (dateString) => {
+    if (!dateString) return true;
+    const date = dayjs(dateString);
+
+    switch (activeFilter) {
+      case "today":
+        return date.isToday();
+      case "week":
+        const endOfWeek = dayjs().add(7, "day");
+        return date.isBefore(endOfWeek) && date.isAfter(dayjs().subtract(1, "day"));
+      case "upcoming":
+        return date.isAfter(dayjs());
+      default:
+        return true;
+    }
   };
 
   // Filter out past expeditions on the client side
@@ -168,8 +232,15 @@ export default function Cards({ launches, expeditions }) {
 
     return expeditionsList.results.filter((post) => {
       const endDate = post.end ? dayjs(post.end) : null;
-      return !endDate || endDate.isAfter(dayjs()) || endDate.isToday();
+      const isActive = !endDate || endDate.isAfter(dayjs()) || endDate.isToday();
+      return isActive && applyTimeFilter(post.start);
     });
+  };
+
+  // Filter events
+  const filterEvents = (eventsList) => {
+    if (!eventsList || !("results" in eventsList)) return [];
+    return eventsList.results.filter((post) => applyTimeFilter(post.date));
   };
 
   // Apply quick filters to launches
@@ -177,43 +248,46 @@ export default function Cards({ launches, expeditions }) {
     if (!launchList || !("results" in launchList)) return [];
 
     return launchList.results.filter((post) => {
-      const launchDate = dayjs(post.net || post.start);
       const launchStatus = post.status?.abbrev?.toLowerCase();
-      const provider = post.launch_service_provider?.name?.toLowerCase() || "";
 
-      switch (activeFilter) {
-        case "today":
-          return launchDate.isToday();
-        case "week":
-          const endOfWeek = dayjs().add(7, "day");
-          return launchDate.isBefore(endOfWeek) && launchDate.isAfter(dayjs().subtract(1, "day"));
-        case "spacex":
-          return provider.includes("spacex");
-        case "nasa":
-          return provider.includes("nasa");
-        case "upcoming":
-          return !["success", "failure"].includes(launchStatus) && launchDate.isAfter(dayjs());
-        default:
-          return true;
+      // Apply time filter
+      if (!applyTimeFilter(post.net || post.start)) return false;
+
+      // For "upcoming" filter, also check status
+      if (activeFilter === "upcoming") {
+        return !["success", "failure"].includes(launchStatus);
       }
+
+      return true;
     });
   };
 
+  // Check if content type should be shown
+  const showLaunches = activeTypeFilter === "all-types" || activeTypeFilter === "launches";
+  const showExpeditions = activeTypeFilter === "all-types" || activeTypeFilter === "expeditions";
+  const showEvents = activeTypeFilter === "all-types" || activeTypeFilter === "events";
+
   return (
     <>
-      {/* Filter bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4 relative">
-        <FilterPills onFilterChange={setActiveFilter} />
-        <TimezoneToggle onTimezoneChange={setUseUTC} />
+      {/* Filter bar - sticky on scroll */}
+      <div className="sticky top-0 z-40 py-4 backdrop-blur-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <Filters onFilterChange={setActiveFilter} onTypeFilterChange={setActiveTypeFilter} />
+          <TimezoneToggle onTimezoneChange={setUseUTC} />
+        </div>
       </div>
 
       <div className="my-6">
-        {launches &&
-          filterLaunches(launches).map((post, index) => launch(post, index))}
+        {showLaunches && launches &&
+          filterLaunches(launches).map((post) => launch(post))}
 
-        {expeditions &&
+        {showExpeditions && expeditions &&
           "results" in expeditions &&
-          filterActiveExpeditions(expeditions).map((post, index) => expedition(post, index))}
+          filterActiveExpeditions(expeditions).map((post) => expedition(post))}
+
+        {showEvents && events &&
+          "results" in events &&
+          filterEvents(events).map((post) => event(post))}
       </div>
 
       <Modal
@@ -221,6 +295,8 @@ export default function Cards({ launches, expeditions }) {
         onClose={() => setSelectedLaunch(null)}
         launch={selectedLaunch}
       />
+
+      <BackToTop />
     </>
   );
 }

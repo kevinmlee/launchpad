@@ -1,97 +1,84 @@
-"use client";
-
-import { useEffect, useState, useCallback } from "react";
-import dayjs from "dayjs";
-import LocalizedFormat from "dayjs/plugin/localizedFormat";
-import isToday from "dayjs/plugin/isToday";
-
 import Hero from "../src/components/Hero/Hero";
 import Cards from "../src/components/Cards/Cards";
-import SolarSystemLoader from "../src/components/SolarSystemLoader/SolarSystemLoader";
+import clientPromise from "../src/lib/mongodb";
 
-dayjs.extend(LocalizedFormat);
-dayjs.extend(isToday);
+// Force dynamic rendering so we fetch fresh data from MongoDB on each request
+export const dynamic = "force-dynamic";
 
-const endpoint = "https://ll.thespacedevs.com/2.2.0";
-const currentTime = dayjs().format();
+async function getLaunches() {
+  try {
+    const client = await clientPromise;
+    const db = client.db("data");
+    const launchesDoc = await db.collection("launches").findOne({});
 
-export default function Home() {
-  const [launches, setLaunches] = useState({});
-  const [expeditions, setExpeditions] = useState({});
-  const [loading, setLoading] = useState(true);
+    if (!launchesDoc) {
+      return { results: [] };
+    }
 
-  const getLaunches = useCallback(async () => {
-    const cachedLaunches =
-      localStorage.getItem("launches") &&
-      JSON.parse(localStorage.getItem("launches"));
+    return {
+      results: launchesDoc.results || [],
+      count: launchesDoc.count,
+      updatedAt: launchesDoc.updatedAt?.toISOString(),
+    };
+  } catch (error) {
+    console.error("Error fetching launches from MongoDB:", error);
+    return { results: [] };
+  }
+}
 
-    if (cachedLaunches) {
-      const difference = dayjs(currentTime).diff(dayjs(cachedLaunches.at));
-      const minutesDiff = Math.floor((difference / 1000 / 60) % 60);
+async function getExpeditions() {
+  try {
+    const client = await clientPromise;
+    const db = client.db("data");
+    const expeditionsDoc = await db.collection("expeditions").findOne({});
 
-      if (minutesDiff < 30) setLaunches(cachedLaunches);
-      else if (navigator.onLine) fetchLaunches();
-    } else if (navigator.onLine) fetchLaunches();
-  }, []);
+    if (!expeditionsDoc) {
+      return { results: [] };
+    }
 
-  const fetchLaunches = async () => {
-    await fetch(`${endpoint}/launch/upcoming?limit=20`)
-      .then((response) => response.json())
-      .then((data) => {
-        if ("results" in data) {
-          const cache = data;
-          cache["at"] = currentTime;
+    return {
+      results: expeditionsDoc.results || [],
+      count: expeditionsDoc.count,
+      updatedAt: expeditionsDoc.updatedAt?.toISOString(),
+    };
+  } catch (error) {
+    console.error("Error fetching expeditions from MongoDB:", error);
+    return { results: [] };
+  }
+}
 
-          localStorage.setItem("launches", JSON.stringify(cache));
-          setLaunches(cache);
-        }
-      });
-  };
+async function getEvents() {
+  try {
+    const client = await clientPromise;
+    const db = client.db("data");
+    const eventsDoc = await db.collection("events").findOne({});
 
-  const getExpeditions = useCallback(async () => {
-    const cachedExpeditions =
-      localStorage.getItem("expeditions_v2") &&
-      JSON.parse(localStorage.getItem("expeditions_v2"));
+    if (!eventsDoc) {
+      return { results: [] };
+    }
 
-    if (cachedExpeditions) {
-      const difference = dayjs(currentTime).diff(dayjs(cachedExpeditions.at));
-      const minutesDiff = Math.floor((difference / 1000 / 60) % 60);
+    return {
+      results: eventsDoc.results || [],
+      count: eventsDoc.count,
+      updatedAt: eventsDoc.updatedAt?.toISOString(),
+    };
+  } catch (error) {
+    console.error("Error fetching events from MongoDB:", error);
+    return { results: [] };
+  }
+}
 
-      if (minutesDiff < 30) setExpeditions(cachedExpeditions);
-      else if (navigator.onLine) fetchExpeditions();
-    } else if (navigator.onLine) fetchExpeditions();
-  }, []);
-
-  const fetchExpeditions = async () => {
-    const now = dayjs().format('YYYY-MM-DD');
-    await fetch(`${endpoint}/expedition?end__gte=${now}&ordering=start&limit=20&mode=detailed`)
-      .then((response) => response.json())
-      .then((data) => {
-        if ("results" in data) {
-          const cache = data;
-          cache["at"] = currentTime;
-
-          localStorage.setItem("expeditions_v2", JSON.stringify(cache));
-          setExpeditions(cache);
-        }
-      });
-  };
-
-  useEffect(() => {
-    getLaunches();
-    getExpeditions();
-    setLoading(false);
-  }, [getLaunches, getExpeditions]);
+export default async function Home() {
+  const [launches, expeditions, events] = await Promise.all([
+    getLaunches(),
+    getExpeditions(),
+    getEvents(),
+  ]);
 
   return (
     <>
       <Hero />
-
-      {loading ? (
-        <SolarSystemLoader />
-      ) : (
-        <Cards launches={launches} expeditions={expeditions} />
-      )}
+      <Cards launches={launches} expeditions={expeditions} events={events} />
     </>
   );
 }
