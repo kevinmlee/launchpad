@@ -4,16 +4,32 @@ import { useState } from "react";
 import Chip from "../Chip/Chip";
 import Card from "./Card";
 import Modal from "../Modal/Modal";
+import TimezoneToggle from "../TimezoneToggle/TimezoneToggle";
+import FilterPills from "../FilterPills/FilterPills";
 
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import isToday from "dayjs/plugin/isToday";
 
+dayjs.extend(utc);
 dayjs.extend(LocalizedFormat);
 dayjs.extend(isToday);
 
 export default function Cards({ launches, expeditions }) {
   const [selectedLaunch, setSelectedLaunch] = useState(null);
+  const [useUTC, setUseUTC] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  // Format date/time based on timezone preference
+  const formatDate = (dateString) => {
+    if (!dateString) return { day: null, time: null };
+    const date = useUTC ? dayjs(dateString).utc() : dayjs(dateString);
+    return {
+      day: date.format("ll"),
+      time: date.format("LT") + (useUTC ? " UTC" : ""),
+    };
+  };
 
   // Helper function to determine if a launch is in the past
   // Checks both date/time AND status (Success/Failure means it already happened)
@@ -50,17 +66,13 @@ export default function Cards({ launches, expeditions }) {
   };
 
   const launch = (post, index) => {
-    const postNetDay = post.net && dayjs(post.net).format("ll");
-    const postNetTime = post.net && dayjs(post.net).format("LT");
+    const launchDateRaw = post.net || post.start;
+    const { day: formattedDay, time: formattedTime } = formatDate(launchDateRaw);
 
-    const postStartDay = post.start && dayjs(post.start).format("ll");
-    const postStartTime = post.start && dayjs(post.start).format("LT");
-
-    const day = postNetDay ? postNetDay : postStartDay;
-    const time = postNetTime ? postNetTime : postStartTime;
+    const day = formattedDay;
+    const time = formattedTime;
 
     // Determine if launch is in the past (by time or by status)
-    const launchDateRaw = post.net || post.start;
     const launchStatus = post.status?.abbrev;
     const isPast = checkIfPast(launchDateRaw, launchStatus);
 
@@ -114,12 +126,11 @@ export default function Cards({ launches, expeditions }) {
     const finalImageUrl = imageUrl || "/default-expedition.png";
     const finalImageStyle = imageUrl ? "contain" : "cover";
 
-    const postStartDay = post.start && dayjs(post.start).format("ll");
-    const postStartTime = post.start && dayjs(post.start).format("LT");
+    const { day: formattedDay, time: formattedTime } = formatDate(post.start);
 
     // Determine if expedition is in the past
     const isPast = checkIfPast(post.start);
-    const displayDay = dayjs(postStartDay).isToday() ? "Today" : postStartDay;
+    const displayDay = dayjs(post.start).isToday() ? "Today" : formattedDay;
 
     const chips = missionType ? [
       <Chip key="mission-type" color="neutral" size="sm">
@@ -130,7 +141,7 @@ export default function Cards({ launches, expeditions }) {
     // Data to pass to modal
     const expeditionData = {
       day: displayDay,
-      time: postStartTime,
+      time: formattedTime,
       title: post.name,
       chips,
       subtitle: `Station: ${post.spacestation.name}`,
@@ -161,12 +172,44 @@ export default function Cards({ launches, expeditions }) {
     });
   };
 
+  // Apply quick filters to launches
+  const filterLaunches = (launchList) => {
+    if (!launchList || !("results" in launchList)) return [];
+
+    return launchList.results.filter((post) => {
+      const launchDate = dayjs(post.net || post.start);
+      const launchStatus = post.status?.abbrev?.toLowerCase();
+      const provider = post.launch_service_provider?.name?.toLowerCase() || "";
+
+      switch (activeFilter) {
+        case "today":
+          return launchDate.isToday();
+        case "week":
+          const endOfWeek = dayjs().add(7, "day");
+          return launchDate.isBefore(endOfWeek) && launchDate.isAfter(dayjs().subtract(1, "day"));
+        case "spacex":
+          return provider.includes("spacex");
+        case "nasa":
+          return provider.includes("nasa");
+        case "upcoming":
+          return !["success", "failure"].includes(launchStatus) && launchDate.isAfter(dayjs());
+        default:
+          return true;
+      }
+    });
+  };
+
   return (
     <>
+      {/* Filter bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4 relative">
+        <FilterPills onFilterChange={setActiveFilter} />
+        <TimezoneToggle onTimezoneChange={setUseUTC} />
+      </div>
+
       <div className="my-6">
         {launches &&
-          "results" in launches &&
-          launches.results.map((post, index) => launch(post, index))}
+          filterLaunches(launches).map((post, index) => launch(post, index))}
 
         {expeditions &&
           "results" in expeditions &&
