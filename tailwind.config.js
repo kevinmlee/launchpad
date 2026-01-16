@@ -27,6 +27,9 @@ module.exports = {
         'spin-7': 'spin 7.4s linear infinite',
         'spin-3': 'spin 3s linear infinite',
         'fadeSlideIn': 'fadeSlideIn 0.5s ease-out forwards',
+        'rocket': 'rocket 3s ease-in-out infinite',
+        'flicker': 'flicker 0.3s ease-in-out infinite alternate',
+        'smoke': 'smoke 2s ease-out infinite',
       },
       keyframes: {
         orbit: {
@@ -50,6 +53,18 @@ module.exports = {
         fadeSlideIn: {
           '0%': { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        rocket: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-1px)' },
+        },
+        flicker: {
+          '0%': { transform: 'scaleY(1)', opacity: '1' },
+          '100%': { transform: 'scaleY(1.15)', opacity: '0.85' },
+        },
+        smoke: {
+          '0%': { transform: 'translateY(0) scale(1)', opacity: '0.4' },
+          '100%': { transform: 'translateY(30px) scale(2)', opacity: '0' },
         },
       },
     },
