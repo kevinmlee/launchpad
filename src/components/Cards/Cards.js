@@ -5,7 +5,8 @@ import Chip from "../Chip/Chip";
 import Card from "./Card";
 import Modal from "../Modal/Modal";
 import TimezoneToggle from "../TimezoneToggle/TimezoneToggle";
-import FilterPills from "../FilterPills/FilterPills";
+import Filters from "../Filters/Filters";
+import BackToTop from "../BackToTop/BackToTop";
 
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -268,10 +269,12 @@ export default function Cards({ launches, expeditions, events }) {
 
   return (
     <>
-      {/* Filter bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4 relative">
-        <FilterPills onFilterChange={setActiveFilter} onTypeFilterChange={setActiveTypeFilter} />
-        <TimezoneToggle onTimezoneChange={setUseUTC} />
+      {/* Filter bar - sticky on scroll */}
+      <div className="sticky top-0 z-40 py-4 backdrop-blur-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <Filters onFilterChange={setActiveFilter} onTypeFilterChange={setActiveTypeFilter} />
+          <TimezoneToggle onTimezoneChange={setUseUTC} />
+        </div>
       </div>
 
       <div className="my-6">
@@ -292,6 +295,8 @@ export default function Cards({ launches, expeditions, events }) {
         onClose={() => setSelectedLaunch(null)}
         launch={selectedLaunch}
       />
+
+      <BackToTop />
     </>
   );
 }

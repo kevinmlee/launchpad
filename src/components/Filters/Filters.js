@@ -94,7 +94,7 @@ function FilterDropdown({ label, options, value, onChange, color = "indigo" }) {
   );
 }
 
-export default function FilterPills({ onFilterChange, onTypeFilterChange }) {
+export default function Filters({ onFilterChange, onTypeFilterChange }) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [activeTypeFilter, setActiveTypeFilter] = useState("all-types");
 
