@@ -56,11 +56,11 @@ module.exports = {
         },
         rocket: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-8px)' },
+          '50%': { transform: 'translateY(-1px)' },
         },
         flicker: {
-          '0%': { transform: 'scaleY(1) scaleX(1)', opacity: '1' },
-          '100%': { transform: 'scaleY(1.1) scaleX(0.9)', opacity: '0.8' },
+          '0%': { transform: 'scaleY(1)', opacity: '1' },
+          '100%': { transform: 'scaleY(1.15)', opacity: '0.85' },
         },
         smoke: {
           '0%': { transform: 'translateY(0) scale(1)', opacity: '0.4' },

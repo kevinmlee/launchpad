@@ -72,21 +72,7 @@ function Rocket() {
           </linearGradient>
         </defs>
 
-        {/* Main body with rounded top */}
-        <path d="M22 32 Q22 12 32 8 Q42 12 42 32 L42 44 L22 44 Z" fill="url(#rocketBody)" />
-
-
-        {/* Window */}
-        <circle cx="32" cy="24" r="5" fill="#0ea5e9" />
-        <circle cx="32" cy="24" r="3.5" fill="#38bdf8" />
-        <circle cx="30" cy="22" r="1.5" fill="#bae6fd" opacity="0.8" />
-
-        {/* Fins */}
-        <path d="M22 40 L18 52 L26 44 Z" fill="url(#rocketNose)" />
-        <path d="M42 40 L46 52 L38 44 Z" fill="url(#rocketNose)" />
-        <path d="M32 44 L28 54 L36 54 Z" fill="url(#rocketNose)" />
-
-        {/* Flames */}
+        {/* Flames (behind rocket) */}
         <ellipse
           cx="32"
           cy="56"
@@ -103,6 +89,19 @@ function Rocket() {
           fill="url(#flameInner)"
           className="animate-flicker"
         />
+
+        {/* Main body with rounded top */}
+        <path d="M22 32 Q22 12 32 8 Q42 12 42 32 L42 44 L22 44 Z" fill="url(#rocketBody)" />
+
+        {/* Window */}
+        <circle cx="32" cy="24" r="5" fill="#0ea5e9" />
+        <circle cx="32" cy="24" r="3.5" fill="#38bdf8" />
+        <circle cx="30" cy="22" r="1.5" fill="#bae6fd" opacity="0.8" />
+
+        {/* Fins */}
+        <path d="M22 40 L18 52 L26 44 Z" fill="url(#rocketNose)" />
+        <path d="M42 40 L46 52 L38 44 Z" fill="url(#rocketNose)" />
+        <path d="M32 44 L24 56 L40 56 Z" fill="url(#rocketNose)" />
       </svg>
 
       {/* Smoke particles */}
