@@ -204,7 +204,7 @@ export default function Hero() {
             <OrbitRing size={280} duration="20s" delay="0s">
               <Planet color="#818cf8" size={12} glow="#6366f1" />
             </OrbitRing>
-            <OrbitRing size={200} duration="15s" delay="-5s">
+            <OrbitRing size={220} duration="15s" delay="-5s">
               <Planet color="#f472b6" size={8} glow="#ec4899" />
             </OrbitRing>
             <OrbitRing size={160} duration="10s" delay="-2s">
