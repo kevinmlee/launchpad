@@ -29,7 +29,7 @@ export default function Card({
       return `${baseClasses} bg-black/30 opacity-75 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.4)] border border-white/5 text-past-muted hover:opacity-90 hover:bg-black/35`;
     }
 
-    return `${baseClasses} bg-gradient-to-br from-black/50 to-black/30 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5),0_4px_6px_-2px_rgba(0,0,0,0.3)] border border-white/10 text-white hover:-translate-y-3 hover:shadow-[0_20px_50px_-15px_rgba(99,102,241,0.4),0_10px_20px_-5px_rgba(0,0,0,0.4)] hover:bg-white/10 hover:backdrop-blur-sm hover:border-indigo-400/40`;
+    return `${baseClasses} bg-gradient-to-br from-black/50 to-black/30 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5),0_4px_6px_-2px_rgba(0,0,0,0.3)] border border-white/10 text-white hover:border-indigo-400/30 hover:shadow-[0_10px_40px_-10px_rgba(99,102,241,0.3)]`;
   };
 
   // Date/time display for mobile (inline) vs desktop (box)
