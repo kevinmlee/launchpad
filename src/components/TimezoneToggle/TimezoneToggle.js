@@ -21,7 +21,7 @@ export default function TimezoneToggle({ onTimezoneChange }) {
   return (
     <button
       onClick={handleToggle}
-      className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all text-sm"
+      className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all text-sm !w-fit"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
