@@ -20,6 +20,7 @@ export default function Cards({ launches, expeditions, events }) {
   const [selectedLaunch, setSelectedLaunch] = useState(null);
   const [useUTC, setUseUTC] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
+  const [activeTypeFilter, setActiveTypeFilter] = useState("all-types");
 
   // Format date/time based on timezone preference
   const formatDate = (dateString) => {
@@ -209,20 +210,39 @@ export default function Cards({ launches, expeditions, events }) {
     );
   };
 
+  // Apply time filter to a date
+  const applyTimeFilter = (dateString) => {
+    if (!dateString) return true;
+    const date = dayjs(dateString);
+
+    switch (activeFilter) {
+      case "today":
+        return date.isToday();
+      case "week":
+        const endOfWeek = dayjs().add(7, "day");
+        return date.isBefore(endOfWeek) && date.isAfter(dayjs().subtract(1, "day"));
+      case "upcoming":
+        return date.isAfter(dayjs());
+      default:
+        return true;
+    }
+  };
+
   // Filter out past expeditions on the client side
   const filterActiveExpeditions = (expeditionsList) => {
     if (!expeditionsList || !("results" in expeditionsList)) return [];
 
     return expeditionsList.results.filter((post) => {
       const endDate = post.end ? dayjs(post.end) : null;
-      return !endDate || endDate.isAfter(dayjs()) || endDate.isToday();
+      const isActive = !endDate || endDate.isAfter(dayjs()) || endDate.isToday();
+      return isActive && applyTimeFilter(post.start);
     });
   };
 
-  // Filter events (only show upcoming by default)
+  // Filter events
   const filterEvents = (eventsList) => {
     if (!eventsList || !("results" in eventsList)) return [];
-    return eventsList.results;
+    return eventsList.results.filter((post) => applyTimeFilter(post.date));
   };
 
   // Apply quick filters to launches
@@ -230,45 +250,42 @@ export default function Cards({ launches, expeditions, events }) {
     if (!launchList || !("results" in launchList)) return [];
 
     return launchList.results.filter((post) => {
-      const launchDate = dayjs(post.net || post.start);
       const launchStatus = post.status?.abbrev?.toLowerCase();
-      const provider = post.launch_service_provider?.name?.toLowerCase() || "";
 
-      switch (activeFilter) {
-        case "today":
-          return launchDate.isToday();
-        case "week":
-          const endOfWeek = dayjs().add(7, "day");
-          return launchDate.isBefore(endOfWeek) && launchDate.isAfter(dayjs().subtract(1, "day"));
-        case "spacex":
-          return provider.includes("spacex");
-        case "nasa":
-          return provider.includes("nasa");
-        case "upcoming":
-          return !["success", "failure"].includes(launchStatus) && launchDate.isAfter(dayjs());
-        default:
-          return true;
+      // Apply time filter
+      if (!applyTimeFilter(post.net || post.start)) return false;
+
+      // For "upcoming" filter, also check status
+      if (activeFilter === "upcoming") {
+        return !["success", "failure"].includes(launchStatus);
       }
+
+      return true;
     });
   };
+
+  // Check if content type should be shown
+  const showLaunches = activeTypeFilter === "all-types" || activeTypeFilter === "launches";
+  const showExpeditions = activeTypeFilter === "all-types" || activeTypeFilter === "expeditions";
+  const showEvents = activeTypeFilter === "all-types" || activeTypeFilter === "events";
 
   return (
     <>
       {/* Filter bar */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4 relative">
-        <FilterPills onFilterChange={setActiveFilter} />
+        <FilterPills onFilterChange={setActiveFilter} onTypeFilterChange={setActiveTypeFilter} />
         <TimezoneToggle onTimezoneChange={setUseUTC} />
       </div>
 
       <div className="my-6">
-        {launches &&
+        {showLaunches && launches &&
           filterLaunches(launches).map((post, index) => launch(post, index))}
 
-        {expeditions &&
+        {showExpeditions && expeditions &&
           "results" in expeditions &&
           filterActiveExpeditions(expeditions).map((post, index) => expedition(post, index))}
 
-        {events &&
+        {showEvents && events &&
           "results" in events &&
           filterEvents(events).map((post, index) => event(post, index))}
       </div>
