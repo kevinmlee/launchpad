@@ -66,7 +66,7 @@ export default function Cards({ launches, expeditions, events }) {
     );
   };
 
-  const launch = (post, index) => {
+  const launch = (post) => {
     const launchDateRaw = post.net || post.start;
     const { day: formattedDay, time: formattedTime } = formatDate(launchDateRaw);
 
@@ -106,13 +106,12 @@ export default function Cards({ launches, expeditions, events }) {
         key={post.id}
         {...launchData}
         imageStyle="cover"
-        index={index}
         onClick={() => setSelectedLaunch(launchData)}
       />
     );
   };
 
-  const expedition = (post, index) => {
+  const expedition = (post) => {
     let imageUrl = "";
     let agency = "";
     let missionType = "";
@@ -159,13 +158,12 @@ export default function Cards({ launches, expeditions, events }) {
         key={post.id}
         {...expeditionData}
         imageStyle={finalImageStyle}
-        index={index}
         onClick={() => setSelectedLaunch(expeditionData)}
       />
     );
   };
 
-  const event = (post, index) => {
+  const event = (post) => {
     // Get image from the image object or use default
     const imageUrl = post.image?.image_url || "/default-event.png";
     const finalImageStyle = post.image?.image_url ? "cover" : "cover";
@@ -204,7 +202,6 @@ export default function Cards({ launches, expeditions, events }) {
         key={post.id}
         {...eventData}
         imageStyle={finalImageStyle}
-        index={index}
         onClick={() => setSelectedLaunch(eventData)}
       />
     );
@@ -279,15 +276,15 @@ export default function Cards({ launches, expeditions, events }) {
 
       <div className="my-6">
         {showLaunches && launches &&
-          filterLaunches(launches).map((post, index) => launch(post, index))}
+          filterLaunches(launches).map((post) => launch(post))}
 
         {showExpeditions && expeditions &&
           "results" in expeditions &&
-          filterActiveExpeditions(expeditions).map((post, index) => expedition(post, index))}
+          filterActiveExpeditions(expeditions).map((post) => expedition(post))}
 
         {showEvents && events &&
           "results" in events &&
-          filterEvents(events).map((post, index) => event(post, index))}
+          filterEvents(events).map((post) => event(post))}
       </div>
 
       <Modal

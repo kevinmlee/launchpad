@@ -15,7 +15,6 @@ export default function Card({
   isPast = false,
   launchDate,
   onClick,
-  index = 0,
 }) {
   const imageClasses = imageStyle === "cover"
     ? "object-cover"
@@ -98,13 +97,9 @@ export default function Card({
     );
   };
 
-  // Animation delay based on index
-  const animationDelay = `${index * 100}ms`;
-
   return (
     <div
-      className={`${getCardClasses()} cursor-pointer animate-fadeSlideIn`}
-      style={{ animationDelay }}
+      className={`${getCardClasses()} cursor-pointer`}
       onClick={onClick}
     >
       {/* Image - LEFT on both mobile and desktop */}
