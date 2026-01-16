@@ -120,11 +120,11 @@ export default function NotificationToggle({ onNotificationChange }) {
         </div>
       </button>
 
-      {/* Tooltip */}
+      {/* Tooltip - hidden on mobile, responsive positioning */}
       {showTooltip && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-[#1a1625] border border-white/20 rounded-lg text-xs text-white/80 whitespace-nowrap z-50 shadow-lg">
+        <div className="hidden sm:block absolute bottom-full right-0 mb-2 px-3 py-2 bg-[#1a1625] border border-white/20 rounded-lg text-xs text-white/80 whitespace-nowrap z-50 shadow-lg">
           {getTooltipText()}
-          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#1a1625]" />
+          <div className="absolute top-full right-4 border-4 border-transparent border-t-[#1a1625]" />
         </div>
       )}
     </div>
