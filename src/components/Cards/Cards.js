@@ -5,8 +5,10 @@ import Chip from "../Chip/Chip";
 import Card from "./Card";
 import Modal from "../Modal/Modal";
 import TimezoneToggle from "../TimezoneToggle/TimezoneToggle";
+import NotificationToggle from "../NotificationToggle/NotificationToggle";
 import Filters from "../Filters/Filters";
 import BackToTop from "../BackToTop/BackToTop";
+import useNotifications from "../../hooks/useNotifications";
 
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -22,6 +24,17 @@ export default function Cards({ launches, expeditions, events }) {
   const [useUTC, setUseUTC] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
   const [activeTypeFilter, setActiveTypeFilter] = useState("all-types");
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+
+  // Combine all items for notification checking
+  const allItems = [
+    ...(launches?.results || []),
+    ...(expeditions?.results || []),
+    ...(events?.results || []),
+  ];
+
+  // Hook that handles checking for imminent events and sending notifications
+  useNotifications(allItems, notificationsEnabled);
 
   // Format date/time based on timezone preference
   const formatDate = (dateString) => {
@@ -273,7 +286,10 @@ export default function Cards({ launches, expeditions, events }) {
       <div className="sticky top-0 z-40 py-4 backdrop-blur-sm">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <Filters onFilterChange={setActiveFilter} onTypeFilterChange={setActiveTypeFilter} />
-          <TimezoneToggle onTimezoneChange={setUseUTC} />
+          <div className="flex items-center gap-2">
+            <NotificationToggle onNotificationChange={setNotificationsEnabled} />
+            <TimezoneToggle onTimezoneChange={setUseUTC} />
+          </div>
         </div>
       </div>
 
