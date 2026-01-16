@@ -6,8 +6,6 @@ const filters = [
   { id: "all", label: "All" },
   { id: "today", label: "Today" },
   { id: "week", label: "This Week" },
-  { id: "spacex", label: "SpaceX" },
-  { id: "nasa", label: "NASA" },
   { id: "upcoming", label: "Upcoming" },
 ];
 
