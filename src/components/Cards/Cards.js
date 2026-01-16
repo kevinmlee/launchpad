@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Chip from "../Chip/Chip";
 import Card from "./Card";
+import Modal from "../Modal/Modal";
 
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
@@ -11,6 +13,8 @@ dayjs.extend(LocalizedFormat);
 dayjs.extend(isToday);
 
 export default function Cards({ launches, expeditions }) {
+  const [selectedLaunch, setSelectedLaunch] = useState(null);
+
   // Helper function to determine if a launch is in the past
   // Checks both date/time AND status (Success/Failure means it already happened)
   const checkIfPast = (dateString, status) => {
@@ -69,19 +73,26 @@ export default function Cards({ launches, expeditions }) {
 
     // Use default image if no launch image is available
     const finalImageUrl = post.image || "/default-launch.png";
+    const displayDay = dayjs(day).isToday() ? "Today" : day;
+
+    // Data to pass to modal
+    const launchData = {
+      day: displayDay,
+      time,
+      title: post.mission?.name || "No information available",
+      chips,
+      subtitle: post.launch_service_provider?.name && `LSP: ${post.launch_service_provider.name}`,
+      description: post.mission?.description,
+      image: finalImageUrl,
+      isPast,
+    };
 
     return (
       <Card
         key={post.id}
-        day={dayjs(day).isToday() ? "Today" : day}
-        time={time}
-        title={post.mission?.name || "No information available"}
-        chips={chips}
-        subtitle={post.launch_service_provider?.name && `LSP: ${post.launch_service_provider.name}`}
-        description={post.mission?.description}
-        image={finalImageUrl}
+        {...launchData}
         imageStyle="cover"
-        isPast={isPast}
+        onClick={() => setSelectedLaunch(launchData)}
       />
     );
   };
@@ -106,6 +117,7 @@ export default function Cards({ launches, expeditions }) {
 
     // Determine if expedition is in the past
     const isPast = checkIfPast(post.start);
+    const displayDay = dayjs(postStartDay).isToday() ? "Today" : postStartDay;
 
     const chips = missionType ? [
       <Chip key="mission-type" color="neutral" size="sm">
@@ -113,18 +125,24 @@ export default function Cards({ launches, expeditions }) {
       </Chip>,
     ] : [];
 
+    // Data to pass to modal
+    const expeditionData = {
+      day: displayDay,
+      time: postStartTime,
+      title: post.name,
+      chips,
+      subtitle: `Station: ${post.spacestation.name}`,
+      description: agency && `Agency: ${agency}`,
+      image: finalImageUrl,
+      isPast,
+    };
+
     return (
       <Card
         key={post.id}
-        day={dayjs(postStartDay).isToday() ? "Today" : postStartDay}
-        time={postStartTime}
-        title={post.name}
-        chips={chips}
-        subtitle={`Station: ${post.spacestation.name}`}
-        description={agency && `Agency: ${agency}`}
-        image={finalImageUrl}
+        {...expeditionData}
         imageStyle={finalImageStyle}
-        isPast={isPast}
+        onClick={() => setSelectedLaunch(expeditionData)}
       />
     );
   };
@@ -140,14 +158,22 @@ export default function Cards({ launches, expeditions }) {
   };
 
   return (
-    <div className="my-6">
-      {launches &&
-        "results" in launches &&
-        launches.results.map((post) => launch(post))}
+    <>
+      <div className="my-6">
+        {launches &&
+          "results" in launches &&
+          launches.results.map((post) => launch(post))}
 
-      {expeditions &&
-        "results" in expeditions &&
-        filterActiveExpeditions(expeditions).map((post) => expedition(post))}
-    </div>
+        {expeditions &&
+          "results" in expeditions &&
+          filterActiveExpeditions(expeditions).map((post) => expedition(post))}
+      </div>
+
+      <Modal
+        isOpen={!!selectedLaunch}
+        onClose={() => setSelectedLaunch(null)}
+        launch={selectedLaunch}
+      />
+    </>
   );
 }
