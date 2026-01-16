@@ -11,6 +11,22 @@ dayjs.extend(LocalizedFormat);
 dayjs.extend(isToday);
 
 export default function Cards({ launches, expeditions }) {
+  // Helper function to determine if a launch is in the past
+  // Checks both date/time AND status (Success/Failure means it already happened)
+  const checkIfPast = (dateString, status) => {
+    // If status indicates completion, it's in the past
+    const completedStatuses = ["success", "failure"];
+    if (status && completedStatuses.includes(status.toLowerCase())) {
+      return true;
+    }
+
+    if (!dateString) return false;
+    const launchDate = dayjs(dateString);
+    const now = dayjs();
+    // Check if the full datetime (not just date) is in the past
+    return launchDate.isBefore(now);
+  };
+
   const status = (type) => {
     const green = ["success", "go", "active"];
     const yellow = ["tbc", "tbd"];
@@ -39,6 +55,11 @@ export default function Cards({ launches, expeditions }) {
     const day = postNetDay ? postNetDay : postStartDay;
     const time = postNetTime ? postNetTime : postStartTime;
 
+    // Determine if launch is in the past (by time or by status)
+    const launchDate = post.net || post.start;
+    const launchStatus = post.status?.abbrev;
+    const isPast = checkIfPast(launchDate, launchStatus);
+
     const chips = "mission" in post && post.mission ? [
       <Chip key="mission-type" color="neutral" size="sm">
         {post.mission.type}
@@ -60,6 +81,7 @@ export default function Cards({ launches, expeditions }) {
         description={post.mission?.description}
         image={finalImageUrl}
         imageStyle="cover"
+        isPast={isPast}
       />
     );
   };
@@ -82,6 +104,9 @@ export default function Cards({ launches, expeditions }) {
     const postStartDay = post.start && dayjs(post.start).format("ll");
     const postStartTime = post.start && dayjs(post.start).format("LT");
 
+    // Determine if expedition is in the past
+    const isPast = checkIfPast(post.start);
+
     const chips = missionType ? [
       <Chip key="mission-type" color="neutral" size="sm">
         {missionType}
@@ -99,6 +124,7 @@ export default function Cards({ launches, expeditions }) {
         description={agency && `Agency: ${agency}`}
         image={finalImageUrl}
         imageStyle={finalImageStyle}
+        isPast={isPast}
       />
     );
   };
