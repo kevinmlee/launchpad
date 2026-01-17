@@ -118,7 +118,11 @@ export default function Modal({ isOpen, onClose, launch }) {
         <div className="p-6 overflow-y-auto max-h-[50vh]">
           {/* Date & Time */}
           <div className="flex items-center gap-2 text-sm text-indigo-400 mb-3">
-            {launch.isPast && <span className="text-launched-badge font-semibold">✓ LAUNCHED</span>}
+            {launch.isPast && (
+              <span className={`font-semibold ${launch.isFailed ? 'text-red-400' : 'text-launched-badge'}`}>
+                {launch.isFailed ? '✗' : '✓'} {launch.pastLabel || 'COMPLETED'}
+              </span>
+            )}
             <span>{launch.day}</span>
             {launch.time && <span>• {launch.time}</span>}
           </div>

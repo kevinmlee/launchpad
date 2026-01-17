@@ -140,8 +140,13 @@ export default function Cards({ launches, expeditions, events }) {
     const time = formattedTime;
 
     // Determine if launch is in the past (by time or by status)
-    const launchStatus = post.status?.abbrev;
-    const isPast = checkIfPast(launchDateRaw, launchStatus);
+    const launchStatus = post.status?.abbrev?.toLowerCase();
+    const isPast = checkIfPast(launchDateRaw, post.status?.abbrev);
+
+    // Determine past label and failure state based on status
+    const isSuccess = launchStatus === "success";
+    const isFailed = launchStatus === "failure";
+    const pastLabel = isSuccess ? "LAUNCHED" : isFailed ? "FAILED" : null;
 
     const chips = "mission" in post && post.mission ? [
       <Chip key="mission-type" color="neutral" size="sm">
@@ -163,7 +168,9 @@ export default function Cards({ launches, expeditions, events }) {
       subtitle: post.launch_service_provider?.name && `LSP: ${post.launch_service_provider.name}`,
       description: post.mission?.description,
       image: finalImageUrl,
-      isPast,
+      isPast: isPast && (isSuccess || isFailed), // Only show past indicator for definitive outcomes
+      isFailed,
+      pastLabel,
       launchDate: launchDateRaw,
     };
 
@@ -195,9 +202,6 @@ export default function Cards({ launches, expeditions, events }) {
     const finalImageStyle = imageUrl ? "contain" : "cover";
 
     const { day: formattedDay, time: formattedTime } = formatDate(post.start);
-
-    // Determine if expedition is in the past
-    const isPast = checkIfPast(post.start);
     const displayDay = dayjs(post.start).isToday() ? "Today" : formattedDay;
 
     const chips = missionType ? [
@@ -207,6 +211,7 @@ export default function Cards({ launches, expeditions, events }) {
     ] : [];
 
     // Data to pass to modal
+    // Don't show isPast indicator for expeditions - they don't have clear completion status
     const expeditionData = {
       day: displayDay,
       time: formattedTime,
@@ -215,7 +220,7 @@ export default function Cards({ launches, expeditions, events }) {
       subtitle: `Station: ${post.spacestation.name}`,
       description: agency && `Agency: ${agency}`,
       image: finalImageUrl,
-      isPast,
+      isPast: false,
       launchDate: post.start,
     };
 
@@ -235,9 +240,6 @@ export default function Cards({ launches, expeditions, events }) {
     const finalImageStyle = post.image?.image_url ? "cover" : "cover";
 
     const { day: formattedDay, time: formattedTime } = formatDate(post.date);
-
-    // Determine if event is in the past
-    const isPast = checkIfPast(post.date);
     const displayDay = dayjs(post.date).isToday() ? "Today" : formattedDay;
 
     // Event type chip - handle object format from API v2.3.0
@@ -251,6 +253,7 @@ export default function Cards({ launches, expeditions, events }) {
     ] : [];
 
     // Data to pass to modal
+    // Don't show isPast indicator for events - they don't have clear completion status
     const eventData = {
       day: displayDay,
       time: formattedTime,
@@ -259,7 +262,7 @@ export default function Cards({ launches, expeditions, events }) {
       subtitle: post.location && `Location: ${post.location}`,
       description: post.description,
       image: imageUrl,
-      isPast,
+      isPast: false,
       launchDate: post.date,
     };
 

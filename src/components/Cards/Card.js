@@ -13,6 +13,7 @@ export default function Card({
   image,
   imageStyle = "cover",
   isPast = false,
+  isFailed = false,
   launchDate,
   onClick,
 }) {
@@ -70,7 +71,9 @@ export default function Card({
     if (isPast) {
       return (
         <div className="flex items-center gap-2 text-sm md:text-base">
-          <span className="text-launched-badge font-semibold">✓</span>
+          <span className={`font-semibold ${isFailed ? 'text-red-400' : 'text-launched-badge'}`}>
+            {isFailed ? '✗' : '✓'}
+          </span>
           <span className="text-past-muted/80">{day}</span>
           {time && <span className="text-past-muted/60">• {time}</span>}
         </div>
