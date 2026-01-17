@@ -396,7 +396,7 @@ export default function Cards({ launches, expeditions, events }) {
   return (
     <>
       {/* Filter bar - sticky on scroll */}
-      <div className="sticky top-0 z-40 py-4 backdrop-blur-sm">
+      <div className="sticky top-0 sticky-safe-top z-40 py-4 backdrop-blur-sm">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <Filters
             onFilterChange={handleTimeFilterChange}

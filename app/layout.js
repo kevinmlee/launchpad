@@ -18,6 +18,11 @@ const merriweather = Merriweather({
 export const metadata = {
   title: "Launchpad - Space Launches & Expeditions",
   description: "Track upcoming space launches and expeditions",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    viewportFit: "cover",
+  },
 };
 
 export default function RootLayout({ children }) {

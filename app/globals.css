@@ -74,6 +74,11 @@
     animation: shimmer 1.5s infinite;
   }
 
+  /* Safe area top for iOS browsers with dynamic UI */
+  .sticky-safe-top {
+    top: env(safe-area-inset-top, 0px);
+  }
+
   @keyframes shimmer {
     0% {
       transform: translateX(-100%);
