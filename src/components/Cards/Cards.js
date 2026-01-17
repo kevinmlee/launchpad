@@ -296,9 +296,12 @@ export default function Cards({ launches, expeditions, events }) {
     if (!expeditionsList || !("results" in expeditionsList)) return [];
 
     return expeditionsList.results.filter((post) => {
-      const endDate = post.end ? dayjs(post.end) : null;
-      const isActive = !endDate || endDate.isAfter(dayjs()) || endDate.isToday();
-      return isActive && applyTimeFilter(post.start);
+      // Only show expeditions with start dates today or in the future
+      const startDate = dayjs(post.start);
+      if (startDate.isBefore(dayjs(), 'day') && !startDate.isToday()) {
+        return false;
+      }
+      return applyTimeFilter(post.start);
     });
   };
 
