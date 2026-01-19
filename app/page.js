@@ -1,15 +1,13 @@
 import Hero from "../src/components/Hero/Hero";
 import Cards from "../src/components/Cards/Cards";
-import { createApolloClient } from "../src/lib/apollo-client";
-import { GET_ALL_SPACE_DATA } from "../src/graphql/queries";
+import apolloClient from "@/app/graphql";
+import { GET_ALL_SPACE_DATA } from "@/app/graphql/queries/space";
 
-// Force dynamic rendering so we fetch fresh data on each request
 export const dynamic = "force-dynamic";
 
 async function getSpaceData() {
   try {
-    const client = createApolloClient();
-    const { data, errors } = await client.query({
+    const { data, errors } = await apolloClient.query({
       query: GET_ALL_SPACE_DATA,
     });
 
