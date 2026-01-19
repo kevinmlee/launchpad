@@ -1,30 +1,12 @@
-import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
-import { registerApolloClient } from "@apollo/client-integration-nextjs";
+import { cacheExchange, createClient, fetchExchange } from '@urql/core'
+import { registerUrql } from '@urql/next/rsc'
 
-const GRAPHQL_ENDPOINT = "https://graphql.kevinmlee.com/";
+const isClient = typeof window !== 'undefined'
 
-export const { getClient } = registerApolloClient(() => {
-  return new ApolloClient({
-    link: new HttpLink({
-      uri: GRAPHQL_ENDPOINT,
-      credentials: "include",
-      fetch,
-    }),
-    cache: new InMemoryCache(),
-    defaultOptions: {
-      query: {
-        fetchPolicy: "no-cache",
-        errorPolicy: "all",
-      },
-    },
-  });
-});
+const makeClient = () => createClient({
+  url: 'https://graphql.kevinmlee.com/',
+  exchanges: [cacheExchange, fetchExchange],
+  requestPolicy: isClient ? 'cache-first' : 'network-only',
+})
 
-const apolloClient = {
-  query: async (options) => {
-    const client = getClient();
-    return client.query(options);
-  },
-};
-
-export default apolloClient;
+export const { getClient } = registerUrql(makeClient)
