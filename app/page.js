@@ -1,79 +1,39 @@
 import Hero from "../src/components/Hero/Hero";
 import Cards from "../src/components/Cards/Cards";
-import clientPromise from "../src/lib/mongodb";
+import { createApolloClient } from "../src/lib/apollo-client";
+import { GET_ALL_SPACE_DATA } from "../src/graphql/queries";
 
-// Force dynamic rendering so we fetch fresh data from MongoDB on each request
+// Force dynamic rendering so we fetch fresh data on each request
 export const dynamic = "force-dynamic";
 
-async function getLaunches() {
+async function getSpaceData() {
   try {
-    const client = await clientPromise;
-    const db = client.db("data");
-    const launchesDoc = await db.collection("launches").findOne({});
+    const client = createApolloClient();
+    const { data, errors } = await client.query({
+      query: GET_ALL_SPACE_DATA,
+    });
 
-    if (!launchesDoc) {
-      return { results: [] };
+    if (errors) {
+      console.error("GraphQL errors:", errors);
     }
 
     return {
-      results: launchesDoc.results || [],
-      count: launchesDoc.count,
-      updatedAt: launchesDoc.updatedAt?.toISOString(),
+      launches: data?.space?.launches || { results: [], count: 0 },
+      expeditions: data?.space?.expeditions || { results: [], count: 0 },
+      events: data?.space?.events || { results: [], count: 0 },
     };
   } catch (error) {
-    console.error("Error fetching launches from MongoDB:", error);
-    return { results: [] };
-  }
-}
-
-async function getExpeditions() {
-  try {
-    const client = await clientPromise;
-    const db = client.db("data");
-    const expeditionsDoc = await db.collection("expeditions").findOne({});
-
-    if (!expeditionsDoc) {
-      return { results: [] };
-    }
-
+    console.error("Error fetching space data from GraphQL:", error);
     return {
-      results: expeditionsDoc.results || [],
-      count: expeditionsDoc.count,
-      updatedAt: expeditionsDoc.updatedAt?.toISOString(),
+      launches: { results: [] },
+      expeditions: { results: [] },
+      events: { results: [] },
     };
-  } catch (error) {
-    console.error("Error fetching expeditions from MongoDB:", error);
-    return { results: [] };
-  }
-}
-
-async function getEvents() {
-  try {
-    const client = await clientPromise;
-    const db = client.db("data");
-    const eventsDoc = await db.collection("events").findOne({});
-
-    if (!eventsDoc) {
-      return { results: [] };
-    }
-
-    return {
-      results: eventsDoc.results || [],
-      count: eventsDoc.count,
-      updatedAt: eventsDoc.updatedAt?.toISOString(),
-    };
-  } catch (error) {
-    console.error("Error fetching events from MongoDB:", error);
-    return { results: [] };
   }
 }
 
 export default async function Home() {
-  const [launches, expeditions, events] = await Promise.all([
-    getLaunches(),
-    getExpeditions(),
-    getEvents(),
-  ]);
+  const { launches, expeditions, events } = await getSpaceData();
 
   return (
     <>
