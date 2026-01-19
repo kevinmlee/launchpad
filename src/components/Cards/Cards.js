@@ -185,28 +185,26 @@ export default function Cards({ launches, expeditions, events }) {
   };
 
   const expedition = (post) => {
-    let imageUrl = "";
+    // Get agency info from first crew member if available
     let agency = "";
-    let missionType = "";
-
-    if (post.mission_patches.length > 0) {
-      imageUrl = post.mission_patches[0].image_url;
-      agency = post.mission_patches[0].agency.name;
-      // API v2.3.0 returns type as object {id, name} instead of string
-      const agencyType = post.mission_patches[0].agency.type;
-      missionType = typeof agencyType === "object" ? agencyType.name : agencyType;
+    if (post.crew && post.crew.length > 0) {
+      const firstAstronaut = post.crew[0]?.astronaut;
+      if (firstAstronaut?.agency?.name) {
+        agency = firstAstronaut.agency.name;
+      }
     }
 
-    // Use default image if no mission patch image is available
-    const finalImageUrl = imageUrl || "/default-expedition.png";
-    const finalImageStyle = imageUrl ? "contain" : "cover";
+    // Use default image for expeditions
+    const finalImageUrl = "/default-expedition.png";
+    const finalImageStyle = "cover";
 
     const { day: formattedDay, time: formattedTime } = formatDate(post.start);
     const displayDay = dayjs(post.start).isToday() ? "Today" : formattedDay;
 
-    const chips = missionType ? [
-      <Chip key="mission-type" color="neutral" size="sm">
-        {missionType}
+    // Show crew count as chip if available
+    const chips = post.crew && post.crew.length > 0 ? [
+      <Chip key="crew-count" color="neutral" size="sm">
+        {post.crew.length} Crew
       </Chip>,
     ] : [];
 
@@ -217,8 +215,8 @@ export default function Cards({ launches, expeditions, events }) {
       time: formattedTime,
       title: post.name,
       chips,
-      subtitle: `Station: ${post.spacestation.name}`,
-      description: agency && `Agency: ${agency}`,
+      subtitle: post.spacestation?.name ? `Station: ${post.spacestation.name}` : null,
+      description: agency ? `Agency: ${agency}` : null,
       image: finalImageUrl,
       isPast: false,
       launchDate: post.start,
@@ -235,9 +233,9 @@ export default function Cards({ launches, expeditions, events }) {
   };
 
   const event = (post) => {
-    // Get image from the image object or use default
+    // Get image from image object or use default
     const imageUrl = post.image?.image_url || "/default-event.png";
-    const finalImageStyle = post.image?.image_url ? "cover" : "cover";
+    const finalImageStyle = "cover";
 
     const { day: formattedDay, time: formattedTime } = formatDate(post.date);
     const displayDay = dayjs(post.date).isToday() ? "Today" : formattedDay;
