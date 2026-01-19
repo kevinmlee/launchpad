@@ -1,20 +1,162 @@
 import Hero from "../src/components/Hero/Hero";
 import Cards from "../src/components/Cards/Cards";
-import apolloClient from "@/app/graphql";
-import { GET_ALL_SPACE_DATA } from "@/app/graphql/queries/space";
 
 export const dynamic = "force-dynamic";
+
+const GRAPHQL_ENDPOINT = "https://graphql.kevinmlee.com/";
+
+const QUERY = `
+  query GetAllSpaceData {
+    space {
+      launches {
+        count
+        updatedAt
+        results {
+          id
+          name
+          net
+          window_start
+          window_end
+          image
+          infographic
+          status {
+            id
+            name
+            abbrev
+            description
+          }
+          pad {
+            id
+            name
+            location {
+              id
+              name
+              country_code
+            }
+          }
+          mission {
+            id
+            name
+            description
+            type
+            orbit {
+              id
+              name
+              abbrev
+            }
+          }
+          rocket {
+            id
+            configuration {
+              id
+              name
+              full_name
+              variant
+            }
+          }
+          launch_service_provider {
+            id
+            name
+            type {
+              id
+              name
+            }
+          }
+        }
+      }
+      expeditions {
+        count
+        updatedAt
+        results {
+          id
+          name
+          start
+          end
+          spacestation {
+            id
+            name
+            status {
+              id
+              name
+            }
+            orbit
+          }
+          crew {
+            id
+            role {
+              id
+              role
+              priority
+            }
+            astronaut {
+              id
+              name
+              status {
+                id
+                name
+              }
+              agency {
+                id
+                name
+                type {
+                  id
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+      events {
+        count
+        updatedAt
+        results {
+          id
+          name
+          description
+          location
+          date
+          news_url
+          video_url
+          image {
+            image_url
+            thumbnail_url
+          }
+          type {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
 
 async function getSpaceData() {
   try {
     console.log("Fetching space data from GraphQL...");
-    const { data, errors } = await apolloClient.query({
-      query: GET_ALL_SPACE_DATA,
+
+    const response = await fetch(GRAPHQL_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ query: QUERY }),
+      cache: "no-store",
     });
 
-    if (errors) {
-      console.error("GraphQL errors:", errors);
+    if (!response.ok) {
+      console.error("GraphQL fetch failed:", response.status, response.statusText);
+      throw new Error(`HTTP error: ${response.status}`);
     }
+
+    const json = await response.json();
+
+    if (json.errors) {
+      console.error("GraphQL errors:", json.errors);
+    }
+
+    const data = json.data;
 
     console.log("GraphQL response received:", {
       launchesCount: data?.space?.launches?.results?.length || 0,
