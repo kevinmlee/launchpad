@@ -7,6 +7,7 @@ export const { getClient } = registerApolloClient(() => {
   return new ApolloClient({
     link: new HttpLink({
       uri: GRAPHQL_ENDPOINT,
+      credentials: "include",
       fetch,
     }),
     cache: new InMemoryCache(),

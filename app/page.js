@@ -1,6 +1,5 @@
 import Hero from "../src/components/Hero/Hero";
 import Cards from "../src/components/Cards/Cards";
-import clientPromise from "../src/lib/mongodb";
 
 export const dynamic = "force-dynamic";
 
@@ -133,66 +132,39 @@ const QUERY = `
   }
 `;
 
-async function getSpaceDataFromGraphQL() {
-  const response = await fetch(GRAPHQL_ENDPOINT, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query: QUERY }),
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error: ${response.status}`);
-  }
-
-  const json = await response.json();
-  const data = json.data;
-
-  return {
-    launches: data?.space?.launches || { results: [], count: 0 },
-    expeditions: data?.space?.expeditions || { results: [], count: 0 },
-    events: data?.space?.events || { results: [], count: 0 },
-  };
-}
-
-async function getSpaceDataFromMongoDB() {
-  const client = await clientPromise;
-  const db = client.db("data");
-
-  const [launches, expeditions, events] = await Promise.all([
-    db.collection("launches").find({}).toArray(),
-    db.collection("expeditions").find({}).toArray(),
-    db.collection("events").find({}).toArray(),
-  ]);
-
-  // Convert MongoDB documents to plain objects (remove _id)
-  const serialize = (docs) => docs.map(({ _id, ...rest }) => rest);
-
-  return {
-    launches: { results: serialize(launches), count: launches.length },
-    expeditions: { results: serialize(expeditions), count: expeditions.length },
-    events: { results: serialize(events), count: events.length },
-  };
-}
-
-export default async function Home({ searchParams }) {
-  const params = await searchParams;
-  const useGraphQL = params?.graphql === "true";
-
-  let launches, expeditions, events;
-
+async function getSpaceData() {
   try {
-    if (useGraphQL) {
-      ({ launches, expeditions, events } = await getSpaceDataFromGraphQL());
-    } else {
-      ({ launches, expeditions, events } = await getSpaceDataFromMongoDB());
+    const response = await fetch(GRAPHQL_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: QUERY }),
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
     }
+
+    const json = await response.json();
+    const data = json.data;
+
+    return {
+      launches: data?.space?.launches || { results: [], count: 0 },
+      expeditions: data?.space?.expeditions || { results: [], count: 0 },
+      events: data?.space?.events || { results: [], count: 0 },
+    };
   } catch (error) {
     console.error("Error fetching space data:", error);
-    launches = { results: [] };
-    expeditions = { results: [] };
-    events = { results: [] };
+    return {
+      launches: { results: [] },
+      expeditions: { results: [] },
+      events: { results: [] },
+    };
   }
+}
+
+export default async function Home() {
+  const { launches, expeditions, events } = await getSpaceData();
 
   return (
     <>
