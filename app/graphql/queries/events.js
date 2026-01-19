@@ -14,7 +14,10 @@ export const GET_EVENTS = gql`
           date
           news_url
           video_url
-          feature_image
+          image {
+            image_url
+            thumbnail_url
+          }
           type {
             id
             name

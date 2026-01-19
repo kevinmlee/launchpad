@@ -52,7 +52,10 @@ export const GET_ALL_SPACE_DATA = gql`
           launch_service_provider {
             id
             name
-            type
+            type {
+              id
+              name
+            }
           }
         }
       }
@@ -90,7 +93,10 @@ export const GET_ALL_SPACE_DATA = gql`
               agency {
                 id
                 name
-                type
+                type {
+                  id
+                  name
+                }
               }
             }
           }
@@ -107,7 +113,10 @@ export const GET_ALL_SPACE_DATA = gql`
           date
           news_url
           video_url
-          feature_image
+          image {
+            image_url
+            thumbnail_url
+          }
           type {
             id
             name

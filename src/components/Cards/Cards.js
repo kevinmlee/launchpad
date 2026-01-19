@@ -233,8 +233,8 @@ export default function Cards({ launches, expeditions, events }) {
   };
 
   const event = (post) => {
-    // Get image from feature_image (GraphQL) or image object (legacy) or use default
-    const imageUrl = post.feature_image || post.image?.image_url || "/default-event.png";
+    // Get image from image object or use default
+    const imageUrl = post.image?.image_url || "/default-event.png";
     const finalImageStyle = "cover";
 
     const { day: formattedDay, time: formattedTime } = formatDate(post.date);
