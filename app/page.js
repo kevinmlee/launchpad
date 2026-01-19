@@ -156,7 +156,6 @@ async function getSpaceDataFromGraphQL() {
 }
 
 async function getSpaceDataFromMongoDB() {
-  console.log("Fetching from MongoDB...");
   const client = await clientPromise;
   const db = client.db("data");
 
@@ -166,16 +165,13 @@ async function getSpaceDataFromMongoDB() {
     db.collection("events").find({}).toArray(),
   ]);
 
-  console.log("MongoDB docs found:", {
-    launches: launches.length,
-    expeditions: expeditions.length,
-    events: events.length,
-  });
+  // Convert MongoDB documents to plain objects (remove _id)
+  const serialize = (docs) => docs.map(({ _id, ...rest }) => rest);
 
   return {
-    launches: { results: launches, count: launches.length },
-    expeditions: { results: expeditions, count: expeditions.length },
-    events: { results: events, count: events.length },
+    launches: { results: serialize(launches), count: launches.length },
+    expeditions: { results: serialize(expeditions), count: expeditions.length },
+    events: { results: serialize(events), count: events.length },
   };
 }
 
