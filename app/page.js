@@ -3,13 +3,13 @@ import Cards from "../src/components/Cards/Cards"
 import { GET_ALL_SPACE_DATA } from "./graphql/queries/space"
 import { getClient } from "./graphql"
 
-export const dynamic = "force-dynamic"
+// Revalidate every 5 minutes (300 seconds)
+export const revalidate = 300
 
 const getSpaceData = async () => {
   return getClient()
     .query(GET_ALL_SPACE_DATA)
     .then(result => {
-      console.log('graphql response', result)
       return result?.error ? result.error : result?.data?.space
     })
     .catch(() => ({ error: 'Error fetching data' }))
