@@ -1,5 +1,7 @@
+import { Suspense } from "react"
 import Hero from "../src/components/Hero/Hero"
 import Cards from "../src/components/Cards/Cards"
+import { CardSkeletonList } from "../src/components/Cards/CardSkeleton"
 import { GET_ALL_SPACE_DATA } from "./graphql/queries/space"
 import { getClient } from "./graphql"
 
@@ -21,7 +23,9 @@ export default async function Home() {
   return (
     <>
       <Hero />
-      <Cards launches={launches} expeditions={expeditions} events={events} />
+      <Suspense fallback={<CardSkeletonList count={5} />}>
+        <Cards launches={launches} expeditions={expeditions} events={events} />
+      </Suspense>
     </>
   )
 }
