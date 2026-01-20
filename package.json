@@ -10,8 +10,6 @@
     "test": "jest --coverage --watchAll=false --detectOpenHandles --forceExit --passWithNoTests"
   },
   "dependencies": {
-    "@apollo/client": "^4.1.0",
-    "@apollo/client-integration-nextjs": "^0.14.4",
     "@urql/core": "^6.0.1",
     "@urql/next": "^2.0.0",
     "dayjs": "^1.11.13",

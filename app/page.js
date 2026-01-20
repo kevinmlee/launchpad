@@ -9,7 +9,7 @@ const getSpaceData = async () => {
   return getClient()
     .query(GET_ALL_SPACE_DATA)
     .then(result => result?.error ? result.error : result?.data?.space)
-    .catch(() => ({ routeError: 'Error fetching route' }))
+    .catch(() => ({ error: 'Error fetching data' }))
 }
 
 export default async function Home() {
