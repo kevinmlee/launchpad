@@ -13,7 +13,7 @@
     "@apollo/client": "^4.1.0",
     "@urql/core": "^6.0.1",
     "@urql/next": "^2.0.0",
-    "dayjs": "^1.11.13",
+    "dayjs": "^1.11.19",
     "graphql": "^16.12.0",
     "mongodb": "^7.0.0",
     "next": "^16.1.4",
