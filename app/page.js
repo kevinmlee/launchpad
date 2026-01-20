@@ -8,7 +8,10 @@ export const dynamic = "force-dynamic"
 const getSpaceData = async () => {
   return getClient()
     .query(GET_ALL_SPACE_DATA)
-    .then(result => result?.error ? result.error : result?.data?.space)
+    .then(result => {
+      console.log('graphql response', result)
+      return result?.error ? result.error : result?.data?.space
+    })
     .catch(() => ({ error: 'Error fetching data' }))
 }
 
