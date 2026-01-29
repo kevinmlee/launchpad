@@ -23,6 +23,8 @@ export const GET_LAUNCHES = gql`
           pad {
             id
             name
+            latitude
+            longitude
             location {
               id
               name

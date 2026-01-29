@@ -23,6 +23,8 @@ export const GET_ALL_SPACE_DATA = gql`
           pad {
             id
             name
+            latitude
+            longitude
             location {
               id
               name
