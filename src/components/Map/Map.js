@@ -20,7 +20,7 @@ export default function LaunchMap({ launches }) {
           "carto-dark": {
             type: "raster",
             tiles: [
-              "https://basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png",
+              "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
             ],
             tileSize: 256,
             attribution:
