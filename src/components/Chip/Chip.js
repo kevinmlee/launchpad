@@ -1,9 +1,9 @@
 export default function Chip({ children, color = "neutral", size = "md", className = "" }) {
   const colorClasses = {
-    neutral: "bg-white/[0.07] text-white/50",
-    success: "bg-emerald-500/15 text-emerald-400",
-    warning: "bg-yellow-500/15 text-yellow-400",
-    danger: "bg-red-500/15 text-red-400",
+    neutral: "bg-gray-100 dark:bg-white/[0.07] text-gray-500 dark:text-white/50",
+    success: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400",
+    warning: "bg-yellow-500/15 text-yellow-700 dark:text-yellow-400",
+    danger: "bg-red-500/15 text-red-700 dark:text-red-400",
   };
 
   const sizeClasses = {

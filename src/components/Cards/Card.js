@@ -53,8 +53,8 @@ export default function Card({
     <article
       className={`group flex items-start gap-4 md:gap-5 py-4 md:py-5 cursor-pointer transition-colors duration-200 border-b ${
         isPast
-          ? 'border-white/5 opacity-60'
-          : 'border-white/[0.07] hover:bg-white/[0.03]'
+          ? 'border-gray-100 dark:border-white/5 opacity-60'
+          : 'border-gray-100 dark:border-white/[0.07] hover:bg-gray-50 dark:hover:bg-white/[0.03]'
       }`}
       onClick={onClick}
     >
@@ -80,28 +80,28 @@ export default function Card({
           <StatusDot />
           {isPast ? (
             <>
-              <span className={`text-xs font-medium ${isFailed ? 'text-red-400' : 'text-emerald-400'}`}>
+              <span className={`text-xs font-medium ${isFailed ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                 {isFailed ? 'Failed' : 'Launched'}
               </span>
-              <span className="text-white/25 text-xs">·</span>
-              <span className="text-xs text-white/30">{day}</span>
+              <span className="text-gray-300 dark:text-white/25 text-xs">·</span>
+              <span className="text-xs text-gray-400 dark:text-white/30">{day}</span>
             </>
           ) : (
             <>
-              <span className={`text-xs font-medium ${isToday ? 'text-indigo-400' : 'text-white/40'}`}>{day}</span>
+              <span className={`text-xs font-medium ${isToday ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-400 dark:text-white/40'}`}>{day}</span>
               {time && (
                 <>
-                  <span className="text-white/20 text-xs">·</span>
-                  <span className={`text-xs ${isToday ? 'text-indigo-400/70' : 'text-white/30'}`}>{time}</span>
+                  <span className="text-gray-300 dark:text-white/20 text-xs">·</span>
+                  <span className={`text-xs ${isToday ? 'text-indigo-600/70 dark:text-indigo-400/70' : 'text-gray-400 dark:text-white/30'}`}>{time}</span>
                 </>
               )}
               {countdown && (
                 <span className={`text-[10px] font-mono ml-1 px-1.5 py-px rounded ${
                   isVerySoon
-                    ? 'bg-red-500/15 text-red-400'
+                    ? 'bg-red-500/15 text-red-600 dark:text-red-400'
                     : isImminent
-                      ? 'bg-emerald-500/15 text-emerald-400'
-                      : 'bg-white/5 text-white/30'
+                      ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+                      : 'bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-white/30'
                 }`}>
                   {countdown}
                 </span>
@@ -112,7 +112,7 @@ export default function Card({
 
         {/* Title */}
         <h2 className={`text-sm md:text-[15px] font-semibold leading-snug mb-1 font-merriweather truncate ${
-          isPast ? 'text-white/40' : 'text-white/90 group-hover:text-white'
+          isPast ? 'text-gray-400 dark:text-white/40' : 'text-gray-900 dark:text-white/90 group-hover:text-black dark:group-hover:text-white'
         }`}>
           {title}
         </h2>
@@ -125,7 +125,7 @@ export default function Card({
             </div>
           )}
           {subtitle && (
-            <span className={`text-xs ${isPast ? 'text-white/25' : 'text-white/35'}`}>
+            <span className={`text-xs ${isPast ? 'text-gray-300 dark:text-white/25' : 'text-gray-500 dark:text-white/35'}`}>
               {subtitle}
             </span>
           )}
@@ -134,7 +134,7 @@ export default function Card({
         {/* Description - desktop only */}
         {description && (
           <p className={`hidden md:block text-xs leading-relaxed mt-1.5 line-clamp-1 ${
-            isPast ? 'text-white/40' : 'text-white/60'
+            isPast ? 'text-gray-300 dark:text-white/40' : 'text-gray-500 dark:text-white/60'
           }`}>
             {description}
           </p>
@@ -143,7 +143,7 @@ export default function Card({
 
       {/* Right arrow indicator */}
       <div className={`shrink-0 self-center transition-transform duration-200 group-hover:translate-x-0.5 ${
-        isPast ? 'text-white/10' : 'text-white/15 group-hover:text-white/30'
+        isPast ? 'text-gray-200 dark:text-white/10' : 'text-gray-300 dark:text-white/15 group-hover:text-gray-400 dark:group-hover:text-white/30'
       }`}>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M6 3L11 8L6 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
