@@ -1,6 +1,6 @@
 export default function CardSkeleton() {
   return (
-    <div className="flex items-start gap-4 md:gap-5 py-4 md:py-5 border-b border-gray-100 dark:border-white/[0.07] animate-pulse">
+    <div className="flex items-start gap-4 md:gap-5 py-4 md:py-5 px-3 sm:px-4 -mx-3 sm:-mx-4 border-b border-gray-100 dark:border-white/[0.07] animate-pulse">
       {/* Thumbnail skeleton */}
       <div className="shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg bg-gray-100 dark:bg-white/[0.06]" />
 

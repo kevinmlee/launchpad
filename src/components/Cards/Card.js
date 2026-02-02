@@ -51,7 +51,7 @@ export default function Card({
 
   return (
     <article
-      className={`group flex items-start gap-4 md:gap-5 py-4 md:py-5 cursor-pointer transition-colors duration-200 border-b ${
+      className={`group flex items-start gap-4 md:gap-5 py-4 md:py-5 px-3 sm:px-4 -mx-3 sm:-mx-4 rounded-lg cursor-pointer transition-colors duration-200 border-b ${
         isPast
           ? 'border-gray-100 dark:border-white/5 opacity-60'
           : 'border-gray-100 dark:border-white/[0.07] hover:bg-gray-50 dark:hover:bg-white/[0.03]'
