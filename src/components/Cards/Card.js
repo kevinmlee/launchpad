@@ -134,7 +134,7 @@ export default function Card({
         {/* Description - desktop only */}
         {description && (
           <p className={`hidden md:block text-xs leading-relaxed mt-1.5 line-clamp-1 ${
-            isPast ? 'text-white/20' : 'text-white/30'
+            isPast ? 'text-white/40' : 'text-white/60'
           }`}>
             {description}
           </p>

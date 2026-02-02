@@ -26,7 +26,6 @@ export default function Modal({ isOpen, onClose, launch }) {
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
-      // Small delay to trigger animation
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           setIsAnimating(true);
@@ -34,7 +33,6 @@ export default function Modal({ isOpen, onClose, launch }) {
       });
     } else {
       setIsAnimating(false);
-      // Wait for animation to complete before hiding
       const timer = setTimeout(() => {
         setIsVisible(false);
       }, 300);
@@ -70,34 +68,23 @@ export default function Modal({ isOpen, onClose, launch }) {
     >
       {/* Backdrop */}
       <div
-        className={`absolute inset-0 bg-[#1a1625]/90 backdrop-blur-sm transition-all duration-300 ${
+        className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-all duration-300 ${
           isAnimating ? 'opacity-100' : 'opacity-0'
         }`}
       />
 
       {/* Modal */}
       <div
-        className={`relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-2xl bg-[#2d2640] border border-white/15 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] transition-all duration-300 ease-out ${
+        className={`relative w-full max-w-lg max-h-[90vh] overflow-hidden bg-[#1c1828] rounded-xl border border-white/[0.08] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] transition-all duration-300 ease-out ${
           isAnimating
-            ? 'opacity-100 scale-100 translate-y-0'
-            : 'opacity-0 scale-95 translate-y-8'
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-12'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button - with shadow outline for visibility on any background */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-black/50 hover:bg-black/70 transition-colors text-white backdrop-blur-sm shadow-[0_0_0_2px_rgba(0,0,0,0.3),0_2px_8px_rgba(0,0,0,0.4)]"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
         {/* Image */}
         {launch.image && (
-          <div className="relative w-full h-48 sm:h-64 bg-[#1a1625]">
-            {/* Skeleton loader */}
+          <div className="relative w-full h-44 sm:h-56 bg-[#141020]">
             {!imageLoaded && <ImageSkeleton />}
 
             <Image
@@ -110,47 +97,87 @@ export default function Modal({ isOpen, onClose, launch }) {
               onLoad={() => setImageLoaded(true)}
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#2d2640] via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1c1828] via-[#1c1828]/40 to-transparent" />
+
+            {/* Close button — over image */}
+            <button
+              onClick={onClose}
+              className="absolute top-3 right-3 z-10 w-7 h-7 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/60 transition-colors text-white/70 hover:text-white backdrop-blur-sm"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
         )}
 
+        {/* Close button fallback when no image */}
+        {!launch.image && (
+          <button
+            onClick={onClose}
+            className="absolute top-3 right-3 z-10 w-7 h-7 flex items-center justify-center rounded-full bg-white/[0.06] hover:bg-white/10 transition-colors text-white/50 hover:text-white"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
+
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[50vh]">
-          {/* Date & Time */}
-          <div className="flex items-center gap-2 text-sm text-indigo-400 mb-3">
-            {launch.isPast && (
-              <span className={`font-semibold ${launch.isFailed ? 'text-red-400' : 'text-launched-badge'}`}>
-                {launch.isFailed ? '✗' : '✓'} {launch.pastLabel || 'COMPLETED'}
-              </span>
+        <div className="px-5 pb-6 pt-4 overflow-y-auto max-h-[50vh]">
+          {/* Meta line */}
+          <div className="flex items-center gap-1.5 text-xs mb-3">
+            {launch.isPast ? (
+              <>
+                <span className={`font-medium ${launch.isFailed ? 'text-red-400' : 'text-emerald-400'}`}>
+                  {launch.isFailed ? 'Failed' : launch.pastLabel || 'Launched'}
+                </span>
+                <span className="text-white/20">·</span>
+                <span className="text-white/30">{launch.day}</span>
+                {launch.time && (
+                  <>
+                    <span className="text-white/20">·</span>
+                    <span className="text-white/30">{launch.time}</span>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <span className="text-indigo-400 font-medium">{launch.day}</span>
+                {launch.time && (
+                  <>
+                    <span className="text-white/20">·</span>
+                    <span className="text-indigo-400/70">{launch.time}</span>
+                  </>
+                )}
+              </>
             )}
-            <span>{launch.day}</span>
-            {launch.time && <span>• {launch.time}</span>}
           </div>
 
           {/* Title */}
-          <h2 className="text-2xl font-merriweather text-white mb-4">
+          <h2 className="text-lg sm:text-xl font-semibold font-merriweather text-white/90 leading-snug mb-3">
             {launch.title}
           </h2>
 
           {/* Chips */}
           {launch.chips && launch.chips.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-1.5 mb-4">
               {launch.chips}
             </div>
           )}
 
           {/* Subtitle */}
           {launch.subtitle && (
-            <p className="text-white/80 text-sm mb-4">
+            <p className="text-white/40 text-sm mb-4">
               {launch.subtitle}
             </p>
           )}
 
           {/* Description */}
           {launch.description && (
-            <div className="border-t border-white/10 pt-4">
-              <h3 className="text-xs uppercase tracking-wider text-white/50 mb-2">Mission Details</h3>
-              <p className="text-white/70 text-sm leading-relaxed">
+            <div className="border-t border-white/[0.06] pt-4">
+              <h3 className="text-[10px] uppercase tracking-widest text-white/25 mb-2">Details</h3>
+              <p className="text-white/50 text-sm leading-relaxed">
                 {launch.description}
               </p>
             </div>
