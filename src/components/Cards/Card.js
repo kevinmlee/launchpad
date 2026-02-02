@@ -21,44 +21,27 @@ export default function Card({
     ? "object-cover"
     : "object-contain";
 
-  // Check if today is launch day
   const isToday = day === "Today";
-
-  // Countdown hook
   const { formatted: countdown, isImminent, isVerySoon } = useCountdown(isPast ? null : launchDate);
-
-  // Card container classes - unified layout for mobile and desktop
-  const getCardClasses = () => {
-    // Two columns: image left, content right (consistent across breakpoints)
-    const baseClasses = "grid grid-cols-[100px_1fr] md:grid-cols-[140px_1fr] gap-4 md:gap-6 p-4 md:p-5 mt-4 sm:mt-6 relative rounded-2xl overflow-hidden transition-all duration-300 ease-out";
-
-    if (isPast) {
-      return `${baseClasses} bg-[#2a2535] opacity-80 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.5)] border border-white/10 text-past-muted hover:opacity-90`;
-    }
-
-    return `${baseClasses} bg-[#2d2640] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] border border-white/15 text-white hover:border-indigo-400/40 hover:shadow-[0_10px_40px_-10px_rgba(99,102,241,0.35)]`;
-  };
 
   // Status indicator dot
   const StatusDot = () => {
     if (isPast) return null;
 
     if (isVerySoon) {
-      // Red pulsing dot for < 1 hour
       return (
-        <span className="relative flex h-2 w-2">
+        <span className="relative flex h-1.5 w-1.5">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500"></span>
         </span>
       );
     }
 
     if (isImminent || isToday) {
-      // Green pulsing dot for < 24 hours or Today
       return (
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
         </span>
       );
     }
@@ -66,90 +49,106 @@ export default function Card({
     return null;
   };
 
-  // Unified date/time display with countdown
-  const getDateDisplay = () => {
-    if (isPast) {
-      return (
-        <div className="flex items-center gap-2 text-sm md:text-base">
-          <span className={`font-semibold ${isFailed ? 'text-red-400' : 'text-launched-badge'}`}>
-            {isFailed ? '✗' : '✓'}
-          </span>
-          <span className="text-past-muted/80">{day}</span>
-          {time && <span className="text-past-muted/60">• {time}</span>}
-        </div>
-      );
-    }
-
-    return (
-      <div className={`flex items-center gap-2 text-sm md:text-base flex-wrap`}>
-        <StatusDot />
-        <span className={`font-medium ${isToday ? 'text-indigo-400' : 'text-white/60'}`}>{day}</span>
-        {time && <span className={`${isToday ? 'text-indigo-400/80' : 'text-white/50'}`}>• {time}</span>}
-        {countdown && (
-          <span className={`text-xs font-mono px-2 py-0.5 rounded-full ${
-            isVerySoon
-              ? 'bg-red-500/20 text-red-400'
-              : isImminent
-                ? 'bg-green-500/20 text-green-400'
-                : 'bg-white/10 text-white/50'
-          }`}>
-            {countdown}
-          </span>
-        )}
-      </div>
-    );
-  };
-
   return (
-    <div
-      className={`${getCardClasses()} cursor-pointer`}
+    <article
+      className={`group flex items-start gap-4 md:gap-5 py-4 md:py-5 px-3 sm:px-4 -mx-3 sm:-mx-4 rounded-lg cursor-pointer transition-colors duration-200 border-b ${
+        isPast
+          ? 'border-gray-100 dark:border-white/5 opacity-60'
+          : 'border-gray-100 dark:border-white/[0.07] hover:bg-gray-50 dark:hover:bg-white/[0.03]'
+      }`}
       onClick={onClick}
     >
-      {/* Image - LEFT on both mobile and desktop */}
-      <div className={`relative rounded-xl overflow-hidden h-24 md:h-28 ${isPast ? 'opacity-60 grayscale-[30%]' : ''}`}>
+      {/* Thumbnail */}
+      <div className={`relative shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden ${isPast ? 'grayscale-[30%]' : ''}`}>
         {image && (
           <Image
             src={image}
             alt={title}
             fill
-            sizes="(max-width: 768px) 100px, 140px"
-            className={`${imageClasses} transition-opacity duration-500`}
+            sizes="(max-width: 768px) 64px, 80px"
+            className={`${imageClasses} transition-transform duration-300 group-hover:scale-105`}
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAMH/8QAIhAAAgEDAwUBAAAAAAAAAAAAAQIDAAQRBRIhBhMiMUFR/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADESH/2gAMAwEAAhEDEEA/ANT6d1K0sdJtLW6WdbiGJY5F7TMMgDnkD3/a1r+pdOoP+xSlPqRnQGxgKsGXJ//Z"
           />
         )}
       </div>
 
-      {/* Content - RIGHT on both mobile and desktop */}
-      <div className="flex flex-col justify-center relative z-10">
-        {/* Date/time - inline */}
-        <div className="mb-1.5 md:mb-2">
-          {getDateDisplay()}
+      {/* Content */}
+      <div className="flex-1 min-w-0">
+        {/* Meta row: date + countdown */}
+        <div className="flex items-center gap-1.5 mb-1">
+          <StatusDot />
+          {isPast ? (
+            <>
+              <span className={`text-xs font-medium ${isFailed ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                {isFailed ? 'Failed' : 'Launched'}
+              </span>
+              <span className="text-gray-300 dark:text-white/25 text-xs">·</span>
+              <span className="text-xs text-gray-400 dark:text-white/30">{day}</span>
+            </>
+          ) : (
+            <>
+              <span className={`text-xs font-medium ${isToday ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-400 dark:text-white/40'}`}>{day}</span>
+              {time && (
+                <>
+                  <span className="text-gray-300 dark:text-white/20 text-xs">·</span>
+                  <span className={`text-xs ${isToday ? 'text-indigo-600/70 dark:text-indigo-400/70' : 'text-gray-400 dark:text-white/30'}`}>{time}</span>
+                </>
+              )}
+              {countdown && (
+                <span className={`text-[10px] font-mono ml-1 px-1.5 py-px rounded ${
+                  isVerySoon
+                    ? 'bg-red-500/15 text-red-600 dark:text-red-400'
+                    : isImminent
+                      ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+                      : 'bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-white/30'
+                }`}>
+                  {countdown}
+                </span>
+              )}
+            </>
+          )}
         </div>
 
-        <h2 className={`my-0 text-base md:text-lg leading-tight mb-1.5 md:mb-2 font-merriweather ${isPast ? 'text-past-muted' : 'text-white'}`}>
+        {/* Title */}
+        <h2 className={`text-sm md:text-[15px] font-semibold leading-snug mb-1 font-merriweather truncate ${
+          isPast ? 'text-gray-400 dark:text-white/40' : 'text-gray-900 dark:text-white/90 group-hover:text-black dark:group-hover:text-white'
+        }`}>
           {title}
         </h2>
 
-        {chips && chips.length > 0 && (
-          <div className={`mb-1.5 md:mb-2 [&>*:not(:last-child)]:mr-1.5 ${isPast ? 'opacity-60' : ''}`}>
-            {chips}
-          </div>
-        )}
+        {/* Chips + subtitle inline */}
+        <div className="flex items-center gap-2 flex-wrap">
+          {chips && chips.length > 0 && (
+            <div className={`flex items-center gap-1 ${isPast ? 'opacity-50' : ''}`}>
+              {chips}
+            </div>
+          )}
+          {subtitle && (
+            <span className={`text-xs ${isPast ? 'text-gray-300 dark:text-white/25' : 'text-gray-500 dark:text-white/35'}`}>
+              {subtitle}
+            </span>
+          )}
+        </div>
 
-        {subtitle && (
-          <div className={`text-xs md:text-sm ${isPast ? 'text-past-muted/80' : 'text-white/70'}`}>
-            {subtitle}
-          </div>
-        )}
-
-        {/* Description - visible on desktop, truncated */}
+        {/* Description - desktop only */}
         {description && (
-          <div className={`hidden md:block text-xs leading-relaxed mt-2 line-clamp-2 ${isPast ? 'text-past-muted/60' : 'text-white/50'}`}>
+          <p className={`hidden md:block text-xs leading-relaxed mt-1.5 line-clamp-1 ${
+            isPast ? 'text-gray-300 dark:text-white/40' : 'text-gray-500 dark:text-white/60'
+          }`}>
             {description}
-          </div>
+          </p>
         )}
       </div>
-    </div>
+
+      {/* Right arrow indicator */}
+      <div className={`shrink-0 self-center transition-transform duration-200 group-hover:translate-x-0.5 ${
+        isPast ? 'text-gray-200 dark:text-white/10' : 'text-gray-300 dark:text-white/15 group-hover:text-gray-400 dark:group-hover:text-white/30'
+      }`}>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M6 3L11 8L6 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </div>
+    </article>
   );
 }

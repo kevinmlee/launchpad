@@ -9,6 +9,7 @@ import TimezoneToggle from "../TimezoneToggle/TimezoneToggle";
 import NotificationToggle from "../NotificationToggle/NotificationToggle";
 import Filters, { timeFilters, typeFilters } from "../Filters/Filters";
 import BackToTop from "../BackToTop/BackToTop";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import useNotifications from "../../hooks/useNotifications";
 
 import dayjs from "dayjs";
@@ -411,6 +412,7 @@ export default function Cards({ launches, expeditions, events }) {
           <div className="flex items-center gap-2">
             <NotificationToggle onNotificationChange={setNotificationsEnabled} />
             <TimezoneToggle onTimezoneChange={setUseUTC} />
+            <ThemeToggle />
           </div>
         </div>
       </div>

@@ -87,10 +87,10 @@ export default function NotificationToggle({ onNotificationChange }) {
         disabled={isDisabled}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
-        className={`flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 transition-all text-sm !w-fit ${
+        className={`flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/8 dark:border-white/10 transition-all text-sm !w-fit ${
           isDisabled
             ? "opacity-50 cursor-not-allowed"
-            : "hover:bg-white/10 hover:border-white/20"
+            : "hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/15 dark:hover:border-white/20"
         }`}
       >
         {/* Bell icon */}
@@ -100,7 +100,7 @@ export default function NotificationToggle({ onNotificationChange }) {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className={`w-4 h-4 ${isEnabled ? 'text-indigo-400' : 'text-white/60'}`}
+          className={`w-4 h-4 ${isEnabled ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-400 dark:text-white/60'}`}
         >
           <path
             strokeLinecap="round"
@@ -108,13 +108,13 @@ export default function NotificationToggle({ onNotificationChange }) {
             d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
           />
         </svg>
-        <span className={`transition-colors ${isEnabled ? 'text-indigo-400' : 'text-white/60'}`}>
+        <span className={`transition-colors ${isEnabled ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-white/60'}`}>
           Notifications
         </span>
-        <div className={`relative w-8 h-4 rounded-full ${isDisabled ? 'bg-white/5' : 'bg-white/10'}`}>
+        <div className={`relative w-8 h-4 rounded-full ${isDisabled ? 'bg-black/5 dark:bg-white/5' : 'bg-black/10 dark:bg-white/10'}`}>
           <div
             className={`absolute top-0.5 w-3 h-3 rounded-full transition-transform ${
-              isEnabled ? 'translate-x-4 bg-indigo-400' : 'translate-x-0.5 bg-white/30'
+              isEnabled ? 'translate-x-4 bg-indigo-500 dark:bg-indigo-400' : 'translate-x-0.5 bg-gray-300 dark:bg-white/30'
             }`}
           />
         </div>
@@ -122,9 +122,9 @@ export default function NotificationToggle({ onNotificationChange }) {
 
       {/* Tooltip - hidden on mobile, responsive positioning */}
       {showTooltip && (
-        <div className="hidden sm:block absolute bottom-full right-0 mb-2 px-3 py-2 bg-[#1a1625] border border-white/20 rounded-lg text-xs text-white/80 whitespace-nowrap z-50 shadow-lg">
+        <div className="hidden sm:block absolute bottom-full right-0 mb-2 px-3 py-2 bg-white dark:bg-[#1a1625] border border-gray-200 dark:border-white/20 rounded-lg text-xs text-gray-600 dark:text-white/80 whitespace-nowrap z-50 shadow-lg">
           {getTooltipText()}
-          <div className="absolute top-full right-4 border-4 border-transparent border-t-[#1a1625]" />
+          <div className="absolute top-full right-4 border-4 border-transparent border-t-white dark:border-t-[#1a1625]" />
         </div>
       )}
     </div>

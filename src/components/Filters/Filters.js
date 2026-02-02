@@ -36,18 +36,18 @@ function FilterDropdown({ label, options, value, onChange, color = "indigo" }) {
 
   const colorClasses = {
     indigo: {
-      button: "hover:border-indigo-400/50",
-      active: "bg-indigo-500/20 border-indigo-400/50",
-      dropdown: "border-indigo-500/30",
-      option: "hover:bg-indigo-500/20",
-      selected: "bg-indigo-500/30 text-indigo-300",
+      button: "hover:border-indigo-500/50 dark:hover:border-indigo-400/50",
+      active: "bg-indigo-500/10 dark:bg-indigo-500/20 border-indigo-500/50 dark:border-indigo-400/50",
+      dropdown: "border-indigo-500/20 dark:border-indigo-500/30",
+      option: "hover:bg-indigo-500/10 dark:hover:bg-indigo-500/20",
+      selected: "bg-indigo-500/15 dark:bg-indigo-500/30 text-indigo-700 dark:text-indigo-300",
     },
     violet: {
-      button: "hover:border-violet-400/50",
-      active: "bg-violet-500/20 border-violet-400/50",
-      dropdown: "border-violet-500/30",
-      option: "hover:bg-violet-500/20",
-      selected: "bg-violet-500/30 text-violet-300",
+      button: "hover:border-violet-500/50 dark:hover:border-violet-400/50",
+      active: "bg-violet-500/10 dark:bg-violet-500/20 border-violet-500/50 dark:border-violet-400/50",
+      dropdown: "border-violet-500/20 dark:border-violet-500/30",
+      option: "hover:bg-violet-500/10 dark:hover:bg-violet-500/20",
+      selected: "bg-violet-500/15 dark:bg-violet-500/30 text-violet-700 dark:text-violet-300",
     },
   };
 
@@ -58,13 +58,13 @@ function FilterDropdown({ label, options, value, onChange, color = "indigo" }) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all
-          bg-white/5 border border-white/10 text-white/80
+          bg-black/5 dark:bg-white/5 border border-black/8 dark:border-white/10 text-gray-700 dark:text-white/80
           ${isOpen ? colors.active : colors.button}`}
       >
-        <span className="text-white/50">{label}:</span>
+        <span className="text-gray-500 dark:text-white/50">{label}:</span>
         <span>{selectedOption?.label}</span>
         <svg
-          className={`w-4 h-4 text-white/50 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          className={`w-4 h-4 text-gray-400 dark:text-white/50 transition-transform ${isOpen ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -74,7 +74,7 @@ function FilterDropdown({ label, options, value, onChange, color = "indigo" }) {
       </button>
 
       {isOpen && (
-        <div className={`absolute top-full left-0 mt-1 min-w-full bg-[#1a1625] border ${colors.dropdown} rounded-lg shadow-xl z-50 overflow-hidden`}>
+        <div className={`absolute top-full left-0 mt-1 min-w-full bg-white dark:bg-[#1a1625] border ${colors.dropdown} rounded-lg shadow-xl z-50 overflow-hidden`}>
           {options.map((option) => (
             <button
               key={option.id}
@@ -83,7 +83,7 @@ function FilterDropdown({ label, options, value, onChange, color = "indigo" }) {
                 setIsOpen(false);
               }}
               className={`w-full px-4 py-2 text-left text-sm transition-colors
-                ${value === option.id ? colors.selected : `text-white/70 ${colors.option}`}`}
+                ${value === option.id ? colors.selected : `text-gray-600 dark:text-white/70 ${colors.option}`}`}
             >
               {option.label}
             </button>

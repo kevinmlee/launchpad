@@ -26,14 +26,27 @@ export const viewport = {
   viewportFit: "cover",
 };
 
+// Inline script to prevent flash of wrong theme
+const themeScript = `
+  (function() {
+    try {
+      var stored = localStorage.getItem('launchpad_theme');
+      if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    } catch(e) {}
+  })();
+`;
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${merriweather.variable}`}>
+    <html lang="en" className={`${poppins.variable} ${merriweather.variable}`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo192.png" />
       </head>
-      <body className="font-poppins bg-[#1a1625] text-white">
+      <body className="font-poppins">
         <div className="max-w-[1200px] mx-auto px-3 sm:px-8">
           {children}
         </div>

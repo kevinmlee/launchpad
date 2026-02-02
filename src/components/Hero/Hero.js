@@ -21,7 +21,7 @@ function Stars() {
   }, []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden opacity-0 dark:opacity-100 transition-opacity duration-500">
       {stars.map((star) => (
         <div
           key={star.id}
@@ -126,7 +126,7 @@ function Rocket() {
 function OrbitRing({ size, duration, delay, children }) {
   return (
     <div
-      className="absolute rounded-full border border-white/10"
+      className="absolute rounded-full border border-black/10 dark:border-white/10"
       style={{
         width: size,
         height: size,
@@ -164,41 +164,41 @@ function Planet({ color, size, glow }) {
 
 export default function Hero() {
   return (
-    <div className="relative min-h-[500px] sm:min-h-[550px] overflow-hidden">
+    <div className="relative overflow-hidden">
 
       {/* Stars */}
       <Stars />
 
       {/* Content */}
-      <div className="relative z-10 pt-16 sm:pt-24 pb-20 px-4">
+      <div className="relative z-10 sm:py-24 py-12 px-4">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-8">
           {/* Text content */}
           <div className="text-center sm:text-left flex-1">
             <h1 className="font-merriweather text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
-              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-indigo-900 via-purple-800 to-indigo-600 dark:from-white dark:via-blue-100 dark:to-purple-200 bg-clip-text text-transparent">
                 Launchpad
               </span>
             </h1>
-            <p className="text-lg sm:text-xl text-gray-300 max-w-md leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-500 dark:text-gray-300 max-w-md leading-relaxed">
               Track upcoming launches, space station dockings, and deep space
               expeditions in real-time
             </p>
 
             {/* Stats badges */}
             <div className="flex flex-wrap gap-3 mt-8 justify-center sm:justify-start">
-              <div className="px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
-                <span className="text-blue-400 font-semibold">Live</span>
-                <span className="text-gray-400 ml-2">Tracking</span>
+              <div className="px-4 py-2 rounded-full bg-black/5 dark:bg-white/5 border border-black/8 dark:border-white/10 backdrop-blur-sm">
+                <span className="text-blue-600 dark:text-blue-400 font-semibold">Live</span>
+                <span className="text-gray-500 dark:text-gray-400 ml-2">Tracking</span>
               </div>
-              <div className="px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
-                <span className="text-purple-400 font-semibold">Global</span>
-                <span className="text-gray-400 ml-2">Coverage</span>
+              <div className="px-4 py-2 rounded-full bg-black/5 dark:bg-white/5 border border-black/8 dark:border-white/10 backdrop-blur-sm">
+                <span className="text-purple-600 dark:text-purple-400 font-semibold">Global</span>
+                <span className="text-gray-500 dark:text-gray-400 ml-2">Coverage</span>
               </div>
             </div>
           </div>
 
           {/* Rocket & Orbital illustration */}
-          <div className="relative w-64 h-64 sm:w-80 sm:h-80 flex-shrink-0">
+          <div className="relative w-64 h-64 sm:w-80 sm:h-80 flex-shrink-0 hidden sm:block">
             {/* Orbit rings */}
             <OrbitRing size={280} duration="20s" delay="0s">
               <Planet color="#818cf8" size={12} glow="#6366f1" />
