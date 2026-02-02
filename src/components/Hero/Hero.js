@@ -164,13 +164,13 @@ function Planet({ color, size, glow }) {
 
 export default function Hero() {
   return (
-    <div className="relative min-h-[500px] sm:min-h-[550px] overflow-hidden">
+    <div className="relative overflow-hidden">
 
       {/* Stars */}
       <Stars />
 
       {/* Content */}
-      <div className="relative z-10 pt-16 sm:pt-24 pb-20 px-4">
+      <div className="relative z-10 sm:py-24 py-12 px-4">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-8">
           {/* Text content */}
           <div className="text-center sm:text-left flex-1">
@@ -198,7 +198,7 @@ export default function Hero() {
           </div>
 
           {/* Rocket & Orbital illustration */}
-          <div className="relative w-64 h-64 sm:w-80 sm:h-80 flex-shrink-0">
+          <div className="relative w-64 h-64 sm:w-80 sm:h-80 flex-shrink-0 hidden sm:block">
             {/* Orbit rings */}
             <OrbitRing size={280} duration="20s" delay="0s">
               <Planet color="#818cf8" size={12} glow="#6366f1" />
