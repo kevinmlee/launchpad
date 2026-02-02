@@ -1,31 +1,25 @@
 export default function CardSkeleton() {
   return (
-    <div className="grid grid-cols-[100px_1fr] md:grid-cols-[140px_1fr] gap-4 md:gap-6 p-4 md:p-5 mt-4 sm:mt-6 rounded-2xl bg-[#2d2640] border border-white/10 animate-pulse">
-      {/* Image skeleton */}
-      <div className="rounded-xl bg-white/10 h-24 md:h-28" />
+    <div className="flex items-start gap-4 md:gap-5 py-4 md:py-5 border-b border-white/[0.07] animate-pulse">
+      {/* Thumbnail skeleton */}
+      <div className="shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg bg-white/[0.06]" />
 
       {/* Content skeleton */}
-      <div className="flex flex-col justify-center gap-2">
+      <div className="flex-1 min-w-0 space-y-2">
         {/* Date skeleton */}
-        <div className="h-4 w-32 bg-white/10 rounded" />
+        <div className="h-3 w-28 bg-white/[0.06] rounded" />
 
         {/* Title skeleton */}
-        <div className="h-5 md:h-6 w-3/4 bg-white/10 rounded" />
+        <div className="h-4 w-3/4 bg-white/[0.06] rounded" />
 
         {/* Chips skeleton */}
-        <div className="flex gap-2">
-          <div className="h-5 w-16 bg-white/10 rounded-full" />
-          <div className="h-5 w-12 bg-white/10 rounded-full" />
+        <div className="flex gap-1.5">
+          <div className="h-4 w-14 bg-white/[0.06] rounded-full" />
+          <div className="h-4 w-10 bg-white/[0.06] rounded-full" />
         </div>
-
-        {/* Subtitle skeleton */}
-        <div className="h-4 w-1/2 bg-white/10 rounded" />
 
         {/* Description skeleton - desktop only */}
-        <div className="hidden md:block space-y-1.5 mt-1">
-          <div className="h-3 w-full bg-white/10 rounded" />
-          <div className="h-3 w-2/3 bg-white/10 rounded" />
-        </div>
+        <div className="hidden md:block h-3 w-1/2 bg-white/[0.06] rounded" />
       </div>
     </div>
   );
